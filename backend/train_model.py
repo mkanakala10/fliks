@@ -45,14 +45,14 @@ def main():
     if ratings.empty:
         raise RuntimeError("No ratings found for Indian movies. Check ratings_small.csv.")
 
-    user_ids = sorted(ratings["userId"].unique())
-    movie_ids = sorted(ratings["movieId"].unique())
+    user_ids = sorted(int(u) for u in ratings["userId"].unique())
+    movie_ids = sorted(int(m) for m in ratings["movieId"].unique())
 
     user_to_idx = {uid: idx for idx, uid in enumerate(user_ids)}
     movie_to_idx = {mid: idx for idx, mid in enumerate(movie_ids)}
     idx_to_movie = {idx: mid for mid, idx in movie_to_idx.items()}
 
-    title_map = pd.Series(indian_df.title.values, index=indian_df.id).to_dict()
+    title_map = {int(k): str(v) for k, v in pd.Series(indian_df.title.values, index=indian_df.id).items()}
 
     users = torch.tensor([user_to_idx[u] for u in ratings["userId"]], dtype=torch.long)
     movies = torch.tensor([movie_to_idx[m] for m in ratings["movieId"]], dtype=torch.long)
@@ -75,10 +75,10 @@ def main():
     torch.save(model.movie_embedding.weight.detach(), MODEL_DIR / "movie_embeddings.pt")
 
     with open(MODEL_DIR / "movie_id_map.json", "w") as f:
-        json.dump({str(k): v for k, v in movie_to_idx.items()}, f)
+        json.dump({str(k): int(v) for k, v in movie_to_idx.items()}, f)
 
     with open(MODEL_DIR / "index_to_movie_id.json", "w") as f:
-        json.dump({str(k): v for k, v in idx_to_movie.items()}, f)
+        json.dump({str(k): int(v) for k, v in idx_to_movie.items()}, f)
 
     with open(MODEL_DIR / "movie_titles.json", "w") as f:
         json.dump({str(k): v for k, v in title_map.items()}, f)
