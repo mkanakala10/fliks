@@ -13,6 +13,7 @@ function MovieCard({
   onRemoveFromWatchlist,
   isInWatchlist,
   onSetReminder,
+  onRate,
 }) {
   const isUpcoming = variant === 'upcoming';
 
