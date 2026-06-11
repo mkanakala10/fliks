@@ -13,6 +13,7 @@ import {
   HiLogout,
   HiSearch,
   HiLightningBolt,
+  HiStar,
 } from 'react-icons/hi';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -23,6 +24,7 @@ const navItems = [
   { id: 'recommendations', label: 'For You', icon: HiLightningBolt },
   { id: 'ai-assistant', label: 'AI Assistant', icon: HiSparkles },
   { id: 'watch-later', label: 'Watch Later', icon: HiBookmark },
+  { id: 'ratings', label: 'My Ratings', icon: HiStar },
   { id: 'actors', label: 'Actors', icon: HiUsers },
   { id: 'all-movies', label: 'All Movies', icon: HiFilm },
 ];

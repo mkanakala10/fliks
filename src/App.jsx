@@ -4,6 +4,7 @@ import theme from './theme';
 import Home from './pages/home';
 import Trending from './pages/trending';
 import WatchLater from './pages/watchLater';
+import Ratings from './pages/ratings';
 import Actors from './pages/actors';
 import AllMovies from './pages/allMovies';
 import Signup from './pages/signup';
@@ -78,6 +79,8 @@ function AppContent() {
         return <Recommendations {...sharedProps} />;
       case 'watch-later':
         return <WatchLater {...sharedProps} />;
+      case 'ratings':
+        return <Ratings {...sharedProps} />;
       case 'actors':
         return <Actors />;
       case 'all-movies':

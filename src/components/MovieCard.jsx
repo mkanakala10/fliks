@@ -3,6 +3,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Button from './Button';
+import { useState } from 'react';
 
 function MovieCard({
   movie,
@@ -15,7 +16,42 @@ function MovieCard({
   onSetReminder,
   onRate,
 }) {
+  const [hoverRating, setHoverRating] = useState(null);
   const isUpcoming = variant === 'upcoming';
+  const currentRating = movie?.ratingValue || 0;
+  const displayRating = hoverRating !== null ? hoverRating : currentRating;
+
+  const handleStarHover = (starIndex, e) => {
+    if (!onRate) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const isLeftHalf = x < rect.width / 2;
+    const rating = starIndex + (isLeftHalf ? 0.5 : 1);
+    setHoverRating(rating);
+  };
+
+  const handleStarClick = (starIndex, e) => {
+    if (!onRate) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const isLeftHalf = x < rect.width / 2;
+    const rating = starIndex + (isLeftHalf ? 0.5 : 1);
+    onRate(movie.id, rating);
+  };
+
+  const shouldShowComingSoon = () => {
+    if (!isUpcoming) return false;
+    if (!movie?.releaseDate) return true;
+    
+    try {
+      const releaseDate = new Date(movie.releaseDate);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return releaseDate > today;
+    } catch {
+      return true;
+    }
+  };
 
   const watchlistAction = isInWatchlist ? onRemoveFromWatchlist : onAddToWatchlist;
   const watchlistLabel = isInWatchlist ? 'Remove' : 'Watchlist';
@@ -71,7 +107,7 @@ function MovieCard({
             '&:hover': { transform: 'scale(1.05)' },
           }}
         />
-        {isUpcoming && (
+        {shouldShowComingSoon() && (
           <Chip
             label="Coming Soon"
             size="small"
@@ -100,23 +136,43 @@ function MovieCard({
             {movie.title}
           </Typography>
 
-          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 0.5 }}>
-            {[1, 2, 3, 4, 5].map((value) => (
+          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 0.3 }}>
+            {[0, 1, 2, 3, 4].map((starIndex) => (
               <Box
-                key={value}
+                key={starIndex}
                 component="button"
                 type="button"
-                onClick={() => onRate?.(movie.id, value)}
+                onMouseMove={(e) => handleStarHover(starIndex, e)}
+                onMouseLeave={() => setHoverRating(null)}
+                onClick={(e) => handleStarClick(starIndex, e)}
                 sx={{
                   border: 'none',
                   background: 'none',
-                  color: value <= (movie?.ratingValue || 0) ? '#ffb400' : '#cccccc',
-                  fontSize: '1rem',
-                  cursor: 'pointer',
+                  fontSize: '1.2rem',
+                  cursor: onRate ? 'pointer' : 'default',
                   p: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  position: 'relative',
+                  height: '1.2rem',
+                  width: '1rem',
+                  opacity: onRate ? 1 : 0.6,
                 }}
               >
-                {value <= (movie?.ratingValue || 0) ? '★' : '☆'}
+                {/* Background (empty) star */}
+                <Box sx={{ position: 'absolute', color: '#cccccc' }}>☆</Box>
+                {/* Filled star - only show for filled portion */}
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    color: '#ffb400',
+                    overflow: 'hidden',
+                    width: `${Math.max(0, Math.min(100, ((displayRating - starIndex) / 1) * 100))}%`,
+                  }}
+                >
+                  ★
+                </Box>
               </Box>
             ))}
           </Box>
