@@ -58,6 +58,7 @@ function Ratings({ onViewMovie, onRate, ratings = {} }) {
                   ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
                   : 'https://via.placeholder.com/300x450?text=No+Poster',
                 releaseDate: data.release_date || 'TBA',
+                rating: data.vote_average,
                 revenue: data.revenue
                   ? `₹${(data.revenue / 10000000).toFixed(1)} Cr`
                   : 'N/A',

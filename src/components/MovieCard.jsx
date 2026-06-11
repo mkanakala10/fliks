@@ -20,6 +20,8 @@ function MovieCard({
   const isClickable = Boolean(onViewDetails);
   const currentRating = movie?.ratingValue || 0;
   const displayRating = hoverRating !== null ? hoverRating : currentRating;
+  const tmdbRating = movie?.rating > 0 ? Number(movie.rating) : null;
+  const activeRating = hoverRating !== null ? hoverRating : currentRating;
 
   const handleStarHover = (starIndex, event) => {
     if (!onRate) return;
@@ -156,6 +158,23 @@ function MovieCard({
             }}
           />
         )}
+        {tmdbRating !== null && (
+          <Chip
+            label={`★ ${tmdbRating.toFixed(1)}`}
+            size="small"
+            sx={{
+              position: 'absolute',
+              bottom: 8,
+              left: 8,
+              zIndex: 2,
+              bgcolor: 'rgba(0,0,0,0.72)',
+              color: '#fff',
+              fontWeight: 600,
+              fontSize: '0.75rem',
+              backdropFilter: 'blur(4px)',
+            }}
+          />
+        )}
       </Box>
 
       <Stack p={2} spacing={1.5} flex={1} justifyContent="space-between" alignItems="center">
@@ -211,6 +230,18 @@ function MovieCard({
               </Box>
             ))}
           </Box>
+
+          {(activeRating > 0 || tmdbRating !== null) && (
+            <Typography variant="caption" color="text.secondary" textAlign="center" display="block">
+              {activeRating > 0 && (
+                <>
+                  Your rating: <Box component="span" sx={{ color: '#f59e0b', fontWeight: 600 }}>{activeRating.toFixed(1)}</Box>
+                </>
+              )}
+              {activeRating > 0 && tmdbRating !== null && ' · '}
+              {tmdbRating !== null && <>TMDB: {tmdbRating.toFixed(1)}</>}
+            </Typography>
+          )}
 
           {isUpcoming && movie.genre && (
             <Typography variant="caption" color="text.secondary" textAlign="center" display="block">
