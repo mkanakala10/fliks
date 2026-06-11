@@ -1,13 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Film, User, Popcorn } from 'lucide-react';
+import { semanticSearch } from '../config/api';
 import './MovieMeter.css';
 
-export default function MovieMeterChatbot() {
+export default function MovieMeterChatbot({ onViewMovie }) {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: '🎬 Welcome to Movie Meter! I\'m your personal film expert. Ask me about any movie, get recommendations, or discuss your favorite films!'
-    }
+      content:
+        '🎬 Welcome to Movie Meter! Ask about Indian cinema, get recommendations, or describe the kind of film you\'re in the mood for. I search our Indian film database to give grounded answers.',
+    },
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -23,71 +25,121 @@ export default function MovieMeterChatbot() {
     scrollToBottom();
   }, [messages]);
 
+  const buildSearchContext = async (userMessage) => {
+    try {
+      const data = await semanticSearch(userMessage, 5);
+      const hits = data.results || [];
+      if (!hits.length) return { context: '', movies: [] };
+
+      const lines = hits.map(
+        (m, i) =>
+          `${i + 1}. "${m.title}" (ID: ${m.csv_id})${m.language ? ` [${m.language}]` : ''}: ${(m.plot || '').slice(0, 200)}`
+      );
+
+      return {
+        context: `\n\nGrounded Indian cinema matches from our semantic search database:\n${lines.join('\n')}\n\nWhen recommending films, prefer titles from this list. Mention specific titles by name.`,
+        movies: hits,
+      };
+    } catch {
+      return { context: '', movies: [] };
+    }
+  };
+
   const sendMessage = async () => {
     if (!input.trim() || isLoading) return;
 
     const userMessage = input.trim();
     setInput('');
-    
-    setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
+    setMessages((prev) => [...prev, { role: 'user', content: userMessage }]);
     setIsLoading(true);
 
+    const { context: searchContext, movies: searchHits } = await buildSearchContext(userMessage);
+
     if (!GEMINI_API_KEY) {
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: 'assistant',
-          content:
-            '🎬 No Gemini API key found. Please add VITE_GEMINI_API_KEY to your .env file to enable the AI assistant.',
-        },
-      ]);
+      if (searchHits.length > 0) {
+        const fallback = searchHits
+          .map((m) => `🎬 **${m.title}** — ${(m.plot || '').slice(0, 150)}…`)
+          .join('\n\n');
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'assistant',
+            content: `Here are Indian films that match your query (from semantic search):\n\n${fallback}\n\n_Add VITE_GEMINI_API_KEY for full AI chat._`,
+            movies: searchHits,
+          },
+        ]);
+      } else {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'assistant',
+            content:
+              '🎬 No Gemini API key found. Add VITE_GEMINI_API_KEY to your .env file. Start the backend for semantic search fallback.',
+          },
+        ]);
+      }
       setIsLoading(false);
       return;
     }
 
     try {
+      const systemPrompt = `You are Movie Meter, an enthusiastic expert on Indian cinema. Help users discover Hindi, Tamil, Telugu, Malayalam, and Kannada films. Be conversational and passionate. Use the grounded search results below when relevant — cite specific movie titles from that list when recommending.${searchContext}`;
+
       const response = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
         {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             contents: [
               {
-                parts: [
-                  {
-                    text: `You are Movie Meter, an enthusiastic and knowledgeable movie expert AI. Help users discover films, provide movie recommendations, discuss plots, actors, directors, and share interesting movie trivia. Be engaging and passionate about cinema. Keep responses conversational and fun.\n\nUser: ${userMessage}`
-                  }
-                ]
-              }
+                parts: [{ text: `${systemPrompt}\n\nUser: ${userMessage}` }],
+              },
             ],
             generationConfig: {
               temperature: 0.8,
               maxOutputTokens: 600,
-            }
-          })
+            },
+          }),
         }
       );
 
       const data = await response.json();
-      
-      if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
+
+      if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
         const aiResponse = data.candidates[0].content.parts[0].text;
-        setMessages(prev => [...prev, { role: 'assistant', content: aiResponse }]);
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'assistant',
+            content: aiResponse,
+            movies: searchHits.length > 0 ? searchHits : undefined,
+          },
+        ]);
       } else {
         throw new Error('Unexpected response format');
       }
     } catch (error) {
       console.error('Error calling Gemini API:', error);
-      setMessages(prev => [
-        ...prev,
-        {
-          role: 'assistant',
-          content: '🎬 Oops! Having some technical difficulties. Let\'s try that again!'
-        }
-      ]);
+      if (searchHits.length > 0) {
+        const fallback = searchHits.map((m) => `• ${m.title}`).join('\n');
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'assistant',
+            content: `Gemini is unavailable, but here are matching Indian films:\n${fallback}`,
+            movies: searchHits,
+          },
+        ]);
+      } else {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'assistant',
+            content: '🎬 Having technical difficulties. Make sure the backend and Gemini API key are configured.',
+          },
+        ]);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -102,7 +154,6 @@ export default function MovieMeterChatbot() {
 
   return (
     <div className="movie-meter-container">
-      {/* Header with Film Strip Design */}
       <div className="movie-header">
         <div className="film-strip-top"></div>
         <div className="header-content">
@@ -111,7 +162,7 @@ export default function MovieMeterChatbot() {
           </div>
           <div className="header-text">
             <h1 className="movie-title">Movie Meter</h1>
-            <p className="movie-subtitle">🍿 Your Personal Cinema Companion</p>
+            <p className="movie-subtitle">🍿 AI + Semantic Search for Indian Cinema</p>
           </div>
           <div className="popcorn-icon">
             <Popcorn size={28} />
@@ -120,25 +171,51 @@ export default function MovieMeterChatbot() {
         <div className="film-strip-bottom"></div>
       </div>
 
-      {/* Chat Messages */}
       <div className="chat-area">
         <div className="messages-container">
           {messages.map((message, index) => (
-            <div
-              key={index}
-              className={`message-row ${message.role === 'user' ? 'user-row' : 'assistant-row'}`}
-            >
-              <div className={`avatar ${message.role === 'user' ? 'user-avatar' : 'assistant-avatar'}`}>
-                {message.role === 'user' ? (
-                  <User size={20} />
-                ) : (
-                  <Film size={20} />
-                )}
+            <div key={index}>
+              <div
+                className={`message-row ${message.role === 'user' ? 'user-row' : 'assistant-row'}`}
+              >
+                <div className={`avatar ${message.role === 'user' ? 'user-avatar' : 'assistant-avatar'}`}>
+                  {message.role === 'user' ? <User size={20} /> : <Film size={20} />}
+                </div>
+                <div className={`message-bubble ${message.role === 'user' ? 'user-bubble' : 'assistant-bubble'}`}>
+                  <p>{message.content}</p>
+                </div>
               </div>
 
-              <div className={`message-bubble ${message.role === 'user' ? 'user-bubble' : 'assistant-bubble'}`}>
-                <p>{message.content}</p>
-              </div>
+              {message.movies?.length > 0 && onViewMovie && (
+                <div className="message-row assistant-row" style={{ marginTop: '-8px' }}>
+                  <div className="avatar" style={{ visibility: 'hidden' }} />
+                  <div className="message-bubble assistant-bubble" style={{ padding: '12px 16px' }}>
+                    <p style={{ fontSize: '13px', marginBottom: '8px', color: '#90caf9' }}>
+                      Tap a film for details:
+                    </p>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                      {message.movies.map((m) => (
+                        <button
+                          key={m.csv_id}
+                          type="button"
+                          onClick={() => onViewMovie(Number(m.csv_id))}
+                          style={{
+                            background: 'rgba(33,150,243,0.2)',
+                            border: '1px solid #2196f3',
+                            borderRadius: '20px',
+                            color: '#e3f2fd',
+                            padding: '6px 14px',
+                            cursor: 'pointer',
+                            fontSize: '13px',
+                          }}
+                        >
+                          {m.title}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           ))}
 
@@ -161,7 +238,6 @@ export default function MovieMeterChatbot() {
         </div>
       </div>
 
-      {/* Input Area */}
       <div className="input-area">
         <div className="input-container">
           <input
@@ -169,7 +245,7 @@ export default function MovieMeterChatbot() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Ask about any movie or get recommendations..."
+            placeholder="Ask about Indian films or describe what you want to watch..."
             className="message-input"
             disabled={isLoading}
           />
@@ -182,7 +258,7 @@ export default function MovieMeterChatbot() {
           </button>
         </div>
         <p className="tagline">
-          🎥 Lights, Camera, Chat! Discover your next favorite film
+          🎥 Powered by semantic search + Gemini — grounded in Indian cinema
         </p>
       </div>
     </div>

@@ -25,3 +25,10 @@ dist-ssr
 
 
 .env
+
+# Backend
+backend/venv/
+backend/qdrant_storage/
+backend/models/
+backend/movies_metadata.csv
+backend/ratings_small.csv

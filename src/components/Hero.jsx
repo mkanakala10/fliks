@@ -26,7 +26,7 @@ function Hero({ stats = [], onNavigate }) {
             <Button variant="primary" size="md" onClick={() => onNavigate?.('all-movies')}>
               Explore Movies
             </Button>
-            <Button variant="secondary" size="md" onClick={() => onNavigate?.('ai-assistant')}>
+            <Button variant="secondary" size="md" onClick={() => onNavigate?.('recommendations')}>
               AI Recommendations
             </Button>
           </Stack>

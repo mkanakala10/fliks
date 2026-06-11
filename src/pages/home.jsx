@@ -12,7 +12,7 @@ import ActorCard from '../components/ActorCard';
 import MovieCard from '../components/MovieCard';
 import CTA from '../components/CTA';
 
-function Home({ onNavigate, onRate, ratings = {} }) {
+function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
   const [trendingActors, setTrendingActors] = useState([]);
   const [boxOffice, setBoxOffice] = useState([]);
   const [anticipated, setAnticipated] = useState([]);
@@ -168,7 +168,7 @@ function Home({ onNavigate, onRate, ratings = {} }) {
                   <MovieCard
                     movie={{ ...movie, ratingValue: ratings[movie.id] || 0 }}
                     rank={index + 1}
-                    onViewDetails={() => onNavigate?.('all-movies')}
+                    onViewDetails={() => onViewMovie?.(movie.id)}
                     onRate={onRate}
                   />
                 </Grid>
@@ -189,6 +189,7 @@ function Home({ onNavigate, onRate, ratings = {} }) {
                     movie={{ ...film, ratingValue: ratings[film.id] || 0 }}
                     variant="upcoming"
                     onRate={onRate}
+                    onViewDetails={() => onViewMovie?.(film.id)}
                   />
                 </Grid>
               ))}

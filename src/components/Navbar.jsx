@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import Divider from '@mui/material/Divider'; // Added for a clean separation
 import {
   HiHome,
   HiTrendingUp,
@@ -11,13 +10,17 @@ import {
   HiUsers,
   HiFilm,
   HiMenu,
-  HiLogout, // Added logout icon
+  HiLogout,
+  HiSearch,
+  HiLightningBolt,
 } from 'react-icons/hi';
-import { useAuth } from '../contexts/AuthContext'; // Import your auth hook
+import { useAuth } from '../contexts/AuthContext';
 
 const navItems = [
   { id: 'home', label: 'Home', icon: HiHome },
   { id: 'trending', label: 'Trending', icon: HiTrendingUp },
+  { id: 'search', label: 'Search', icon: HiSearch },
+  { id: 'recommendations', label: 'For You', icon: HiLightningBolt },
   { id: 'ai-assistant', label: 'AI Assistant', icon: HiSparkles },
   { id: 'watch-later', label: 'Watch Later', icon: HiBookmark },
   { id: 'actors', label: 'Actors', icon: HiUsers },
@@ -30,20 +33,15 @@ function Navbar({ isOpen, onToggle, currentPage, onNavigate }) {
   const handleLogout = async () => {
     try {
       await logout();
-      
-      if (onToggle) {
-        onToggle(); // Close the sidebar after logout
-      }
-      
-      onNavigate('signup'); // Send them back to the signup/login page
+      if (onToggle) onToggle();
+      onNavigate('signup');
     } catch (error) {
-      console.error("Logout failed:", error);
+      console.error('Logout failed:', error);
     }
   };
 
   return (
     <>
-      {/* Hamburger button — only when sidebar is closed */}
       {!isOpen && (
         <IconButton
           onClick={onToggle}
@@ -63,7 +61,6 @@ function Navbar({ isOpen, onToggle, currentPage, onNavigate }) {
         </IconButton>
       )}
 
-      {/* Overlay */}
       {isOpen && (
         <Box
           onClick={onToggle}
@@ -76,7 +73,6 @@ function Navbar({ isOpen, onToggle, currentPage, onNavigate }) {
         />
       )}
 
-      {/* Sidebar */}
       <Box
         sx={{
           position: 'fixed',
@@ -91,7 +87,7 @@ function Navbar({ isOpen, onToggle, currentPage, onNavigate }) {
           transform: isOpen ? 'translateX(0)' : 'translateX(-100%)',
           transition: 'transform 0.3s ease',
           display: 'flex',
-          flexDirection: 'column', // Stack items vertically
+          flexDirection: 'column',
         }}
       >
         <Stack sx={{ p: 4, pt: 5, flexGrow: 1 }} spacing={0}>
@@ -120,7 +116,7 @@ function Navbar({ isOpen, onToggle, currentPage, onNavigate }) {
                   width: '100%',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'flex-start', // Left align looks better in sidebars
+                  justifyContent: 'flex-start',
                   gap: 1.5,
                   px: 3,
                   py: 1.5,
@@ -144,7 +140,6 @@ function Navbar({ isOpen, onToggle, currentPage, onNavigate }) {
           })}
         </Stack>
 
-        {/* User Section & Logout Button at the Bottom */}
         {isAuthenticated && (
           <Box sx={{ p: 3, borderTop: '1px solid #eee' }}>
             <Stack spacing={2}>
@@ -156,7 +151,7 @@ function Navbar({ isOpen, onToggle, currentPage, onNavigate }) {
                   {user?.displayName || 'User'}
                 </Typography>
               </Box>
-              
+
               <Box
                 component="button"
                 onClick={handleLogout}
@@ -173,9 +168,7 @@ function Navbar({ isOpen, onToggle, currentPage, onNavigate }) {
                   backgroundColor: 'transparent',
                   color: '#ff4444',
                   transition: 'all 0.2s',
-                  '&:hover': {
-                    backgroundColor: '#fff5f5',
-                  },
+                  '&:hover': { backgroundColor: '#fff5f5' },
                 }}
               >
                 <HiLogout size={20} />

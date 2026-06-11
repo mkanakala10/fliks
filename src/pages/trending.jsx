@@ -19,7 +19,7 @@ const GENRE_MAP = {
   53: 'Thriller', 10752: 'War', 37: 'Western',
 };
 
-function Trending({ onRate, ratings = {} }) {
+function Trending({ onViewMovie, onRate, ratings = {} }) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -101,9 +101,9 @@ function Trending({ onRate, ratings = {} }) {
                       variant="upcoming"
                       rank={index + 1}
                       onAddToWatchlist={() => addToWatchLater(movie)}
-                      onSetReminder={() => {}}
                       isInWatchlist={isInWatchLater(movie.id)}
                       onRate={onRate}
+                      onViewDetails={() => onViewMovie?.(movie.id)}
                     />
                   </Grid>
                 ))}

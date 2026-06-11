@@ -7,6 +7,9 @@ import WatchLater from './pages/watchLater';
 import Actors from './pages/actors';
 import AllMovies from './pages/allMovies';
 import Signup from './pages/signup';
+import Search from './pages/search';
+import Recommendations from './pages/recommendations';
+import MovieDetails from './pages/movieDetails';
 import MovieMeterChatbot from './components/MovieMeterChatbot';
 import Navbar from './components/Navbar';
 import { WatchLaterProvider } from './contexts/WatchLaterContext';
@@ -15,6 +18,7 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 function AppContent() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState('home');
+  const [selectedMovieId, setSelectedMovieId] = useState(null);
   const [ratings, setRatings] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem('movieMeterRatings')) || {};
@@ -30,7 +34,19 @@ function AppContent() {
   }, [ratings]);
 
   const handleToggleNav = () => setIsNavOpen((prev) => !prev);
-  const handleNavigate = (pageId) => setCurrentPage(pageId);
+
+  const handleNavigate = (pageId) => {
+    setCurrentPage(pageId);
+    if (pageId !== 'movie-details') {
+      setSelectedMovieId(null);
+    }
+  };
+
+  const handleViewMovie = (movieId) => {
+    setSelectedMovieId(movieId);
+    setCurrentPage('movie-details');
+    setIsNavOpen(false);
+  };
 
   const handleRate = (movieId, value) => {
     if (!isAuthenticated) {
@@ -41,23 +57,40 @@ function AppContent() {
     setRatings((prev) => ({ ...prev, [movieId]: value }));
   };
 
+  const sharedProps = {
+    onNavigate: handleNavigate,
+    onViewMovie: handleViewMovie,
+    onRate: handleRate,
+    ratings,
+  };
+
   const renderPage = () => {
-    const sharedProps = { onNavigate: handleNavigate, onRate: handleRate, ratings };
     switch (currentPage) {
       case 'home':
         return <Home {...sharedProps} />;
       case 'ai-assistant':
-        return <MovieMeterChatbot />;
+        return <MovieMeterChatbot onViewMovie={handleViewMovie} />;
       case 'trending':
         return <Trending {...sharedProps} />;
+      case 'search':
+        return <Search {...sharedProps} />;
+      case 'recommendations':
+        return <Recommendations {...sharedProps} />;
       case 'watch-later':
-        return <WatchLater />;
+        return <WatchLater {...sharedProps} />;
       case 'actors':
         return <Actors />;
       case 'all-movies':
         return <AllMovies {...sharedProps} />;
       case 'signup':
         return <Signup onNavigate={handleNavigate} />;
+      case 'movie-details':
+        return (
+          <MovieDetails
+            movieId={selectedMovieId}
+            onNavigate={handleNavigate}
+          />
+        );
       default:
         return <Home {...sharedProps} />;
     }
@@ -79,9 +112,16 @@ function AppContent() {
         {isAuthenticated ? (
           <>
             <Box sx={{ color: '#fff', fontWeight: 700 }}>
-              {user?.name || 'Signed In'}
+              {user?.displayName || 'Signed In'}
             </Box>
-            <MuiButton variant="outlined" color="inherit" onClick={async () => { await logout(); setCurrentPage('home'); }}>
+            <MuiButton
+              variant="outlined"
+              color="inherit"
+              onClick={async () => {
+                await logout();
+                setCurrentPage('home');
+              }}
+            >
               Sign out
             </MuiButton>
           </>

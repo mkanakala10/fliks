@@ -8,7 +8,7 @@ import SectionHeader from '../components/SectionHeader';
 import MovieCard from '../components/MovieCard';
 import { useWatchLater } from '../contexts/WatchLaterContext';
 
-function WatchLater() {
+function WatchLater({ onViewMovie }) {
   const { watchLater, removeFromWatchLater } = useWatchLater();
 
   return (
@@ -48,7 +48,7 @@ function WatchLater() {
                       variant="upcoming"
                       isInWatchlist
                       onRemoveFromWatchlist={() => removeFromWatchLater(movie.id)}
-                      onSetReminder={() => {}}
+                      onViewDetails={() => onViewMovie?.(movie.id)}
                     />
                   </Grid>
                 ))}

@@ -139,11 +139,7 @@ function MovieCard({
         </Stack>
 
         <Box width="100%">
-          {!isUpcoming ? (
-            <Button variant="primary" size="sm" sx={{ width: '100%' }} onClick={onViewDetails}>
-              View Details
-            </Button>
-          ) : (
+          {isUpcoming ? (
             <Stack direction="row" spacing={1} width="100%">
               <Button
                 variant={watchlistVariant}
@@ -153,10 +149,16 @@ function MovieCard({
               >
                 {watchlistLabel}
               </Button>
-              <Button variant="secondary" size="sm" onClick={onSetReminder} sx={{ flex: 1 }}>
-                Remind
-              </Button>
+              {onViewDetails && (
+                <Button variant="secondary" size="sm" onClick={onViewDetails} sx={{ flex: 1 }}>
+                  Details
+                </Button>
+              )}
             </Stack>
+          ) : (
+            <Button variant="primary" size="sm" sx={{ width: '100%' }} onClick={onViewDetails}>
+              View Details
+            </Button>
           )}
         </Box>
       </Stack>
