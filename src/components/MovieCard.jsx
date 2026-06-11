@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -14,8 +15,45 @@ function MovieCard({
   isInWatchlist,
   onRate,
 }) {
+  const [hoverRating, setHoverRating] = useState(null);
   const isUpcoming = variant === 'upcoming';
   const isClickable = Boolean(onViewDetails);
+  const currentRating = movie?.ratingValue || 0;
+  const displayRating = hoverRating !== null ? hoverRating : currentRating;
+
+  const handleStarHover = (starIndex, event) => {
+    if (!onRate) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const isLeftHalf = x < rect.width / 2;
+    const rating = starIndex + (isLeftHalf ? 0.5 : 1);
+    setHoverRating(rating);
+  };
+
+  const handleStarClick = (starIndex, event) => {
+    event.stopPropagation();
+    if (!onRate) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const isLeftHalf = x < rect.width / 2;
+    const rating = starIndex + (isLeftHalf ? 0.5 : 1);
+    onRate(movie.id, rating);
+  };
+
+  const shouldShowComingSoon = () => {
+    if (!isUpcoming) return false;
+    if (!movie?.releaseDate) return true;
+
+    try {
+      const releaseDate = new Date(movie.releaseDate);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return releaseDate > today;
+    } catch {
+      return true;
+    }
+  };
+
   const watchlistAction = isInWatchlist ? onRemoveFromWatchlist : onAddToWatchlist;
   const watchlistLabel = isInWatchlist ? 'Remove' : 'Watchlist';
   const watchlistVariant = isInWatchlist ? 'secondary' : 'primary';
@@ -103,7 +141,7 @@ function MovieCard({
             transition: 'transform 0.4s',
           }}
         />
-        {isUpcoming && (
+        {shouldShowComingSoon() && (
           <Chip
             label="Coming Soon"
             size="small"
@@ -132,26 +170,44 @@ function MovieCard({
             {movie.title}
           </Typography>
 
-          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 0.5 }}>
-            {[1, 2, 3, 4, 5].map((value) => (
+          <Box
+            sx={{ display: 'flex', justifyContent: 'center', gap: 0.3 }}
+            onClick={stopPropagation}
+          >
+            {[0, 1, 2, 3, 4].map((starIndex) => (
               <Box
-                key={value}
+                key={starIndex}
                 component="button"
                 type="button"
-                onClick={(event) => {
-                  stopPropagation(event);
-                  onRate?.(movie.id, value);
-                }}
+                onMouseMove={(event) => handleStarHover(starIndex, event)}
+                onMouseLeave={() => setHoverRating(null)}
+                onClick={(event) => handleStarClick(starIndex, event)}
                 sx={{
                   border: 'none',
                   background: 'none',
-                  color: value <= (movie?.ratingValue || 0) ? '#f59e0b' : 'text.disabled',
-                  fontSize: '1rem',
-                  cursor: 'pointer',
+                  fontSize: '1.2rem',
+                  cursor: onRate ? 'pointer' : 'default',
                   p: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  position: 'relative',
+                  height: '1.2rem',
+                  width: '1rem',
+                  opacity: onRate ? 1 : 0.6,
                 }}
               >
-                {value <= (movie?.ratingValue || 0) ? '★' : '☆'}
+                <Box sx={{ position: 'absolute', color: 'text.disabled' }}>☆</Box>
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    color: '#f59e0b',
+                    overflow: 'hidden',
+                    width: `${Math.max(0, Math.min(100, ((displayRating - starIndex) / 1) * 100))}%`,
+                  }}
+                >
+                  ★
+                </Box>
               </Box>
             ))}
           </Box>

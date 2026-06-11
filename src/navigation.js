@@ -5,6 +5,7 @@ export const PAGE_PATHS = {
   recommendations: '/recommendations',
   'ai-assistant': '/ai-assistant',
   'watch-later': '/watch-later',
+  ratings: '/ratings',
   actors: '/actors',
   'all-movies': '/all-movies',
   signup: '/signup',
