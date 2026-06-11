@@ -7,18 +7,22 @@ function ActorCard({ actor }) {
   return (
     <Box
       sx={{
-        background: 'linear-gradient(135deg,#16213e,#0f3460)',
-        borderRadius: '4px',
+        bgcolor: 'background.paper',
+        borderRadius: 2,
         overflow: 'hidden',
-        border: '2px solid #2196f3',
+        border: 1,
+        borderColor: 'divider',
         cursor: 'pointer',
-        transition: 'all 0.2s',
+        transition: 'transform 0.2s, box-shadow 0.2s',
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
         '&:hover': {
           transform: 'translateY(-4px)',
-          boxShadow: '0 6px 20px rgba(33,150,243,0.5)',
+          boxShadow: (theme) =>
+            theme.palette.mode === 'dark'
+              ? '0 8px 24px rgba(0,0,0,0.35)'
+              : '0 8px 24px rgba(0,0,0,0.08)',
         },
       }}
     >
@@ -29,11 +33,12 @@ function ActorCard({ actor }) {
           alt={actor.name}
           sx={{
             position: 'absolute',
-            top: 0, left: 0,
+            top: 0,
+            left: 0,
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            backgroundColor: 'grey.800',
+            bgcolor: 'action.hover',
           }}
         />
         <Chip
@@ -43,9 +48,8 @@ function ActorCard({ actor }) {
             position: 'absolute',
             top: 8,
             right: 8,
-            background: 'linear-gradient(135deg,#2196f3,#1976d2)',
-            color: '#fff',
-            border: '1px solid #64b5f6',
+            bgcolor: 'primary.main',
+            color: 'primary.contrastText',
             fontWeight: 600,
             fontSize: '0.75rem',
           }}
@@ -56,12 +60,9 @@ function ActorCard({ actor }) {
         <Typography fontWeight={600} fontSize="0.95rem" textAlign="center">
           {actor.name}
         </Typography>
-        <Stack direction="row" spacing={0.5} alignItems="center">
-          <Typography fontSize="0.9rem">↑</Typography>
-          <Typography fontSize="0.8rem" sx={{ color: '#90caf9' }}>
-            Trending
-          </Typography>
-        </Stack>
+        <Typography fontSize="0.8rem" color="text.secondary">
+          Trending
+        </Typography>
       </Stack>
     </Box>
   );

@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      // GitHub Pages SPA fallback — restore the intended route after 404 redirect
+      (function () {
+        var base = '/movie-meter/';
+        var path = location.pathname;
+        if (path.indexOf(base) === 0) {
+          path = path.slice(base.length - 1);
+        }
+        sessionStorage.setItem('movieMeterRedirect', path + location.search + location.hash);
+        location.replace(base);
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>

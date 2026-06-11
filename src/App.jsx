@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ThemeProvider, CssBaseline, Box, Button as MuiButton } from '@mui/material';
-import theme from './theme';
+import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Home from './pages/home';
 import Trending from './pages/trending';
 import WatchLater from './pages/watchLater';
@@ -14,11 +13,14 @@ import MovieMeterChatbot from './components/MovieMeterChatbot';
 import Navbar from './components/Navbar';
 import { WatchLaterProvider } from './contexts/WatchLaterContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { ColorModeProvider } from './contexts/ColorModeContext';
+import { NavigationProvider } from './contexts/NavigationContext';
+import { pathForPage, pageFromPath } from './navigation';
 
 function AppContent() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState('home');
-  const [selectedMovieId, setSelectedMovieId] = useState(null);
   const [ratings, setRatings] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem('movieMeterRatings')) || {};
@@ -27,31 +29,37 @@ function AppContent() {
     }
   });
 
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated } = useAuth();
+  const currentPage = pageFromPath(location.pathname);
 
   useEffect(() => {
     localStorage.setItem('movieMeterRatings', JSON.stringify(ratings));
   }, [ratings]);
 
+  useEffect(() => {
+    const redirect = sessionStorage.getItem('movieMeterRedirect');
+    if (redirect) {
+      sessionStorage.removeItem('movieMeterRedirect');
+      navigate(redirect, { replace: true });
+    }
+  }, [navigate]);
+
   const handleToggleNav = () => setIsNavOpen((prev) => !prev);
 
   const handleNavigate = (pageId) => {
-    setCurrentPage(pageId);
-    if (pageId !== 'movie-details') {
-      setSelectedMovieId(null);
-    }
+    navigate(pathForPage(pageId));
+    setIsNavOpen(false);
   };
 
   const handleViewMovie = (movieId) => {
-    setSelectedMovieId(movieId);
-    setCurrentPage('movie-details');
+    navigate(`/movie/${movieId}`);
     setIsNavOpen(false);
   };
 
   const handleRate = (movieId, value) => {
     if (!isAuthenticated) {
       alert('Please sign up using Google to rate movies.');
-      setCurrentPage('signup');
+      navigate(pathForPage('signup'));
       return;
     }
     setRatings((prev) => ({ ...prev, [movieId]: value }));
@@ -64,99 +72,46 @@ function AppContent() {
     ratings,
   };
 
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'home':
-        return <Home {...sharedProps} />;
-      case 'ai-assistant':
-        return <MovieMeterChatbot onViewMovie={handleViewMovie} />;
-      case 'trending':
-        return <Trending {...sharedProps} />;
-      case 'search':
-        return <Search {...sharedProps} />;
-      case 'recommendations':
-        return <Recommendations {...sharedProps} />;
-      case 'watch-later':
-        return <WatchLater {...sharedProps} />;
-      case 'actors':
-        return <Actors />;
-      case 'all-movies':
-        return <AllMovies {...sharedProps} />;
-      case 'signup':
-        return <Signup onNavigate={handleNavigate} />;
-      case 'movie-details':
-        return (
-          <MovieDetails
-            movieId={selectedMovieId}
-            onNavigate={handleNavigate}
-          />
-        );
-      default:
-        return <Home {...sharedProps} />;
-    }
-  };
-
   return (
-    <div style={{ position: 'relative', minHeight: '100vh', paddingTop: '70px' }}>
-      <Box
-        sx={{
-          position: 'fixed',
-          top: 8,
-          right: 16,
-          zIndex: 100,
-          display: 'flex',
-          gap: 1,
-          alignItems: 'center',
-        }}
-      >
-        {isAuthenticated ? (
-          <>
-            <Box sx={{ color: '#fff', fontWeight: 700 }}>
-              {user?.displayName || 'Signed In'}
-            </Box>
-            <MuiButton
-              variant="outlined"
-              color="inherit"
-              onClick={async () => {
-                await logout();
-                setCurrentPage('home');
-              }}
-            >
-              Sign out
-            </MuiButton>
-          </>
-        ) : (
-          <MuiButton
-            variant="contained"
-            color="primary"
-            onClick={() => handleNavigate('signup')}
-          >
-            Sign up with Google
-          </MuiButton>
-        )}
-      </Box>
-
+    <NavigationProvider
+      onNavigate={handleNavigate}
+      onToggleNav={handleToggleNav}
+      onGoBack={() => navigate(-1)}
+    >
       <Navbar
         isOpen={isNavOpen}
         onToggle={handleToggleNav}
         currentPage={currentPage}
         onNavigate={handleNavigate}
       />
-      <div>{renderPage()}</div>
-    </div>
+      <Routes>
+        <Route path="/" element={<Home {...sharedProps} />} />
+        <Route path="/trending" element={<Trending {...sharedProps} />} />
+        <Route path="/search" element={<Search {...sharedProps} />} />
+        <Route path="/recommendations" element={<Recommendations {...sharedProps} />} />
+        <Route path="/watch-later" element={<WatchLater {...sharedProps} />} />
+        <Route path="/actors" element={<Actors />} />
+        <Route path="/all-movies" element={<AllMovies {...sharedProps} />} />
+        <Route path="/signup" element={<Signup onNavigate={handleNavigate} />} />
+        <Route path="/ai-assistant" element={<MovieMeterChatbot onViewMovie={handleViewMovie} />} />
+        <Route path="/movie/:movieId" element={<MovieDetails />} />
+        <Route path="*" element={<Home {...sharedProps} />} />
+      </Routes>
+    </NavigationProvider>
   );
 }
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <AuthProvider>
-        <WatchLaterProvider>
-          <AppContent />
-        </WatchLaterProvider>
-      </AuthProvider>
-    </ThemeProvider>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <ColorModeProvider>
+        <AuthProvider>
+          <WatchLaterProvider>
+            <AppContent />
+          </WatchLaterProvider>
+        </AuthProvider>
+      </ColorModeProvider>
+    </BrowserRouter>
   );
 }
 

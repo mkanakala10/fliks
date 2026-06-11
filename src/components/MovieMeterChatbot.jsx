@@ -1,9 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Film, User, Popcorn } from 'lucide-react';
+import { useTheme } from '@mui/material/styles';
+import { Send, Film, User } from 'lucide-react';
 import { semanticSearch } from '../config/api';
+import PageShell from './PageShell';
 import './MovieMeter.css';
 
 export default function MovieMeterChatbot({ onViewMovie }) {
+  const theme = useTheme();
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
@@ -153,22 +156,23 @@ export default function MovieMeterChatbot({ onViewMovie }) {
   };
 
   return (
-    <div className="movie-meter-container">
-      <div className="movie-header">
-        <div className="film-strip-top"></div>
-        <div className="header-content">
-          <div className="logo-badge">
-            <Film size={32} />
-          </div>
-          <div className="header-text">
-            <h1 className="movie-title">Movie Meter</h1>
-            <p className="movie-subtitle">🍿 AI + Semantic Search for Indian Cinema</p>
-          </div>
-          <div className="popcorn-icon">
-            <Popcorn size={28} />
-          </div>
-        </div>
-        <div className="film-strip-bottom"></div>
+    <PageShell>
+    <div
+      className="movie-meter-container"
+      style={{
+        '--mm-bg': theme.palette.background.default,
+        '--mm-surface': theme.palette.background.paper,
+        '--mm-surface-elevated': theme.palette.action.hover,
+        '--mm-text': theme.palette.text.primary,
+        '--mm-text-muted': theme.palette.text.secondary,
+        '--mm-on-primary': theme.palette.primary.contrastText,
+        '--mm-border': theme.palette.divider,
+        '--mm-hover': theme.palette.action.hover,
+      }}
+    >
+      <div className="chat-page-intro">
+        <h2>AI Assistant</h2>
+        <p>Ask about Indian cinema or describe what you want to watch.</p>
       </div>
 
       <div className="chat-area">
@@ -190,24 +194,14 @@ export default function MovieMeterChatbot({ onViewMovie }) {
                 <div className="message-row assistant-row" style={{ marginTop: '-8px' }}>
                   <div className="avatar" style={{ visibility: 'hidden' }} />
                   <div className="message-bubble assistant-bubble" style={{ padding: '12px 16px' }}>
-                    <p style={{ fontSize: '13px', marginBottom: '8px', color: '#90caf9' }}>
-                      Tap a film for details:
-                    </p>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                    <p className="movie-chip-label">Tap a film for details:</p>
+                    <div className="movie-chip-row">
                       {message.movies.map((m) => (
                         <button
                           key={m.csv_id}
                           type="button"
+                          className="movie-chip"
                           onClick={() => onViewMovie(Number(m.csv_id))}
-                          style={{
-                            background: 'rgba(33,150,243,0.2)',
-                            border: '1px solid #2196f3',
-                            borderRadius: '20px',
-                            color: '#e3f2fd',
-                            padding: '6px 14px',
-                            cursor: 'pointer',
-                            fontSize: '13px',
-                          }}
                         >
                           {m.title}
                         </button>
@@ -258,9 +252,10 @@ export default function MovieMeterChatbot({ onViewMovie }) {
           </button>
         </div>
         <p className="tagline">
-          🎥 Powered by semantic search + Gemini — grounded in Indian cinema
+          Powered by semantic search + Gemini — grounded in Indian cinema
         </p>
       </div>
     </div>
+    </PageShell>
   );
 }

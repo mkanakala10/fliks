@@ -9,7 +9,7 @@ import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
 import Paper from '@mui/material/Paper';
 import SearchIcon from '@mui/icons-material/Search';
-import Header from '../components/Header';
+import PageShell from '../components/PageShell';
 import SectionHeader from '../components/SectionHeader';
 import Button from '../components/Button';
 import { semanticSearch } from '../config/api';
@@ -44,14 +44,7 @@ function Search({ onViewMovie }) {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        background: 'linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%)',
-        color: '#fff',
-      }}
-    >
-      <Header />
+    <PageShell>
       <Container maxWidth="md">
         <Stack spacing={4} py={6}>
           <SectionHeader
@@ -69,21 +62,15 @@ function Search({ onViewMovie }) {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <SearchIcon sx={{ color: '#90caf9' }} />
+                      <SearchIcon sx={{ color: 'text.secondary' }} />
                     </InputAdornment>
                   ),
                 }}
                 sx={{
                   '& .MuiOutlinedInput-root': {
-                    borderRadius: '50px',
-                    backgroundColor: 'rgba(255,255,255,0.08)',
-                    color: '#fff',
-                    '& fieldset': { borderColor: '#2196f3' },
-                    '&:hover fieldset': { borderColor: '#64b5f6' },
-                    '&.Mui-focused fieldset': { borderColor: '#64b5f6' },
+                    borderRadius: 3,
+                    bgcolor: 'background.paper',
                   },
-                  '& input::placeholder': { color: '#90caf9' },
-                  '& input': { color: '#fff' },
                 }}
               />
               <Button type="submit" variant="primary" disabled={isLoading || !query.trim()}>
@@ -96,12 +83,12 @@ function Search({ onViewMovie }) {
 
           {isLoading && (
             <Box sx={{ display: 'flex', justifyContent: 'center', py: 6 }}>
-              <CircularProgress sx={{ color: '#64b5f6' }} />
+              <CircularProgress color="primary" />
             </Box>
           )}
 
           {!isLoading && hasSearched && results.length === 0 && !error && (
-            <Typography textAlign="center" sx={{ color: 'grey.400', py: 4 }}>
+            <Typography textAlign="center" color="text.secondary" py={4}>
               No matches found. Try a different description.
             </Typography>
           )}
@@ -116,34 +103,35 @@ function Search({ onViewMovie }) {
                   onClick={() => movieId && onViewMovie?.(movieId)}
                   sx={{
                     p: 3,
-                    background: 'rgba(22,33,62,0.8)',
-                    border: '1px solid #2196f3',
-                    borderRadius: '12px',
+                    bgcolor: 'background.paper',
+                    border: 1,
+                    borderColor: 'divider',
+                    borderRadius: 2,
                     cursor: movieId ? 'pointer' : 'default',
-                    transition: 'all 0.2s',
+                    transition: 'transform 0.15s, border-color 0.15s',
                     '&:hover': movieId
                       ? {
-                          borderColor: '#64b5f6',
+                          borderColor: 'text.secondary',
                           transform: 'translateY(-2px)',
                         }
                       : {},
                   }}
                 >
                   <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
-                    <Typography variant="h6" fontWeight={700} gutterBottom>
+                    <Typography variant="h6" fontWeight={600} gutterBottom>
                       {movie.title}
                     </Typography>
                     {movie.language && (
-                      <Typography variant="caption" sx={{ color: '#90caf9', ml: 2 }}>
+                      <Typography variant="caption" color="text.secondary" ml={2}>
                         {movie.language.toUpperCase()}
                       </Typography>
                     )}
                   </Stack>
-                  <Typography variant="body2" sx={{ color: 'grey.300', lineHeight: 1.7 }}>
+                  <Typography variant="body2" color="text.secondary" lineHeight={1.7}>
                     {movie.plot || movie.overview || 'No plot available.'}
                   </Typography>
                   {movieId > 0 && (
-                    <Typography variant="caption" sx={{ color: '#64b5f6', mt: 1, display: 'block' }}>
+                    <Typography variant="caption" color="text.primary" mt={1} display="block">
                       Click for full details →
                     </Typography>
                   )}
@@ -153,7 +141,7 @@ function Search({ onViewMovie }) {
           </Stack>
         </Stack>
       </Container>
-    </Box>
+    </PageShell>
   );
 }
 

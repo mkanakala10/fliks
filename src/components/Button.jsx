@@ -1,31 +1,35 @@
 import MuiButton from '@mui/material/Button';
 
-const VARIANT_STYLES = {
-  primary: {
-    background: 'linear-gradient(135deg, #2196f3, #1976d2)',
-    color: '#fff',
-    border: '2px solid #64b5f6',
-    '&:hover': {
-      background: 'linear-gradient(135deg, #1976d2, #1565c0)',
-      transform: 'scale(1.05)',
-      boxShadow: '0 6px 20px rgba(33,150,243,0.7)',
-    },
-    '&:active': { transform: 'scale(0.95)' },
-  },
-  secondary: {
-    background: 'transparent',
-    color: '#2196f3',
-    border: '2px solid #2196f3',
-    '&:hover': {
-      background: '#2196f3',
-      color: '#fff',
-    },
-  },
-};
-
 function Button({ children, variant = 'primary', size = 'medium', onClick, sx, ...props }) {
-  const muiSize = size === 'md' ? 'medium' : size === 'lg' ? 'large' : size === 'sm' ? 'small' : size;
-  const variantStyles = VARIANT_STYLES[variant] ?? VARIANT_STYLES.primary;
+  const muiSize =
+    size === 'md' ? 'medium' : size === 'lg' ? 'large' : size === 'sm' ? 'small' : size;
+
+  const variantStyles =
+    variant === 'secondary'
+      ? {
+          bgcolor: 'transparent',
+          color: 'text.primary',
+          border: 1,
+          borderColor: 'divider',
+          boxShadow: 'none',
+          '&:hover': {
+            bgcolor: 'action.hover',
+            borderColor: 'text.secondary',
+            boxShadow: 'none',
+          },
+        }
+      : {
+          bgcolor: 'primary.main',
+          color: 'primary.contrastText',
+          border: 1,
+          borderColor: 'primary.main',
+          boxShadow: 'none',
+          '&:hover': {
+            bgcolor: 'primary.main',
+            opacity: 0.9,
+            boxShadow: 'none',
+          },
+        };
 
   return (
     <MuiButton
@@ -36,8 +40,8 @@ function Button({ children, variant = 'primary', size = 'medium', onClick, sx, .
       sx={{
         textTransform: 'none',
         fontWeight: 600,
-        borderRadius: '6px',
-        transition: 'all 0.2s',
+        borderRadius: 2,
+        transition: 'opacity 0.15s, background-color 0.15s',
         ...variantStyles,
         ...sx,
       }}

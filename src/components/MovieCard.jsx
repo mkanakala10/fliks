@@ -12,31 +12,62 @@ function MovieCard({
   onAddToWatchlist,
   onRemoveFromWatchlist,
   isInWatchlist,
-  onSetReminder,
   onRate,
 }) {
   const isUpcoming = variant === 'upcoming';
-
+  const isClickable = Boolean(onViewDetails);
   const watchlistAction = isInWatchlist ? onRemoveFromWatchlist : onAddToWatchlist;
   const watchlistLabel = isInWatchlist ? 'Remove' : 'Watchlist';
   const watchlistVariant = isInWatchlist ? 'secondary' : 'primary';
+  const showWatchlist = isUpcoming && watchlistAction;
+
+  const handleCardClick = () => {
+    onViewDetails?.();
+  };
+
+  const handleCardKeyDown = (event) => {
+    if (!isClickable) return;
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      onViewDetails?.();
+    }
+  };
+
+  const stopPropagation = (event) => {
+    event.stopPropagation();
+  };
 
   return (
     <Box
+      onClick={isClickable ? handleCardClick : undefined}
+      onKeyDown={isClickable ? handleCardKeyDown : undefined}
+      role={isClickable ? 'button' : undefined}
+      tabIndex={isClickable ? 0 : undefined}
+      aria-label={isClickable ? `View details for ${movie.title}` : undefined}
       sx={{
-        background: 'rgba(22,33,62,0.8)',
-        borderRadius: '12px',
+        bgcolor: 'background.paper',
+        borderRadius: 2,
         overflow: 'hidden',
-        border: '1px solid #2196f3',
+        border: 1,
+        borderColor: 'divider',
         position: 'relative',
-        transition: 'all 0.3s ease',
+        transition: 'transform 0.2s, box-shadow 0.2s, border-color 0.2s',
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-        '&:hover': {
-          transform: 'translateY(-8px)',
-          boxShadow: '0 10px 30px rgba(33,150,243,0.3)',
-          borderColor: '#64b5f6',
+        cursor: isClickable ? 'pointer' : 'default',
+        '&:hover': isClickable
+          ? {
+              transform: 'translateY(-4px)',
+              borderColor: 'text.secondary',
+              boxShadow: (theme) =>
+                theme.palette.mode === 'dark'
+                  ? '0 12px 32px rgba(0,0,0,0.4)'
+                  : '0 12px 32px rgba(0,0,0,0.08)',
+            }
+          : {},
+        '&:hover .movie-card-poster': {
+          transform: 'scale(1.03)',
         },
       }}
     >
@@ -49,8 +80,8 @@ function MovieCard({
             top: 8,
             left: 8,
             zIndex: 3,
-            backgroundColor: '#2196f3',
-            color: '#fff',
+            bgcolor: 'primary.main',
+            color: 'primary.contrastText',
             fontWeight: 700,
           }}
         />
@@ -58,17 +89,18 @@ function MovieCard({
 
       <Box sx={{ position: 'relative', overflow: 'hidden', paddingTop: '150%' }}>
         <Box
+          className="movie-card-poster"
           component="img"
           src={movie.image}
           alt={movie.title}
           sx={{
             position: 'absolute',
-            top: 0, left: 0,
+            top: 0,
+            left: 0,
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            transition: 'transform 0.5s',
-            '&:hover': { transform: 'scale(1.05)' },
+            transition: 'transform 0.4s',
           }}
         />
         {isUpcoming && (
@@ -80,8 +112,8 @@ function MovieCard({
               top: 8,
               right: 8,
               zIndex: 2,
-              backgroundColor: '#2196f3',
-              color: '#fff',
+              bgcolor: 'primary.main',
+              color: 'primary.contrastText',
               fontSize: '0.65rem',
             }}
           />
@@ -91,11 +123,11 @@ function MovieCard({
       <Stack p={2} spacing={1.5} flex={1} justifyContent="space-between" alignItems="center">
         <Stack spacing={0.5} width="100%">
           <Typography
-            fontWeight="bold"
+            fontWeight={600}
             fontSize="0.95rem"
             textAlign="center"
             noWrap
-            sx={{ color: '#fff' }}
+            color="text.primary"
           >
             {movie.title}
           </Typography>
@@ -106,11 +138,14 @@ function MovieCard({
                 key={value}
                 component="button"
                 type="button"
-                onClick={() => onRate?.(movie.id, value)}
+                onClick={(event) => {
+                  stopPropagation(event);
+                  onRate?.(movie.id, value);
+                }}
                 sx={{
                   border: 'none',
                   background: 'none',
-                  color: value <= (movie?.ratingValue || 0) ? '#ffb400' : '#cccccc',
+                  color: value <= (movie?.ratingValue || 0) ? '#f59e0b' : 'text.disabled',
                   fontSize: '1rem',
                   cursor: 'pointer',
                   p: 0,
@@ -122,46 +157,35 @@ function MovieCard({
           </Box>
 
           {isUpcoming && movie.genre && (
-            <Typography variant="caption" sx={{ color: 'grey.400', textAlign: 'center', display: 'block' }}>
+            <Typography variant="caption" color="text.secondary" textAlign="center" display="block">
               {movie.genre}
             </Typography>
           )}
 
           {!isUpcoming && (
             <>
-              <Typography fontWeight="bold" sx={{ color: '#64b5f6', textAlign: 'center', fontSize: '0.875rem' }}>
+              <Typography
+                fontWeight={600}
+                color="text.primary"
+                textAlign="center"
+                fontSize="0.875rem"
+              >
                 {movie.revenue}
               </Typography>
-              <Typography variant="caption" sx={{ color: 'grey.400', textAlign: 'center', display: 'block' }}>
+              <Typography variant="caption" color="text.secondary" textAlign="center" display="block">
                 {movie.releaseDate}
               </Typography>
             </>
           )}
         </Stack>
 
-        <Box width="100%">
-          {isUpcoming ? (
-            <Stack direction="row" spacing={1} width="100%">
-              <Button
-                variant={watchlistVariant}
-                size="sm"
-                onClick={watchlistAction}
-                sx={{ flex: 1 }}
-              >
-                {watchlistLabel}
-              </Button>
-              {onViewDetails && (
-                <Button variant="secondary" size="sm" onClick={onViewDetails} sx={{ flex: 1 }}>
-                  Details
-                </Button>
-              )}
-            </Stack>
-          ) : (
-            <Button variant="primary" size="sm" sx={{ width: '100%' }} onClick={onViewDetails}>
-              View Details
+        {showWatchlist && (
+          <Box width="100%" onClick={stopPropagation}>
+            <Button variant={watchlistVariant} size="sm" onClick={watchlistAction} sx={{ width: '100%' }}>
+              {watchlistLabel}
             </Button>
-          )}
-        </Box>
+          </Box>
+        )}
       </Stack>
     </Box>
   );

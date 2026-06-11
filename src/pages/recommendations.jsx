@@ -8,10 +8,11 @@ import Slider from '@mui/material/Slider';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
 import Paper from '@mui/material/Paper';
-import Header from '../components/Header';
+import PageShell from '../components/PageShell';
 import SectionHeader from '../components/SectionHeader';
 import Button from '../components/Button';
 import MovieCard from '../components/MovieCard';
+import HorizontalScroller from '../components/HorizontalScroller';
 import { useWatchLater } from '../contexts/WatchLaterContext';
 import { fetchSurveyCatalog, submitOnboarding } from '../config/api';
 
@@ -111,14 +112,7 @@ function Recommendations({ onViewMovie, onRate, ratings: userRatings = {} }) {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        background: 'linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%)',
-        color: '#fff',
-      }}
-    >
-      <Header />
+    <PageShell>
       <Container maxWidth="lg">
         <Stack spacing={4} py={6}>
           <SectionHeader
@@ -133,16 +127,17 @@ function Recommendations({ onViewMovie, onRate, ratings: userRatings = {} }) {
             elevation={0}
             sx={{
               p: 3,
-              background: 'rgba(22,33,62,0.6)',
-              border: '1px solid rgba(33,150,243,0.4)',
-              borderRadius: '16px',
+              bgcolor: 'background.paper',
+              border: 1,
+              borderColor: 'divider',
+              borderRadius: 3,
             }}
           >
             <Stack direction="row" justifyContent="space-between" alignItems="center" mb={3}>
-              <Typography variant="h6" fontWeight={700}>
+              <Typography variant="h6" fontWeight={600}>
                 Rate each seed movie
               </Typography>
-              <Typography variant="caption" sx={{ color: '#90caf9' }}>
+              <Typography variant="caption" color="text.secondary">
                 Scale: 1 – 5 stars
               </Typography>
             </Stack>
@@ -154,26 +149,26 @@ function Recommendations({ onViewMovie, onRate, ratings: userRatings = {} }) {
                     elevation={0}
                     sx={{
                       p: 2.5,
-                      background: 'rgba(15,52,96,0.5)',
-                      border: '1px solid rgba(33,150,243,0.3)',
-                      borderRadius: '12px',
+                      bgcolor: 'background.default',
+                      border: 1,
+                      borderColor: 'divider',
+                      borderRadius: 2,
                     }}
                   >
                     <Stack direction="row" justifyContent="space-between" mb={1}>
                       <Box>
-                        <Typography variant="caption" sx={{ color: 'grey.400' }}>
+                        <Typography variant="caption" color="text.secondary">
                           #{movie.id}
                         </Typography>
                         <Typography fontWeight={600}>{movie.title}</Typography>
                       </Box>
                       <Typography
+                        fontWeight={700}
                         sx={{
-                          color: '#64b5f6',
-                          fontWeight: 700,
-                          background: 'rgba(33,150,243,0.15)',
+                          bgcolor: 'action.selected',
                           px: 1.5,
                           py: 0.5,
-                          borderRadius: '8px',
+                          borderRadius: 2,
                         }}
                       >
                         {surveyRatings[movie.id] ?? 3}
@@ -189,7 +184,8 @@ function Recommendations({ onViewMovie, onRate, ratings: userRatings = {} }) {
                       onChange={(_, value) =>
                         setSurveyRatings((prev) => ({ ...prev, [movie.id]: value }))
                       }
-                      sx={{ color: '#2196f3', mt: 1 }}
+                      color="primary"
+                      sx={{ mt: 1 }}
                     />
                   </Paper>
                 </Grid>
@@ -205,7 +201,7 @@ function Recommendations({ onViewMovie, onRate, ratings: userRatings = {} }) {
 
           {isLoading && (
             <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
-              <CircularProgress sx={{ color: '#64b5f6' }} />
+              <CircularProgress color="primary" />
             </Box>
           )}
 
@@ -214,25 +210,25 @@ function Recommendations({ onViewMovie, onRate, ratings: userRatings = {} }) {
               <Typography variant="h5" fontWeight={700} mb={3} textAlign="center">
                 Recommended Indian Films For You
               </Typography>
-              <Grid container spacing={3} justifyContent="center">
-                {recommendations.map((movie) => (
-                  <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
-                    <MovieCard
-                      movie={{ ...movie, ratingValue: userRatings[movie.id] || 0 }}
-                      variant="upcoming"
-                      onAddToWatchlist={() => addToWatchLater(movie)}
-                      isInWatchlist={isInWatchLater(movie.id)}
-                      onViewDetails={() => onViewMovie?.(movie.id)}
-                      onRate={onRate}
-                    />
-                  </Grid>
-                ))}
-              </Grid>
+              <HorizontalScroller
+                items={recommendations}
+                getKey={(movie) => movie.id}
+                renderItem={(movie) => (
+                  <MovieCard
+                    movie={{ ...movie, ratingValue: userRatings[movie.id] || 0 }}
+                    variant="upcoming"
+                    onAddToWatchlist={() => addToWatchLater(movie)}
+                    isInWatchlist={isInWatchLater(movie.id)}
+                    onViewDetails={() => onViewMovie?.(movie.id)}
+                    onRate={onRate}
+                  />
+                )}
+              />
             </Box>
           )}
         </Stack>
       </Container>
-    </Box>
+    </PageShell>
   );
 }
 

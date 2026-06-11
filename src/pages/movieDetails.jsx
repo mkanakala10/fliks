@@ -1,18 +1,22 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
-import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import Header from '../components/Header';
+import PageShell from '../components/PageShell';
 import Button from '../components/Button';
 import { useWatchLater } from '../contexts/WatchLaterContext';
+import { useNavigation } from '../contexts/NavigationContext';
 
-function MovieDetails({ movieId, onNavigate }) {
+function MovieDetails() {
+  const { movieId: movieIdParam } = useParams();
+  const movieId = Number(movieIdParam);
+  const { onGoBack } = useNavigation();
   const [movie, setMovie] = useState(null);
   const [credits, setCredits] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -87,33 +91,20 @@ function MovieDetails({ movieId, onNavigate }) {
     }
   };
 
-  if (isLoading) {
-    return (
-      <Box
-        sx={{
-          minHeight: '100vh',
-          background: 'linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <CircularProgress size={56} sx={{ color: '#64b5f6' }} thickness={4} />
-      </Box>
-    );
-  }
+  if (isLoading) return <PageShell loading />;
 
   if (error || !movie) {
     return (
-      <Box sx={{ minHeight: '100vh', background: '#1a1a2e', color: '#fff' }}>
-        <Header />
+      <PageShell>
         <Container maxWidth="md" sx={{ py: 8 }}>
-          <Alert severity="error" sx={{ mb: 3 }}>{error || 'Movie not found'}</Alert>
-          <Button variant="secondary" onClick={() => onNavigate?.('all-movies')}>
-            ← Back to Movies
+          <Alert severity="error" sx={{ mb: 3 }}>
+            {error || 'Movie not found'}
+          </Alert>
+          <Button variant="secondary" onClick={() => onGoBack?.()}>
+            ← Back
           </Button>
         </Container>
-      </Box>
+      </PageShell>
     );
   }
 
@@ -121,30 +112,24 @@ function MovieDetails({ movieId, onNavigate }) {
   const inWatchlist = isInWatchLater(movie.id);
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        background: 'linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%)',
-        color: '#fff',
-      }}
-    >
+    <PageShell>
       {movie.backdrop && (
         <Box
           sx={{
-            height: { xs: 200, md: 320 },
-            backgroundImage: `linear-gradient(to bottom, rgba(26,26,46,0.3), #1a1a2e), url(${movie.backdrop})`,
+            height: { xs: 180, md: 280 },
+            backgroundImage: (theme) =>
+              `linear-gradient(to bottom, transparent, ${theme.palette.background.default}), url(${movie.backdrop})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
         />
       )}
 
-      <Header />
       <Container maxWidth="lg" sx={{ py: 4 }}>
         <Button
           variant="secondary"
           size="sm"
-          onClick={() => onNavigate?.('all-movies')}
+          onClick={() => onGoBack?.()}
           sx={{ mb: 3 }}
         >
           <ArrowBackIcon sx={{ mr: 0.5, fontSize: 18 }} /> Back
@@ -158,58 +143,67 @@ function MovieDetails({ movieId, onNavigate }) {
               alt={movie.title}
               sx={{
                 width: '100%',
-                borderRadius: '12px',
-                border: '2px solid #2196f3',
-                boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
+                borderRadius: 2,
+                border: 1,
+                borderColor: 'divider',
+                boxShadow: (theme) =>
+                  theme.palette.mode === 'dark'
+                    ? '0 16px 48px rgba(0,0,0,0.5)'
+                    : '0 16px 48px rgba(0,0,0,0.12)',
               }}
             />
           </Grid>
 
           <Grid item xs={12} md={8}>
             <Stack spacing={2}>
-              <Typography variant="h3" fontWeight={800}>
+              <Typography variant="h3" fontWeight={700} letterSpacing="-0.02em">
                 {movie.title}
               </Typography>
               {movie.tagline && (
-                <Typography sx={{ color: '#90caf9', fontStyle: 'italic' }}>
+                <Typography color="text.secondary" fontStyle="italic">
                   {movie.tagline}
                 </Typography>
               )}
 
               <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
                 {movie.genres.map((g) => (
-                  <Chip key={g} label={g} size="small" sx={{ backgroundColor: '#2196f3', color: '#fff' }} />
+                  <Chip
+                    key={g}
+                    label={g}
+                    size="small"
+                    sx={{ bgcolor: 'action.selected', color: 'text.primary' }}
+                  />
                 ))}
               </Stack>
 
               <Stack direction="row" spacing={3} flexWrap="wrap">
                 {movie.releaseDate && (
-                  <Typography variant="body2" sx={{ color: 'grey.300' }}>
+                  <Typography variant="body2" color="text.secondary">
                     Released: {movie.releaseDate}
                   </Typography>
                 )}
                 {movie.runtime > 0 && (
-                  <Typography variant="body2" sx={{ color: 'grey.300' }}>
+                  <Typography variant="body2" color="text.secondary">
                     {movie.runtime} min
                   </Typography>
                 )}
                 {movie.language && (
-                  <Typography variant="body2" sx={{ color: 'grey.300' }}>
+                  <Typography variant="body2" color="text.secondary">
                     {movie.language}
                   </Typography>
                 )}
-                <Typography variant="body2" sx={{ color: '#64b5f6', fontWeight: 700 }}>
+                <Typography variant="body2" fontWeight={600}>
                   ★ {movie.rating?.toFixed(1)} ({movie.voteCount?.toLocaleString()} votes)
                 </Typography>
               </Stack>
 
               {movie.revenue > 0 && (
-                <Typography sx={{ color: '#64b5f6', fontWeight: 600 }}>
+                <Typography fontWeight={600}>
                   Box Office: ₹{(movie.revenue / 10000000).toFixed(1)} Cr
                 </Typography>
               )}
 
-              <Typography variant="body1" sx={{ color: 'grey.200', lineHeight: 1.8, mt: 1 }}>
+              <Typography variant="body1" color="text.secondary" lineHeight={1.8} mt={1}>
                 {movie.overview || 'No overview available.'}
               </Typography>
 
@@ -224,7 +218,7 @@ function MovieDetails({ movieId, onNavigate }) {
 
         {cast.length > 0 && (
           <Box mt={6}>
-            <Typography variant="h5" fontWeight={700} mb={3}>
+            <Typography variant="h5" fontWeight={700} mb={3} letterSpacing="-0.02em">
               Cast
             </Typography>
             <Grid container spacing={2}>
@@ -234,9 +228,10 @@ function MovieDetails({ movieId, onNavigate }) {
                     alignItems="center"
                     sx={{
                       p: 2,
-                      background: 'rgba(22,33,62,0.6)',
-                      borderRadius: '12px',
-                      border: '1px solid rgba(33,150,243,0.3)',
+                      bgcolor: 'background.paper',
+                      borderRadius: 2,
+                      border: 1,
+                      borderColor: 'divider',
                     }}
                   >
                     <Box
@@ -253,13 +248,14 @@ function MovieDetails({ movieId, onNavigate }) {
                         borderRadius: '50%',
                         objectFit: 'cover',
                         mb: 1,
-                        border: '2px solid #2196f3',
+                        border: 1,
+                        borderColor: 'divider',
                       }}
                     />
                     <Typography fontWeight={600} fontSize="0.9rem" textAlign="center">
                       {person.name}
                     </Typography>
-                    <Typography variant="caption" sx={{ color: 'grey.400' }} textAlign="center">
+                    <Typography variant="caption" color="text.secondary" textAlign="center">
                       {person.character}
                     </Typography>
                   </Stack>
@@ -269,7 +265,7 @@ function MovieDetails({ movieId, onNavigate }) {
           </Box>
         )}
       </Container>
-    </Box>
+    </PageShell>
   );
 }
 

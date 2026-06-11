@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
-import Header from '../components/Header';
+import PageShell from '../components/PageShell';
 import SectionHeader from '../components/SectionHeader';
 import MovieCard from '../components/MovieCard';
 import Button from '../components/Button';
@@ -95,14 +95,7 @@ function AllMovies({ onViewMovie, onRate, ratings = {} }) {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        background: 'linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%)',
-        color: '#fff',
-      }}
-    >
-      <Header />
+    <PageShell>
       <Container maxWidth="xl">
         <Stack spacing={0}>
           <Box component="section" py={6} textAlign="center">
@@ -149,7 +142,7 @@ function AllMovies({ onViewMovie, onRate, ratings = {} }) {
 
           {isLoading ? (
             <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>
-              <CircularProgress size={56} sx={{ color: '#64b5f6' }} thickness={4} />
+              <CircularProgress size={44} color="primary" thickness={4} />
             </Box>
           ) : movies.length > 0 ? (
             <Box pb={6}>
@@ -177,7 +170,7 @@ function AllMovies({ onViewMovie, onRate, ratings = {} }) {
                 >
                   ← Previous
                 </Button>
-                <Typography sx={{ color: '#64b5f6', fontWeight: 'bold' }}>
+                <Typography color="text.secondary" fontWeight={600}>
                   Page {page} of {totalPages}
                 </Typography>
                 <Button
@@ -197,7 +190,7 @@ function AllMovies({ onViewMovie, onRate, ratings = {} }) {
           )}
         </Stack>
       </Container>
-    </Box>
+    </PageShell>
   );
 }
 

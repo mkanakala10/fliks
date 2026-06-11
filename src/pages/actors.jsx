@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
-import Header from '../components/Header';
+import PageShell from '../components/PageShell';
 import SectionHeader from '../components/SectionHeader';
 import ActorCard from '../components/ActorCard';
+import HorizontalScroller from '../components/HorizontalScroller';
+import { fetchIndianActors } from '../utils/indianActors';
 
 function Actors() {
   const [actors, setActors] = useState([]);
@@ -31,32 +32,7 @@ function Actors() {
       setIsLoading(true);
       setError(null);
       try {
-        const pages = await Promise.all(
-          [1, 2, 3].map((page) =>
-            fetch(
-              `https://api.themoviedb.org/3/person/popular?api_key=${apiKey}&language=en-US&page=${page}`
-            ).then((r) => r.json())
-          )
-        );
-
-        const allPeople = pages.flatMap((d) => d.results || []);
-        const indianActors = allPeople
-          .filter((person) =>
-            person.known_for?.some(
-              (m) =>
-                m.origin_country?.includes('IN') ||
-                ['hi', 'ta', 'te', 'ml', 'kn'].includes(m.original_language)
-            )
-          )
-          .filter((person) => person.profile_path)
-          .slice(0, 40)
-          .map((person) => ({
-            id: person.id,
-            name: person.name,
-            image: `https://image.tmdb.org/t/p/w500${person.profile_path}`,
-            trendingScore: Math.round(person.popularity),
-          }));
-
+        const indianActors = await fetchIndianActors(apiKey);
         setActors(indianActors);
         setFiltered(indianActors);
       } catch (err) {
@@ -81,14 +57,7 @@ function Actors() {
   }, [search, actors]);
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        background: 'linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%)',
-        color: '#fff',
-      }}
-    >
-      <Header />
+    <PageShell>
       <Container maxWidth="xl">
         <Stack spacing={0}>
           <Box component="section" py={6} textAlign="center">
@@ -105,21 +74,15 @@ function Actors() {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <SearchIcon sx={{ color: '#90caf9' }} />
+                      <SearchIcon sx={{ color: 'text.secondary' }} />
                     </InputAdornment>
                   ),
                 }}
                 sx={{
                   '& .MuiOutlinedInput-root': {
-                    borderRadius: '50px',
-                    backgroundColor: 'rgba(255,255,255,0.08)',
-                    color: '#fff',
-                    '& fieldset': { borderColor: '#2196f3' },
-                    '&:hover fieldset': { borderColor: '#64b5f6' },
-                    '&.Mui-focused fieldset': { borderColor: '#64b5f6' },
+                    borderRadius: 3,
+                    bgcolor: 'background.paper',
                   },
-                  '& input::placeholder': { color: '#90caf9' },
-                  '& input': { color: '#fff' },
                 }}
               />
             </Box>
@@ -131,31 +94,29 @@ function Actors() {
 
           {isLoading ? (
             <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>
-              <CircularProgress size={56} sx={{ color: '#64b5f6' }} thickness={4} />
+              <CircularProgress size={44} color="primary" thickness={4} />
             </Box>
           ) : filtered.length > 0 ? (
             <Box pb={8}>
-              <Grid container spacing={3}>
-                {filtered.map((actor) => (
-                  <Grid item xs={6} sm={4} md={3} lg={2.4} key={actor.id}>
-                    <ActorCard actor={actor} />
-                  </Grid>
-                ))}
-              </Grid>
+              <HorizontalScroller
+                items={filtered}
+                getKey={(actor) => actor.id}
+                renderItem={(actor) => <ActorCard actor={actor} />}
+              />
             </Box>
           ) : (
             <Box sx={{ textAlign: 'center', py: 10 }}>
               <Typography fontSize="1.2rem" fontWeight="bold" mb={1}>
                 No actors found
               </Typography>
-              <Typography sx={{ color: 'grey.400' }}>
+              <Typography color="text.secondary">
                 {search ? `No results for "${search}"` : 'Check back soon!'}
               </Typography>
             </Box>
           )}
         </Stack>
       </Container>
-    </Box>
+    </PageShell>
   );
 }
 

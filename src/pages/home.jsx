@@ -2,92 +2,88 @@ import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import CircularProgress from '@mui/material/CircularProgress';
-import Header from '../components/Header';
+import Alert from '@mui/material/Alert';
+import PageShell from '../components/PageShell';
 import Hero from '../components/Hero';
 import SectionHeader from '../components/SectionHeader';
 import ActorCard from '../components/ActorCard';
 import MovieCard from '../components/MovieCard';
 import CTA from '../components/CTA';
+import HorizontalScroller from '../components/HorizontalScroller';
+import { fetchIndianActors } from '../utils/indianActors';
+import { fetchDiscoverMovies, mapDiscoverMovie } from '../utils/tmdbMovies';
 
 function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
   const [trendingActors, setTrendingActors] = useState([]);
   const [boxOffice, setBoxOffice] = useState([]);
   const [anticipated, setAnticipated] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const apiKey = import.meta.env.VITE_TMDB_API_KEY;
+    if (!apiKey) {
+      setError('Missing TMDB API key. Add VITE_TMDB_API_KEY to your .env file.');
+      setIsLoading(false);
+      return;
+    }
+
+    let cancelled = false;
 
     const fetchHomeData = async () => {
       setIsLoading(true);
-      try {
-        const actorRes = await fetch(
-          `https://api.themoviedb.org/3/person/popular?api_key=${apiKey}&language=en-US&page=1`
-        );
-        const actorData = await actorRes.json();
+      setError(null);
 
-        const indianActors = (actorData.results || [])
-          .filter((person) =>
-            person.known_for?.some(
-              (m) =>
-                m.origin_country?.includes('IN') ||
-                ['hi', 'ta', 'te', 'ml', 'kn'].includes(m.original_language)
-            )
-          )
-          .filter((p) => p.profile_path)
-          .slice(0, 20)
-          .map((person) => ({
-            id: person.id,
-            name: person.name,
-            image: `https://image.tmdb.org/t/p/w500${person.profile_path}`,
-            trendingScore: Math.round(person.popularity),
-          }));
+      const results = await Promise.allSettled([
+        fetchIndianActors(apiKey),
+        fetchDiscoverMovies(apiKey, {
+          primary_release_year: '2026',
+          sort_by: 'revenue.desc',
+        }),
+        fetchDiscoverMovies(apiKey, {
+          primary_release_year: '2026',
+          sort_by: 'popularity.desc',
+        }),
+      ]);
 
-        setTrendingActors(indianActors);
+      if (cancelled) return;
 
-        const boRes = await fetch(
-          `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&region=IN&with_origin_country=IN&primary_release_year=2026&sort_by=revenue.desc`
-        );
-        const boData = await boRes.json();
-        setBoxOffice(
-          (boData.results || []).slice(0, 5).map((movie) => ({
-            id: movie.id,
-            title: movie.title,
-            image: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-            revenue:
-              movie.revenue > 0
-                ? `₹${(movie.revenue / 10000000).toFixed(1)} Cr`
-                : 'Blockbuster',
-            rating: movie.vote_average,
-            releaseDate: movie.release_date,
-          }))
-        );
+      const [actorsResult, boxOfficeResult, anticipatedResult] = results;
 
-        const antRes = await fetch(
-          `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&region=IN&with_origin_country=IN&primary_release_year=2026&sort_by=popularity.desc`
-        );
-        const antData = await antRes.json();
-        setAnticipated(
-          (antData.results || []).slice(0, 4).map((movie) => ({
-            id: movie.id,
-            title: movie.title,
-            image: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-            releaseDate: movie.release_date,
-            genre: 'Highly Anticipated',
-          }))
-        );
-      } catch (err) {
-        console.error('Error fetching homepage data:', err);
-      } finally {
-        setIsLoading(false);
+      if (actorsResult.status === 'fulfilled') {
+        setTrendingActors(actorsResult.value);
       }
+      if (boxOfficeResult.status === 'fulfilled') {
+        setBoxOffice(
+          boxOfficeResult.value.map((movie) => mapDiscoverMovie(movie)).slice(0, 20)
+        );
+      }
+      if (anticipatedResult.status === 'fulfilled') {
+        setAnticipated(
+          anticipatedResult.value.map((movie) =>
+            mapDiscoverMovie(movie, { genre: 'Highly Anticipated' })
+          )
+        );
+      }
+
+      const allFailed = results.every((r) => r.status === 'rejected');
+      if (allFailed) {
+        setError('Unable to load homepage data. Check your TMDB API key and connection.');
+      }
+
+      setIsLoading(false);
     };
 
-    if (apiKey) fetchHomeData();
-    else setIsLoading(false);
+    fetchHomeData().catch(() => {
+      if (!cancelled) {
+        setError('Unable to load homepage data.');
+        setIsLoading(false);
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const heroStats = [
@@ -96,104 +92,72 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
     { value: '2M+', label: 'User Reviews' },
   ];
 
-  if (isLoading) {
-    return (
-      <Box
-        sx={{
-          minHeight: '100vh',
-          background: 'linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <CircularProgress size={56} sx={{ color: '#64b5f6' }} thickness={4} />
-      </Box>
-    );
-  }
+  if (isLoading) return <PageShell loading />;
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        background: 'linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%)',
-        color: '#fff',
-      }}
-    >
-      <Header />
+    <PageShell>
       <Container maxWidth="xl">
         <Stack spacing={0}>
           <Hero stats={heroStats} onNavigate={onNavigate} />
 
-          {/* Trending Actors */}
+          {error && (
+            <Box py={2}>
+              <Alert severity="warning">{error}</Alert>
+            </Box>
+          )}
+
           <Box component="section" py={6}>
             <SectionHeader
               title="Trending Indian Actors"
               subtitle="Most popular stars in 2026 based on recent hits"
             />
-            <Box
-              sx={{
-                display: 'flex',
-                gap: 3,
-                overflowX: 'auto',
-                py: 3,
-                px: 1,
-                '&::-webkit-scrollbar': { display: 'none' },
-                scrollbarWidth: 'none',
-              }}
-            >
-              {trendingActors.length > 0 ? (
-                trendingActors.map((actor) => (
-                  <Box key={actor.id} sx={{ minWidth: '160px', flex: '0 0 auto' }}>
-                    <ActorCard actor={actor} />
-                  </Box>
-                ))
-              ) : (
-                <Typography sx={{ width: '100%', textAlign: 'center', color: 'grey.400' }}>
-                  Updating trending stars…
-                </Typography>
-              )}
-            </Box>
+            <HorizontalScroller
+              items={trendingActors}
+              getKey={(actor) => actor.id}
+              renderItem={(actor) => <ActorCard actor={actor} />}
+              emptyMessage="Updating trending stars…"
+              centerWhenFits
+            />
           </Box>
 
-          {/* Box Office Leaders */}
           <Box component="section" py={6}>
             <SectionHeader
               title="2026 Box Office Leaders"
               subtitle="Highest grossing Indian films this year"
             />
-            <Grid container spacing={3}>
-              {boxOffice.map((movie, index) => (
-                <Grid item xs={12} sm={6} md={4} lg={2.4} key={movie.id}>
-                  <MovieCard
-                    movie={{ ...movie, ratingValue: ratings[movie.id] || 0 }}
-                    rank={index + 1}
-                    onViewDetails={() => onViewMovie?.(movie.id)}
-                    onRate={onRate}
-                  />
-                </Grid>
-              ))}
-            </Grid>
+            <HorizontalScroller
+              items={boxOffice}
+              getKey={(movie) => movie.id}
+              renderItem={(movie, index) => (
+                <MovieCard
+                  movie={{ ...movie, ratingValue: ratings[movie.id] || 0 }}
+                  rank={index + 1}
+                  onViewDetails={() => onViewMovie?.(movie.id)}
+                  onRate={onRate}
+                />
+              )}
+              emptyMessage="No box office data available yet."
+            />
           </Box>
 
-          {/* Most Anticipated */}
           <Box component="section" py={6}>
             <SectionHeader
               title="Most Anticipated 2026"
               subtitle="Films generating the most buzz right now"
             />
-            <Grid container spacing={3}>
-              {anticipated.map((film) => (
-                <Grid item xs={12} sm={6} md={4} lg={3} key={film.id}>
-                  <MovieCard
-                    movie={{ ...film, ratingValue: ratings[film.id] || 0 }}
-                    variant="upcoming"
-                    onRate={onRate}
-                    onViewDetails={() => onViewMovie?.(film.id)}
-                  />
-                </Grid>
-              ))}
-            </Grid>
+            <HorizontalScroller
+              items={anticipated}
+              getKey={(film) => film.id}
+              renderItem={(film) => (
+                <MovieCard
+                  movie={{ ...film, ratingValue: ratings[film.id] || 0 }}
+                  variant="upcoming"
+                  onRate={onRate}
+                  onViewDetails={() => onViewMovie?.(film.id)}
+                />
+              )}
+              emptyMessage="No anticipated releases found yet."
+            />
           </Box>
 
           <CTA
@@ -204,7 +168,7 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
           />
         </Stack>
       </Container>
-    </Box>
+    </PageShell>
   );
 }
 

@@ -8,18 +8,18 @@ function CTA({ title, description, buttonText = 'Get Started', onButtonClick }) 
   return (
     <Box
       component="section"
-      sx={{ py: 10, borderTop: '2px solid #2196f3' }}
+      sx={{ py: 8, borderTop: 1, borderColor: 'divider' }}
     >
       <Container maxWidth="sm">
-        <Stack spacing={3} alignItems="center" textAlign="center">
+        <Stack spacing={2.5} alignItems="center" textAlign="center">
           <Typography
             variant="h4"
-            sx={{ fontSize: { xs: '1.8rem', md: '2.2rem' }, fontWeight: 700 }}
+            sx={{ fontSize: { xs: '1.5rem', md: '1.85rem' }, fontWeight: 700, letterSpacing: '-0.02em' }}
           >
             {title}
           </Typography>
           {description && (
-            <Typography variant="body1" sx={{ color: '#90caf9' }}>
+            <Typography variant="body1" color="text.secondary">
               {description}
             </Typography>
           )}
