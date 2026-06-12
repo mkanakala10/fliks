@@ -102,6 +102,7 @@ function Actors() {
                 items={filtered}
                 getKey={(actor) => actor.id}
                 renderItem={(actor) => <ActorCard actor={actor} />}
+                cardVariant="actor"
               />
             </Box>
           ) : (

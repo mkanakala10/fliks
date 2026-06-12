@@ -12,9 +12,11 @@ function HorizontalScroller({
   gap = 3,
   emptyMessage,
   centerWhenFits = false,
+  cardVariant = 'movie',
 }) {
   const scrollRef = useRef(null);
-  const itemsPerView = useItemsPerView();
+  const itemsPerView = useItemsPerView(cardVariant);
+  const isActor = cardVariant === 'actor';
   const theme = useTheme();
   const gapPx = parseFloat(theme.spacing(gap));
   const itemBasis = `calc((100% - ${(itemsPerView - 1) * gapPx}px) / ${itemsPerView})`;
@@ -113,6 +115,7 @@ function HorizontalScroller({
         ref={scrollRef}
         sx={{
           display: 'flex',
+          alignItems: isActor ? 'flex-start' : 'stretch',
           gap,
           overflowX: shouldCenter ? 'hidden' : 'auto',
           justifyContent: shouldCenter ? 'center' : 'flex-start',
@@ -136,6 +139,7 @@ function HorizontalScroller({
               maxWidth: itemBasis,
               scrollSnapAlign: 'start',
               minWidth: 0,
+              display: isActor ? 'block' : 'flex',
             }}
           >
             {renderItem(item, index)}

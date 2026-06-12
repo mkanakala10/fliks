@@ -123,6 +123,7 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
               renderItem={(actor) => <ActorCard actor={actor} />}
               emptyMessage="Updating trending stars…"
               centerWhenFits
+              cardVariant="actor"
             />
           </Box>
 

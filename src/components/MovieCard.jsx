@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
+import Rating from '@mui/material/Rating';
 import Button from './Button';
 
 function MovieCard({
@@ -15,32 +16,12 @@ function MovieCard({
   isInWatchlist,
   onRate,
 }) {
-  const [hoverRating, setHoverRating] = useState(null);
+  const [hoverRating, setHoverRating] = useState(-1);
   const isUpcoming = variant === 'upcoming';
   const isClickable = Boolean(onViewDetails);
   const currentRating = movie?.ratingValue || 0;
-  const displayRating = hoverRating !== null ? hoverRating : currentRating;
   const tmdbRating = movie?.rating > 0 ? Number(movie.rating) : null;
-  const activeRating = hoverRating !== null ? hoverRating : currentRating;
-
-  const handleStarHover = (starIndex, event) => {
-    if (!onRate) return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const isLeftHalf = x < rect.width / 2;
-    const rating = starIndex + (isLeftHalf ? 0.5 : 1);
-    setHoverRating(rating);
-  };
-
-  const handleStarClick = (starIndex, event) => {
-    event.stopPropagation();
-    if (!onRate) return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const isLeftHalf = x < rect.width / 2;
-    const rating = starIndex + (isLeftHalf ? 0.5 : 1);
-    onRate(movie.id, rating);
-  };
+  const displayRating = hoverRating >= 0 ? hoverRating : currentRating;
 
   const shouldShowComingSoon = () => {
     if (!isUpcoming) return false;
@@ -95,6 +76,7 @@ function MovieCard({
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
+        width: '100%',
         cursor: isClickable ? 'pointer' : 'default',
         '&:hover': isClickable
           ? {
@@ -127,19 +109,26 @@ function MovieCard({
         />
       )}
 
-      <Box sx={{ position: 'relative', overflow: 'hidden', paddingTop: '150%' }}>
+      <Box
+        sx={{
+          position: 'relative',
+          overflow: 'hidden',
+          aspectRatio: '2 / 3',
+          width: '100%',
+          flexShrink: 0,
+          bgcolor: 'action.hover',
+        }}
+      >
         <Box
           className="movie-card-poster"
           component="img"
           src={movie.image}
           alt={movie.title}
           sx={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
             width: '100%',
             height: '100%',
             objectFit: 'cover',
+            display: 'block',
             transition: 'transform 0.4s',
           }}
         />
@@ -167,84 +156,82 @@ function MovieCard({
               bottom: 8,
               left: 8,
               zIndex: 2,
-              bgcolor: 'rgba(0,0,0,0.72)',
+              bgcolor: 'rgba(0,0,0,0.75)',
               color: '#fff',
               fontWeight: 600,
-              fontSize: '0.75rem',
+              fontSize: '0.7rem',
+              height: 24,
               backdropFilter: 'blur(4px)',
             }}
           />
         )}
       </Box>
 
-      <Stack p={2} spacing={1.5} flex={1} justifyContent="space-between" alignItems="center">
-        <Stack spacing={0.5} width="100%">
-          <Typography
-            fontWeight={600}
-            fontSize="0.95rem"
-            textAlign="center"
-            noWrap
-            color="text.primary"
-          >
-            {movie.title}
-          </Typography>
+      <Stack
+        p={1.5}
+        spacing={1}
+        flex={1}
+        justifyContent="flex-start"
+        alignItems="center"
+        sx={{ minHeight: 148 }}
+      >
+        <Typography
+          fontWeight={600}
+          fontSize="0.875rem"
+          textAlign="center"
+          color="text.primary"
+          sx={{
+            width: '100%',
+            minHeight: '2.5em',
+            lineHeight: 1.25,
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+          }}
+        >
+          {movie.title}
+        </Typography>
 
-          <Box
-            sx={{ display: 'flex', justifyContent: 'center', gap: 0.3 }}
-            onClick={stopPropagation}
-          >
-            {[0, 1, 2, 3, 4].map((starIndex) => (
-              <Box
-                key={starIndex}
-                component="button"
-                type="button"
-                onMouseMove={(event) => handleStarHover(starIndex, event)}
-                onMouseLeave={() => setHoverRating(null)}
-                onClick={(event) => handleStarClick(starIndex, event)}
-                sx={{
-                  border: 'none',
-                  background: 'none',
-                  fontSize: '1.2rem',
-                  cursor: onRate ? 'pointer' : 'default',
-                  p: 0,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  position: 'relative',
-                  height: '1.2rem',
-                  width: '1rem',
-                  opacity: onRate ? 1 : 0.6,
-                }}
-              >
-                <Box sx={{ position: 'absolute', color: 'text.disabled' }}>☆</Box>
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    color: '#f59e0b',
-                    overflow: 'hidden',
-                    width: `${Math.max(0, Math.min(100, ((displayRating - starIndex) / 1) * 100))}%`,
-                  }}
-                >
-                  ★
-                </Box>
-              </Box>
-            ))}
-          </Box>
+        <Box onClick={stopPropagation} sx={{ lineHeight: 0 }}>
+          <Rating
+            name={`rating-${movie.id}`}
+            value={currentRating}
+            precision={0.5}
+            readOnly={!onRate}
+            size="small"
+            onChange={(_, value) => {
+              if (value !== null) onRate?.(movie.id, value);
+            }}
+            onChangeActive={(_, value) => setHoverRating(value ?? -1)}
+            sx={{
+              '& .MuiRating-iconFilled': { color: '#f59e0b' },
+              '& .MuiRating-iconHover': { color: '#fbbf24' },
+              '& .MuiRating-iconEmpty': { color: 'action.disabled' },
+            }}
+          />
+        </Box>
 
-          {(activeRating > 0 || tmdbRating !== null) && (
-            <Typography variant="caption" color="text.secondary" textAlign="center" display="block">
-              {activeRating > 0 && (
+        <Box sx={{ minHeight: 32, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {(displayRating > 0 || tmdbRating !== null) && (
+            <Typography variant="caption" color="text.secondary" textAlign="center">
+              {displayRating > 0 && (
                 <>
-                  Your rating: <Box component="span" sx={{ color: '#f59e0b', fontWeight: 600 }}>{activeRating.toFixed(1)}</Box>
+                  Your rating:{' '}
+                  <Box component="span" sx={{ color: '#f59e0b', fontWeight: 600 }}>
+                    {displayRating.toFixed(1)}
+                  </Box>
                 </>
               )}
-              {activeRating > 0 && tmdbRating !== null && ' · '}
-              {tmdbRating !== null && <>TMDB: {tmdbRating.toFixed(1)}</>}
+              {displayRating > 0 && tmdbRating !== null && ' · '}
+              {tmdbRating !== null && <>TMDB {tmdbRating.toFixed(1)}</>}
             </Typography>
           )}
+        </Box>
 
+        <Box sx={{ minHeight: 36, width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           {isUpcoming && movie.genre && (
-            <Typography variant="caption" color="text.secondary" textAlign="center" display="block">
+            <Typography variant="caption" color="text.secondary" textAlign="center" display="block" noWrap>
               {movie.genre}
             </Typography>
           )}
@@ -255,19 +242,20 @@ function MovieCard({
                 fontWeight={600}
                 color="text.primary"
                 textAlign="center"
-                fontSize="0.875rem"
+                fontSize="0.8rem"
+                noWrap
               >
                 {movie.revenue}
               </Typography>
-              <Typography variant="caption" color="text.secondary" textAlign="center" display="block">
+              <Typography variant="caption" color="text.secondary" textAlign="center" display="block" noWrap>
                 {movie.releaseDate}
               </Typography>
             </>
           )}
-        </Stack>
+        </Box>
 
         {showWatchlist && (
-          <Box width="100%" onClick={stopPropagation}>
+          <Box width="100%" mt="auto" pt={0.5} onClick={stopPropagation}>
             <Button variant={watchlistVariant} size="sm" onClick={watchlistAction} sx={{ width: '100%' }}>
               {watchlistLabel}
             </Button>

@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Alert from '@mui/material/Alert';
@@ -110,161 +109,209 @@ function MovieDetails() {
 
   const cast = (credits?.cast || []).slice(0, 8);
   const inWatchlist = isInWatchLater(movie.id);
+  const heroBackground = movie.backdrop || movie.image;
 
   return (
     <PageShell>
-      {movie.backdrop && (
+      <Box sx={{ position: 'relative', overflow: 'hidden' }}>
         <Box
+          aria-hidden
           sx={{
-            height: { xs: 180, md: 280 },
-            backgroundImage: (theme) =>
-              `linear-gradient(to bottom, transparent, ${theme.palette.background.default}), url(${movie.backdrop})`,
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: `url(${heroBackground})`,
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundPosition: 'center top',
+            opacity: 0.22,
+            zIndex: 0,
           }}
         />
-      )}
+        <Box
+          aria-hidden
+          sx={{
+            position: 'absolute',
+            inset: 0,
+            background: (theme) =>
+              theme.palette.mode === 'dark'
+                ? `linear-gradient(180deg, rgba(0,0,0,0.45) 0%, ${theme.palette.background.default} 92%)`
+                : `linear-gradient(180deg, rgba(255,255,255,0.55) 0%, ${theme.palette.background.default} 92%)`,
+            zIndex: 1,
+          }}
+        />
 
-      <Container maxWidth="lg" sx={{ py: 4 }}>
-        <Button
-          variant="secondary"
-          size="sm"
-          onClick={() => onGoBack?.()}
-          sx={{ mb: 3 }}
-        >
-          <ArrowBackIcon sx={{ mr: 0.5, fontSize: 18 }} /> Back
-        </Button>
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2, py: 4 }}>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => onGoBack?.()}
+            sx={{ mb: 3 }}
+          >
+            <ArrowBackIcon sx={{ mr: 0.5, fontSize: 18 }} /> Back
+          </Button>
 
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={4}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: { xs: 'column', sm: 'row' },
+              alignItems: { xs: 'center', sm: 'flex-start' },
+              gap: { xs: 3, sm: 4 },
+            }}
+          >
             <Box
-              component="img"
-              src={movie.image}
-              alt={movie.title}
               sx={{
-                width: '100%',
-                borderRadius: 2,
-                border: 1,
-                borderColor: 'divider',
-                boxShadow: (theme) =>
-                  theme.palette.mode === 'dark'
-                    ? '0 16px 48px rgba(0,0,0,0.5)'
-                    : '0 16px 48px rgba(0,0,0,0.12)',
+                flexShrink: 0,
+                width: { xs: 240, sm: 260, md: 300 },
               }}
-            />
-          </Grid>
+            >
+              <Box
+                component="img"
+                src={movie.image}
+                alt={movie.title}
+                sx={{
+                  width: '100%',
+                  display: 'block',
+                  borderRadius: 2,
+                  border: 1,
+                  borderColor: 'divider',
+                  boxShadow: (theme) =>
+                    theme.palette.mode === 'dark'
+                      ? '0 16px 48px rgba(0,0,0,0.5)'
+                      : '0 16px 48px rgba(0,0,0,0.12)',
+                }}
+              />
+            </Box>
 
-          <Grid item xs={12} md={8}>
-            <Stack spacing={2}>
-              <Typography variant="h3" fontWeight={700} letterSpacing="-0.02em">
-                {movie.title}
-              </Typography>
-              {movie.tagline && (
-                <Typography color="text.secondary" fontStyle="italic">
-                  {movie.tagline}
+            <Box sx={{ flex: 1, minWidth: 0, width: '100%' }}>
+              <Stack spacing={2}>
+                <Typography variant="h3" fontWeight={700} letterSpacing="-0.02em">
+                  {movie.title}
                 </Typography>
-              )}
-
-              <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-                {movie.genres.map((g) => (
-                  <Chip
-                    key={g}
-                    label={g}
-                    size="small"
-                    sx={{ bgcolor: 'action.selected', color: 'text.primary' }}
-                  />
-                ))}
-              </Stack>
-
-              <Stack direction="row" spacing={3} flexWrap="wrap">
-                {movie.releaseDate && (
-                  <Typography variant="body2" color="text.secondary">
-                    Released: {movie.releaseDate}
+                {movie.tagline && (
+                  <Typography color="text.secondary" fontStyle="italic">
+                    {movie.tagline}
                   </Typography>
                 )}
-                {movie.runtime > 0 && (
-                  <Typography variant="body2" color="text.secondary">
-                    {movie.runtime} min
+
+                <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                  {movie.genres.map((g) => (
+                    <Chip
+                      key={g}
+                      label={g}
+                      size="small"
+                      sx={{ bgcolor: 'action.selected', color: 'text.primary' }}
+                    />
+                  ))}
+                </Stack>
+
+                <Stack direction="row" spacing={3} flexWrap="wrap">
+                  {movie.releaseDate && (
+                    <Typography variant="body2" color="text.secondary">
+                      Released: {movie.releaseDate}
+                    </Typography>
+                  )}
+                  {movie.runtime > 0 && (
+                    <Typography variant="body2" color="text.secondary">
+                      {movie.runtime} min
+                    </Typography>
+                  )}
+                  {movie.language && (
+                    <Typography variant="body2" color="text.secondary">
+                      {movie.language}
+                    </Typography>
+                  )}
+                  <Typography variant="body2" fontWeight={600}>
+                    ★ {movie.rating?.toFixed(1)} ({movie.voteCount?.toLocaleString()} votes)
+                  </Typography>
+                </Stack>
+
+                {movie.revenue > 0 && (
+                  <Typography fontWeight={600}>
+                    Box Office: ₹{(movie.revenue / 10000000).toFixed(1)} Cr
                   </Typography>
                 )}
-                {movie.language && (
-                  <Typography variant="body2" color="text.secondary">
-                    {movie.language}
+
+                <Typography variant="body1" color="text.secondary" lineHeight={1.8} mt={1}>
+                  {movie.overview || 'No overview available.'}
+                </Typography>
+
+                <Stack direction="row" spacing={2} mt={2}>
+                  <Button variant={inWatchlist ? 'secondary' : 'primary'} onClick={handleWatchlist}>
+                    {inWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}
+                  </Button>
+                </Stack>
+              </Stack>
+
+              {cast.length > 0 && (
+                <Box mt={5}>
+                  <Typography variant="h5" fontWeight={700} mb={3} letterSpacing="-0.02em">
+                    Cast
                   </Typography>
-                )}
-                <Typography variant="body2" fontWeight={600}>
-                  ★ {movie.rating?.toFixed(1)} ({movie.voteCount?.toLocaleString()} votes)
-                </Typography>
-              </Stack>
-
-              {movie.revenue > 0 && (
-                <Typography fontWeight={600}>
-                  Box Office: ₹{(movie.revenue / 10000000).toFixed(1)} Cr
-                </Typography>
-              )}
-
-              <Typography variant="body1" color="text.secondary" lineHeight={1.8} mt={1}>
-                {movie.overview || 'No overview available.'}
-              </Typography>
-
-              <Stack direction="row" spacing={2} mt={2}>
-                <Button variant={inWatchlist ? 'secondary' : 'primary'} onClick={handleWatchlist}>
-                  {inWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}
-                </Button>
-              </Stack>
-            </Stack>
-          </Grid>
-        </Grid>
-
-        {cast.length > 0 && (
-          <Box mt={6}>
-            <Typography variant="h5" fontWeight={700} mb={3} letterSpacing="-0.02em">
-              Cast
-            </Typography>
-            <Grid container spacing={2}>
-              {cast.map((person) => (
-                <Grid item xs={6} sm={4} md={3} key={person.id}>
-                  <Stack
-                    alignItems="center"
+                  <Box
                     sx={{
-                      p: 2,
-                      bgcolor: 'background.paper',
-                      borderRadius: 2,
-                      border: 1,
-                      borderColor: 'divider',
+                      display: 'grid',
+                      gridTemplateColumns: {
+                        xs: 'repeat(2, minmax(0, 1fr))',
+                        sm: 'repeat(4, minmax(0, 1fr))',
+                        md: 'repeat(4, minmax(0, 120px))',
+                      },
+                      gap: 3,
                     }}
                   >
-                    <Box
-                      component="img"
-                      src={
-                        person.profile_path
-                          ? `https://image.tmdb.org/t/p/w185${person.profile_path}`
-                          : 'https://via.placeholder.com/185x278?text=No+Photo'
-                      }
-                      alt={person.name}
-                      sx={{
-                        width: 80,
-                        height: 80,
-                        borderRadius: '50%',
-                        objectFit: 'cover',
-                        mb: 1,
-                        border: 1,
-                        borderColor: 'divider',
-                      }}
-                    />
-                    <Typography fontWeight={600} fontSize="0.9rem" textAlign="center">
-                      {person.name}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary" textAlign="center">
-                      {person.character}
-                    </Typography>
-                  </Stack>
-                </Grid>
-              ))}
-            </Grid>
+                    {cast.map((person) => (
+                      <Stack key={person.id} alignItems="center" spacing={0.75} textAlign="center">
+                        <Box
+                          component="img"
+                          src={
+                            person.profile_path
+                              ? `https://image.tmdb.org/t/p/w185${person.profile_path}`
+                              : 'https://via.placeholder.com/185x278?text=No+Photo'
+                          }
+                          alt={person.name}
+                          sx={{
+                            width: 72,
+                            height: 72,
+                            borderRadius: '50%',
+                            objectFit: 'cover',
+                            objectPosition: 'top center',
+                          }}
+                        />
+                        <Typography
+                          fontWeight={600}
+                          fontSize="0.85rem"
+                          lineHeight={1.25}
+                          sx={{
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                            minHeight: '2.5em',
+                          }}
+                        >
+                          {person.name}
+                        </Typography>
+                        <Typography
+                          variant="caption"
+                          color="text.secondary"
+                          lineHeight={1.25}
+                          sx={{
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                            minHeight: '2.5em',
+                          }}
+                        >
+                          {person.character}
+                        </Typography>
+                      </Stack>
+                    ))}
+                  </Box>
+                </Box>
+              )}
+            </Box>
           </Box>
-        )}
-      </Container>
+        </Container>
+      </Box>
     </PageShell>
   );
 }

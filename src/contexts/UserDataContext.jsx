@@ -105,7 +105,11 @@ export function UserDataProvider({ children }) {
       },
       (error) => {
         console.error('Firestore sync error:', error);
-        setSyncError(error.message || 'Could not sync your account data.');
+        const message =
+          error.code === 'permission-denied'
+            ? 'Firestore access denied. Enable Firestore in Firebase Console and deploy security rules (see firestore.rules).'
+            : error.message || 'Could not sync your account data.';
+        setSyncError(message);
         setLoading(false);
       }
     );
