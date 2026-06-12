@@ -2,7 +2,7 @@ export const PAGE_PATHS = {
   home: '/',
   trending: '/trending',
   search: '/search',
-  recommendations: '/recommendations',
+  recommendations: '/account?tab=for-you',
   'ai-assistant': '/ai-assistant',
   'watch-later': '/account',
   ratings: '/account',

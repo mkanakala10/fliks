@@ -7,7 +7,6 @@ import AllMovies from './pages/allMovies';
 import BoxOffice from './pages/BoxOffice';
 import Signup from './pages/signup';
 import Search from './pages/search';
-import Recommendations from './pages/recommendations';
 import MovieDetails from './pages/movieDetails';
 import MovieMeterChatbot from './components/MovieMeterChatbot';
 import Account from './pages/account';
@@ -82,7 +81,7 @@ function AppContent() {
         <Route path="/" element={<Home {...sharedProps} />} />
         <Route path="/trending" element={<Trending {...sharedProps} />} />
         <Route path="/search" element={<Search {...sharedProps} />} />
-        <Route path="/recommendations" element={<Recommendations {...sharedProps} />} />
+        <Route path="/recommendations" element={<Navigate to="/account?tab=for-you" replace />} />
         <Route path="/watch-later" element={<Navigate to="/account?tab=watchlist" replace />} />
         <Route path="/ratings" element={<Navigate to="/account?tab=ratings" replace />} />
         <Route path="/account" element={<Account {...sharedProps} />} />

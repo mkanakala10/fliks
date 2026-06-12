@@ -114,21 +114,6 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
 
           <Box component="section" py={6}>
             <SectionHeader
-              title="Trending Indian Actors"
-              subtitle="Most popular stars in 2026 based on recent hits"
-            />
-            <HorizontalScroller
-              items={trendingActors}
-              getKey={(actor) => actor.id}
-              renderItem={(actor) => <ActorCard actor={actor} />}
-              emptyMessage="Updating trending stars…"
-              centerWhenFits
-              cardVariant="actor"
-            />
-          </Box>
-
-          <Box component="section" py={6}>
-            <SectionHeader
               title="2026 Box Office Leaders"
               subtitle="Highest grossing Indian films this year"
             />
@@ -164,6 +149,21 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
                 />
               )}
               emptyMessage="No anticipated releases found yet."
+            />
+          </Box>
+
+          <Box component="section" py={6}>
+            <SectionHeader
+              title="Trending Indian Actors"
+              subtitle="Most popular stars in 2026 based on recent hits"
+            />
+            <HorizontalScroller
+              items={trendingActors}
+              getKey={(actor) => actor.id}
+              renderItem={(actor) => <ActorCard actor={actor} />}
+              emptyMessage="Updating trending stars…"
+              centerWhenFits
+              cardVariant="actor"
             />
           </Box>
 

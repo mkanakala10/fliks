@@ -16,6 +16,7 @@ import Avatar from '@mui/material/Avatar';
 import PageShell from '../components/PageShell';
 import MovieCard from '../components/MovieCard';
 import HorizontalScroller from '../components/HorizontalScroller';
+import ForYouPanel from '../components/ForYouPanel';
 import Button from '../components/Button';
 import { useAuth } from '../contexts/AuthContext';
 import { useUserData } from '../contexts/UserDataContext';
@@ -34,8 +35,13 @@ function Account({ onViewMovie, onRate }) {
   const { user, isAuthenticated, logout } = useAuth();
   const { ratings, watchLater, loading, syncError, removeFromWatchLater } = useUserData();
 
-  const initialTab = searchParams.get('tab') === 'watchlist' ? 'watchlist' : 'ratings';
-  const [tab, setTab] = useState(initialTab);
+  const tabFromParams = searchParams.get('tab');
+  const resolveTab = (param) => {
+    if (param === 'watchlist') return 'watchlist';
+    if (param === 'for-you') return 'for-you';
+    return 'ratings';
+  };
+  const [tab, setTab] = useState(() => resolveTab(tabFromParams));
   const [sortBy, setSortBy] = useState('rating');
   const [ratedMovies, setRatedMovies] = useState([]);
   const [loadingMovies, setLoadingMovies] = useState(false);
@@ -47,7 +53,7 @@ function Account({ onViewMovie, onRate }) {
   }, [isAuthenticated, navigate]);
 
   useEffect(() => {
-    setTab(searchParams.get('tab') === 'watchlist' ? 'watchlist' : 'ratings');
+    setTab(resolveTab(searchParams.get('tab')));
   }, [searchParams]);
 
   useEffect(() => {
@@ -116,7 +122,13 @@ function Account({ onViewMovie, onRate }) {
 
   const handleTabChange = (_, value) => {
     setTab(value);
-    setSearchParams(value === 'watchlist' ? { tab: 'watchlist' } : {});
+    if (value === 'watchlist') {
+      setSearchParams({ tab: 'watchlist' });
+    } else if (value === 'for-you') {
+      setSearchParams({ tab: 'for-you' });
+    } else {
+      setSearchParams({});
+    }
   };
 
   const handleSignOut = async () => {
@@ -167,12 +179,15 @@ function Account({ onViewMovie, onRate }) {
           <Tabs value={tab} onChange={handleTabChange} sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tab value="ratings" label={`My Ratings (${Object.values(ratings).filter((v) => v > 0).length})`} />
             <Tab value="watchlist" label={`Watch List (${watchLater.length})`} />
+            <Tab value="for-you" label="For You" />
           </Tabs>
 
           {loading ? (
             <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>
               <CircularProgress size={44} color="primary" thickness={4} />
             </Box>
+          ) : tab === 'for-you' ? (
+            <ForYouPanel onViewMovie={onViewMovie} onRate={onRate} ratings={ratings} />
           ) : tab === 'ratings' ? (
             loadingMovies ? (
               <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>

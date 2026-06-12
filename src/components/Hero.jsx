@@ -37,7 +37,7 @@ function Hero({ stats = [], onNavigate }) {
             Explore Movies
           </Button>
           <Button variant="secondary" size="md" onClick={() => onNavigate?.('recommendations')}>
-            AI Recommendations
+            For You
           </Button>
         </Stack>
       </Stack>

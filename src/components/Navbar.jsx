@@ -8,20 +8,17 @@ import {
   HiUsers,
   HiFilm,
   HiSearch,
-  HiLightningBolt,
-  HiUser,
+  HiChartBar,
 } from 'react-icons/hi';
 
 const navItems = [
   { id: 'home', label: 'Home', icon: HiHome },
   { id: 'trending', label: 'Trending', icon: HiTrendingUp },
   { id: 'search', label: 'Search', icon: HiSearch },
-  { id: 'recommendations', label: 'For You', icon: HiLightningBolt },
-  { id: 'ai-assistant', label: 'AI Assistant', icon: HiSparkles },
-  { id: 'account', label: 'My Account', icon: HiUser },
-  { id: 'actors', label: 'Actors', icon: HiUsers },
-  { id: 'box-office', label: 'Box Office', icon: HiTrendingUp },
   { id: 'all-movies', label: 'All Movies', icon: HiFilm },
+  { id: 'box-office', label: 'Box Office', icon: HiChartBar },
+  { id: 'actors', label: 'Actors', icon: HiUsers },
+  { id: 'ai-assistant', label: 'AI Assistant', icon: HiSparkles },
 ];
 
 function Navbar({ isOpen, onToggle, currentPage, onNavigate }) {
