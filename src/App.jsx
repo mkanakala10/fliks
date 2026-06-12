@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import Home from './pages/home';
 import Trending from './pages/trending';
-import WatchLater from './pages/watchLater';
-import Ratings from './pages/ratings';
 import Actors from './pages/actors';
 import AllMovies from './pages/allMovies';
 import BoxOffice from './pages/BoxOffice';
@@ -12,9 +10,10 @@ import Search from './pages/search';
 import Recommendations from './pages/recommendations';
 import MovieDetails from './pages/movieDetails';
 import MovieMeterChatbot from './components/MovieMeterChatbot';
+import Account from './pages/account';
 import Navbar from './components/Navbar';
-import { WatchLaterProvider } from './contexts/WatchLaterContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { UserDataProvider, useUserData } from './contexts/UserDataContext';
 import { ColorModeProvider } from './contexts/ColorModeContext';
 import { NavigationProvider } from './contexts/NavigationContext';
 import { pathForPage, pageFromPath } from './navigation';
@@ -23,20 +22,9 @@ function AppContent() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const [ratings, setRatings] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem('movieMeterRatings')) || {};
-    } catch {
-      return {};
-    }
-  });
-
   const { isAuthenticated } = useAuth();
+  const { ratings, rateMovie } = useUserData();
   const currentPage = pageFromPath(location.pathname);
-
-  useEffect(() => {
-    localStorage.setItem('movieMeterRatings', JSON.stringify(ratings));
-  }, [ratings]);
 
   useEffect(() => {
     const redirect = sessionStorage.getItem('movieMeterRedirect');
@@ -58,13 +46,17 @@ function AppContent() {
     setIsNavOpen(false);
   };
 
-  const handleRate = (movieId, value) => {
+  const handleRate = async (movieId, value) => {
     if (!isAuthenticated) {
-      alert('Please sign up using Google to rate movies.');
+      alert('Please sign in to rate movies.');
       navigate(pathForPage('signup'));
       return;
     }
-    setRatings((prev) => ({ ...prev, [movieId]: value }));
+    try {
+      await rateMovie(movieId, value);
+    } catch (error) {
+      console.error('Failed to save rating:', error);
+    }
   };
 
   const sharedProps = {
@@ -91,8 +83,9 @@ function AppContent() {
         <Route path="/trending" element={<Trending {...sharedProps} />} />
         <Route path="/search" element={<Search {...sharedProps} />} />
         <Route path="/recommendations" element={<Recommendations {...sharedProps} />} />
-        <Route path="/watch-later" element={<WatchLater {...sharedProps} />} />
-        <Route path="/ratings" element={<Ratings {...sharedProps} />} />
+        <Route path="/watch-later" element={<Navigate to="/account?tab=watchlist" replace />} />
+        <Route path="/ratings" element={<Navigate to="/account?tab=ratings" replace />} />
+        <Route path="/account" element={<Account {...sharedProps} />} />
         <Route path="/actors" element={<Actors />} />
         <Route path="/box-office" element={<BoxOffice {...sharedProps} />} />
         <Route path="/all-movies" element={<AllMovies {...sharedProps} />} />
@@ -110,9 +103,9 @@ function App() {
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <ColorModeProvider>
         <AuthProvider>
-          <WatchLaterProvider>
+          <UserDataProvider>
             <AppContent />
-          </WatchLaterProvider>
+          </UserDataProvider>
         </AuthProvider>
       </ColorModeProvider>
     </BrowserRouter>

@@ -4,8 +4,9 @@ export const PAGE_PATHS = {
   search: '/search',
   recommendations: '/recommendations',
   'ai-assistant': '/ai-assistant',
-  'watch-later': '/watch-later',
-  ratings: '/ratings',
+  'watch-later': '/account',
+  ratings: '/account',
+  account: '/account',
   actors: '/actors',
   'box-office': '/box-office',
   'all-movies': '/all-movies',
@@ -20,6 +21,7 @@ export function pageFromPath(pathname) {
   const path = pathname.replace(/\/$/, '') || '/';
   if (path === '/') return 'home';
   if (path.startsWith('/movie/')) return 'movie-details';
+  if (path === '/account') return 'account';
 
   const match = Object.entries(PAGE_PATHS).find(([, route]) => route === path);
   return match?.[0] ?? 'home';

@@ -4,9 +4,8 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
-import { HiMenu, HiMoon, HiSun } from 'react-icons/hi';
+import { HiMenu, HiMoon, HiSun, HiUser } from 'react-icons/hi';
 import { useAuth } from '../contexts/AuthContext';
 import { useColorMode } from '../contexts/ColorModeContext';
 import { useNavigation } from '../contexts/NavigationContext';
@@ -91,17 +90,34 @@ function Header() {
 
             {isAuthenticated ? (
               <Stack direction="row" alignItems="center" spacing={1}>
-                <Avatar
+                <Button
+                  variant="outlined"
+                  size="small"
+                  startIcon={<HiUser size={16} />}
+                  onClick={() => onNavigate?.('account')}
                   sx={{
-                    width: 32,
-                    height: 32,
-                    fontSize: '0.85rem',
-                    bgcolor: 'primary.main',
-                    color: 'primary.contrastText',
+                    display: { xs: 'none', sm: 'inline-flex' },
+                    borderColor: 'divider',
+                    color: 'text.primary',
+                    borderRadius: 2,
+                    px: 2,
                   }}
                 >
-                  {(user?.displayName || 'U').charAt(0).toUpperCase()}
-                </Avatar>
+                  Account
+                </Button>
+                <IconButton
+                  onClick={() => onNavigate?.('account')}
+                  aria-label="My account"
+                  size="small"
+                  sx={{
+                    display: { xs: 'inline-flex', sm: 'none' },
+                    border: 1,
+                    borderColor: 'divider',
+                    borderRadius: 2,
+                  }}
+                >
+                  <HiUser size={18} />
+                </IconButton>
                 <Button
                   variant="outlined"
                   size="small"

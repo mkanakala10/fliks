@@ -5,12 +5,11 @@ import {
   HiHome,
   HiTrendingUp,
   HiSparkles,
-  HiBookmark,
   HiUsers,
   HiFilm,
   HiSearch,
   HiLightningBolt,
-  HiStar,
+  HiUser,
 } from 'react-icons/hi';
 
 const navItems = [
@@ -19,8 +18,7 @@ const navItems = [
   { id: 'search', label: 'Search', icon: HiSearch },
   { id: 'recommendations', label: 'For You', icon: HiLightningBolt },
   { id: 'ai-assistant', label: 'AI Assistant', icon: HiSparkles },
-  { id: 'watch-later', label: 'Watch Later', icon: HiBookmark },
-  { id: 'ratings', label: 'My Ratings', icon: HiStar },
+  { id: 'account', label: 'My Account', icon: HiUser },
   { id: 'actors', label: 'Actors', icon: HiUsers },
   { id: 'box-office', label: 'Box Office', icon: HiTrendingUp },
   { id: 'all-movies', label: 'All Movies', icon: HiFilm },
