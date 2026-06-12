@@ -91,8 +91,8 @@ export default function BoxOffice() {
             subtitle="Filter by year and language to view the top 5 highest grossing Indian films."
           />
 
-          <Stack direction="column" spacing={2}>
-            <Stack direction="row" spacing={1} flexWrap="wrap">
+          <Stack direction="column" spacing={2} alignItems="center" textAlign="center">
+            <Stack direction="row" spacing={1} flexWrap="wrap" justifyContent="center">
               {yearOptions.map((option) => (
                 <Button
                   key={option}
@@ -104,7 +104,7 @@ export default function BoxOffice() {
                 </Button>
               ))}
             </Stack>
-            <Stack direction="row" spacing={1} flexWrap="wrap">
+            <Stack direction="row" spacing={1} flexWrap="wrap" justifyContent="center">
               {LANGUAGE_OPTIONS.map((option) => (
                 <Button
                   key={option.value}
@@ -125,7 +125,7 @@ export default function BoxOffice() {
               <CircularProgress size={48} color="primary" thickness={4} />
             </Box>
           ) : movies.length > 0 ? (
-            <Grid container spacing={3}>
+            <Grid container spacing={3} justifyContent="center">
               {movies.map((movie, index) => (
                 <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
                   <MovieCard
