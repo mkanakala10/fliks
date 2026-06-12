@@ -11,7 +11,12 @@ import MovieCard from '../components/MovieCard';
 import CTA from '../components/CTA';
 import HorizontalScroller from '../components/HorizontalScroller';
 import { fetchIndianActors } from '../utils/indianActors';
-import { fetchDiscoverMovies, mapDiscoverMovie } from '../utils/tmdbMovies';
+import {
+  fetchDiscoverMovies,
+  filterUnreleasedMovies,
+  getUpcomingReleaseDateFloor,
+  mapDiscoverMovie,
+} from '../utils/tmdbMovies';
 
 function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
   const [trendingActors, setTrendingActors] = useState([]);
@@ -43,6 +48,7 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
         fetchDiscoverMovies(apiKey, {
           primary_release_year: '2026',
           sort_by: 'popularity.desc',
+          'primary_release_date.gte': getUpcomingReleaseDateFloor(),
         }),
       ]);
 
@@ -60,7 +66,7 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
       }
       if (anticipatedResult.status === 'fulfilled') {
         setAnticipated(
-          anticipatedResult.value.map((movie) =>
+          filterUnreleasedMovies(anticipatedResult.value).map((movie) =>
             mapDiscoverMovie(movie, { genre: 'Highly Anticipated' })
           )
         );
@@ -143,7 +149,7 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
           <Box component="section" py={6}>
             <SectionHeader
               title="Most Anticipated 2026"
-              subtitle="Films generating the most buzz right now"
+              subtitle="Upcoming Indian releases generating the most buzz on TMDB"
             />
             <HorizontalScroller
               items={anticipated}

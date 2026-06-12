@@ -22,6 +22,31 @@ export const GENRE_MAP = {
   37: 'Western',
 };
 
+export function isUnreleasedMovie(movieOrItem) {
+  const dateStr = movieOrItem.release_date ?? movieOrItem.releaseDate;
+  if (!dateStr || dateStr === 'TBA') return true;
+
+  try {
+    const release = new Date(dateStr);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return release > today;
+  } catch {
+    return false;
+  }
+}
+
+export function filterUnreleasedMovies(movies) {
+  return movies.filter(isUnreleasedMovie);
+}
+
+export function getUpcomingReleaseDateFloor() {
+  const tomorrow = new Date();
+  tomorrow.setHours(0, 0, 0, 0);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  return tomorrow.toISOString().split('T')[0];
+}
+
 export function mapDiscoverMovie(item, extras = {}) {
   return {
     id: item.id,
