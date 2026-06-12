@@ -22,6 +22,7 @@ const navItems = [
   { id: 'watch-later', label: 'Watch Later', icon: HiBookmark },
   { id: 'ratings', label: 'My Ratings', icon: HiStar },
   { id: 'actors', label: 'Actors', icon: HiUsers },
+  { id: 'box-office', label: 'Box Office', icon: HiTrendingUp },
   { id: 'all-movies', label: 'All Movies', icon: HiFilm },
 ];
 

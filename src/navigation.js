@@ -7,6 +7,7 @@ export const PAGE_PATHS = {
   'watch-later': '/watch-later',
   ratings: '/ratings',
   actors: '/actors',
+  'box-office': '/box-office',
   'all-movies': '/all-movies',
   signup: '/signup',
 };

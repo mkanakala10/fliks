@@ -6,6 +6,7 @@ import WatchLater from './pages/watchLater';
 import Ratings from './pages/ratings';
 import Actors from './pages/actors';
 import AllMovies from './pages/allMovies';
+import BoxOffice from './pages/BoxOffice';
 import Signup from './pages/signup';
 import Search from './pages/search';
 import Recommendations from './pages/recommendations';
@@ -93,6 +94,7 @@ function AppContent() {
         <Route path="/watch-later" element={<WatchLater {...sharedProps} />} />
         <Route path="/ratings" element={<Ratings {...sharedProps} />} />
         <Route path="/actors" element={<Actors />} />
+        <Route path="/box-office" element={<BoxOffice {...sharedProps} />} />
         <Route path="/all-movies" element={<AllMovies {...sharedProps} />} />
         <Route path="/signup" element={<Signup onNavigate={handleNavigate} />} />
         <Route path="/ai-assistant" element={<MovieMeterChatbot onViewMovie={handleViewMovie} />} />
