@@ -10,6 +10,7 @@ import Search from './pages/search';
 import MovieDetails from './pages/movieDetails';
 import MovieMeterChatbot from './components/MovieMeterChatbot';
 import Account from './pages/account';
+import Settings from './pages/settings';
 import Navbar from './components/Navbar';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { UserDataProvider, useUserData } from './contexts/UserDataContext';
@@ -85,6 +86,7 @@ function AppContent() {
         <Route path="/watch-later" element={<Navigate to="/account?tab=watchlist" replace />} />
         <Route path="/ratings" element={<Navigate to="/account?tab=ratings" replace />} />
         <Route path="/account" element={<Account {...sharedProps} />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/actors" element={<Actors />} />
         <Route path="/box-office" element={<BoxOffice {...sharedProps} />} />
         <Route path="/all-movies" element={<AllMovies {...sharedProps} />} />

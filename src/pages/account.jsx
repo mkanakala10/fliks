@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Select from '@mui/material/Select';
+import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
@@ -32,8 +33,21 @@ const GENRE_MAP = {
 function Account({ onViewMovie, onRate }) {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [accountMenuAnchor, setAccountMenuAnchor] = useState(null);
   const { user, isAuthenticated, logout } = useAuth();
   const { ratings, watchLater, loading, syncError, removeFromWatchLater } = useUserData();
+
+  const openAccountMenu = (event) => setAccountMenuAnchor(event.currentTarget);
+  const closeAccountMenu = () => setAccountMenuAnchor(null);
+  const handleOpenSettings = () => {
+    closeAccountMenu();
+    navigate('/settings');
+  };
+  const handleSignOut = async () => {
+    closeAccountMenu();
+    await logout();
+    navigate('/');
+  };
 
   const tabFromParams = searchParams.get('tab');
   const resolveTab = (param) => {
@@ -131,11 +145,6 @@ function Account({ onViewMovie, onRate }) {
     }
   };
 
-  const handleSignOut = async () => {
-    await logout();
-    navigate('/');
-  };
-
   if (!isAuthenticated) return <PageShell loading />;
 
   return (
@@ -169,9 +178,21 @@ function Account({ onViewMovie, onRate }) {
                 </Typography>
               </Box>
             </Stack>
-            <Button variant="secondary" size="sm" onClick={handleSignOut}>
-              Sign out
-            </Button>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <Button variant="secondary" size="sm" onClick={openAccountMenu}>
+                Account actions
+              </Button>
+              <Menu
+                anchorEl={accountMenuAnchor}
+                open={Boolean(accountMenuAnchor)}
+                onClose={closeAccountMenu}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+              >
+                <MenuItem onClick={handleOpenSettings}>Settings</MenuItem>
+                <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
+              </Menu>
+            </Stack>
           </Stack>
 
           {syncError && <Alert severity="warning">{syncError}</Alert>}

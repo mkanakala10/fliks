@@ -7,6 +7,7 @@ export const PAGE_PATHS = {
   'watch-later': '/account',
   ratings: '/account',
   account: '/account',
+  settings: '/settings',
   actors: '/actors',
   'box-office': '/box-office',
   'all-movies': '/all-movies',

@@ -6,6 +6,7 @@ import {
   onAuthStateChanged,
   signOut,
   sendEmailVerification,
+  sendPasswordResetEmail,
 } from 'firebase/auth';
 import { auth, googleProvider, isFirebaseConfigured } from '../firebase';
 
@@ -88,6 +89,14 @@ export function AuthProvider({ children }) {
     return signOut(auth);
   };
 
+  const resetPassword = async () => {
+    assertFirebaseConfigured();
+    if (!user?.email) {
+      throw new Error('No email is available for password reset.');
+    }
+    return sendPasswordResetEmail(auth, user.email);
+  };
+
   const refreshUser = async () => {
     if (auth?.currentUser) {
       await auth.currentUser.reload();
@@ -116,6 +125,7 @@ export function AuthProvider({ children }) {
     signInWithEmail,
     registerWithEmail,
     logout,
+    resetPassword,
     refreshUser,
     isAuthenticated: !!user,
     isFirebaseConfigured,
