@@ -8,7 +8,7 @@ import BoxOffice from './pages/BoxOffice';
 import Signup from './pages/signup';
 import Search from './pages/search';
 import MovieDetails from './pages/movieDetails';
-import MovieMeterChatbot from './components/MovieMeterChatbot';
+import FliksChatbot from './components/FliksChatbot';
 import Account from './pages/account';
 import Settings from './pages/settings';
 import Navbar from './components/Navbar';
@@ -27,8 +27,10 @@ function AppContent() {
   const currentPage = pageFromPath(location.pathname);
 
   useEffect(() => {
-    const redirect = sessionStorage.getItem('movieMeterRedirect');
+    const redirect =
+      sessionStorage.getItem('fliksRedirect') || sessionStorage.getItem('movieMeterRedirect');
     if (redirect) {
+      sessionStorage.removeItem('fliksRedirect');
       sessionStorage.removeItem('movieMeterRedirect');
       navigate(redirect, { replace: true });
     }
@@ -91,7 +93,7 @@ function AppContent() {
         <Route path="/box-office" element={<BoxOffice {...sharedProps} />} />
         <Route path="/all-movies" element={<AllMovies {...sharedProps} />} />
         <Route path="/signup" element={<Signup onNavigate={handleNavigate} />} />
-        <Route path="/ai-assistant" element={<MovieMeterChatbot onViewMovie={handleViewMovie} />} />
+        <Route path="/ai-assistant" element={<FliksChatbot onViewMovie={handleViewMovie} />} />
         <Route path="/movie/:movieId" element={<MovieDetails />} />
         <Route path="*" element={<Home {...sharedProps} />} />
       </Routes>

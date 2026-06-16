@@ -1,8 +1,8 @@
-# Movie Meter
+# Fliks
 
 Indian cinema app — browse trending films, semantic search, personalized recommendations, and an AI assistant.
 
-**Live site (after setup):** https://mkanakala10.github.io/movie-meter/
+**Live site (after setup):** https://mkanakala10.github.io/fliks/
 
 ---
 
@@ -99,12 +99,12 @@ Keep `VITE_API_URL=http://localhost:8000` in your `.env`. Restart `npm run dev` 
    ```
 
 5. **Deploy** — push to `main` (or re-run the **Deploy to GitHub Pages** workflow under Actions).  
-   Site goes live at: **https://mkanakala10.github.io/movie-meter/**
+   Site goes live at: **https://mkanakala10.github.io/fliks/**
 
 **Test production build locally before pushing:**
 
 ```bash
-VITE_BASE_PATH=/movie-meter/ npm run build
+VITE_BASE_PATH=/fliks/ npm run build
 npx vite preview
 ```
 

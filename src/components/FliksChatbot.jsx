@@ -3,15 +3,15 @@ import { useTheme } from '@mui/material/styles';
 import { Send, Film, User } from 'lucide-react';
 import { semanticSearch } from '../config/api';
 import PageShell from './PageShell';
-import './MovieMeter.css';
+import './FliksChatbot.css';
 
-export default function MovieMeterChatbot({ onViewMovie }) {
+export default function FliksChatbot({ onViewMovie }) {
   const theme = useTheme();
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
       content:
-        '🎬 Welcome to Movie Meter! Ask about Indian cinema, get recommendations, or describe the kind of film you\'re in the mood for. I search our Indian film database to give grounded answers.',
+        '🎬 Welcome to Fliks! Ask about Indian cinema, get recommendations, or describe the kind of film you\'re in the mood for. I search our Indian film database to give grounded answers.',
     },
   ]);
   const [input, setInput] = useState('');
@@ -86,7 +86,7 @@ export default function MovieMeterChatbot({ onViewMovie }) {
     }
 
     try {
-      const systemPrompt = `You are Movie Meter, an enthusiastic expert on Indian cinema. Help users discover Hindi, Tamil, Telugu, Malayalam, and Kannada films. Be conversational and passionate. Use the grounded search results below when relevant — cite specific movie titles from that list when recommending.${searchContext}`;
+      const systemPrompt = `You are Fliks, an enthusiastic expert on Indian cinema. Help users discover Hindi, Tamil, Telugu, Malayalam, and Kannada films. Be conversational and passionate. Use the grounded search results below when relevant — cite specific movie titles from that list when recommending.${searchContext}`;
 
       const response = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
@@ -158,16 +158,16 @@ export default function MovieMeterChatbot({ onViewMovie }) {
   return (
     <PageShell>
     <div
-      className="movie-meter-container"
+      className="fliks-chatbot"
       style={{
-        '--mm-bg': theme.palette.background.default,
-        '--mm-surface': theme.palette.background.paper,
-        '--mm-surface-elevated': theme.palette.action.hover,
-        '--mm-text': theme.palette.text.primary,
-        '--mm-text-muted': theme.palette.text.secondary,
-        '--mm-on-primary': theme.palette.primary.contrastText,
-        '--mm-border': theme.palette.divider,
-        '--mm-hover': theme.palette.action.hover,
+        '--fliks-bg': theme.palette.background.default,
+        '--fliks-surface': theme.palette.background.paper,
+        '--fliks-surface-elevated': theme.palette.action.hover,
+        '--fliks-text': theme.palette.text.primary,
+        '--fliks-text-muted': theme.palette.text.secondary,
+        '--fliks-on-primary': theme.palette.primary.contrastText,
+        '--fliks-border': theme.palette.divider,
+        '--fliks-hover': theme.palette.action.hover,
       }}
     >
       <div className="chat-page-intro">
@@ -252,7 +252,7 @@ export default function MovieMeterChatbot({ onViewMovie }) {
           </button>
         </div>
         <p className="tagline">
-          Powered by semantic search + Gemini — grounded in Indian cinema
+          Powered by Fliks — semantic search + Gemini
         </p>
       </div>
     </div>

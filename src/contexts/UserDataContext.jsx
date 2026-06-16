@@ -3,14 +3,22 @@ import { doc, onSnapshot, setDoc, serverTimestamp } from 'firebase/firestore';
 import { db, isFirebaseConfigured } from '../firebase';
 import { useAuth } from './AuthContext';
 
-const RATINGS_STORAGE_KEY = 'movieMeterRatings';
-const WATCHLATER_STORAGE_KEY = 'movie-meter-watch-later';
+const RATINGS_STORAGE_KEY = 'fliks-ratings';
+const WATCHLATER_STORAGE_KEY = 'fliks-watch-later';
+const LEGACY_RATINGS_KEYS = ['movieMeterRatings'];
+const LEGACY_WATCHLATER_KEYS = ['movie-meter-watch-later'];
 
 const UserDataContext = createContext(null);
 
 function readLegacyRatings() {
   try {
-    return JSON.parse(localStorage.getItem(RATINGS_STORAGE_KEY)) || {};
+    const current = localStorage.getItem(RATINGS_STORAGE_KEY);
+    if (current) return JSON.parse(current) || {};
+    for (const key of LEGACY_RATINGS_KEYS) {
+      const legacy = localStorage.getItem(key);
+      if (legacy) return JSON.parse(legacy) || {};
+    }
+    return {};
   } catch {
     return {};
   }
@@ -18,7 +26,13 @@ function readLegacyRatings() {
 
 function readLegacyWatchLater() {
   try {
-    return JSON.parse(localStorage.getItem(WATCHLATER_STORAGE_KEY)) || [];
+    const current = localStorage.getItem(WATCHLATER_STORAGE_KEY);
+    if (current) return JSON.parse(current) || [];
+    for (const key of LEGACY_WATCHLATER_KEYS) {
+      const legacy = localStorage.getItem(key);
+      if (legacy) return JSON.parse(legacy) || [];
+    }
+    return [];
   } catch {
     return [];
   }
@@ -28,6 +42,8 @@ function clearLegacyStorage() {
   try {
     localStorage.removeItem(RATINGS_STORAGE_KEY);
     localStorage.removeItem(WATCHLATER_STORAGE_KEY);
+    LEGACY_RATINGS_KEYS.forEach((key) => localStorage.removeItem(key));
+    LEGACY_WATCHLATER_KEYS.forEach((key) => localStorage.removeItem(key));
   } catch {
     // ignore
   }

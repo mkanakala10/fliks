@@ -3,12 +3,13 @@ import { ThemeProvider, CssBaseline } from '@mui/material';
 import createAppTheme from '../theme';
 
 const ColorModeContext = createContext(null);
-const STORAGE_KEY = 'movie-meter-color-mode';
+const STORAGE_KEY = 'fliks-color-mode';
+const LEGACY_STORAGE_KEY = 'movie-meter-color-mode';
 
 export function ColorModeProvider({ children }) {
   const [mode, setMode] = useState(() => {
     try {
-      return localStorage.getItem(STORAGE_KEY) || 'dark';
+      return localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY) || 'dark';
     } catch {
       return 'dark';
     }

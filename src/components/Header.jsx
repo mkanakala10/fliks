@@ -67,7 +67,7 @@ function Header() {
                 fontSize: { xs: '1rem', sm: '1.15rem' },
               }}
             >
-              Movie Meter
+              Fliks
             </Typography>
           </Stack>
 

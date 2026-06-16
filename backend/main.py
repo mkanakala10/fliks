@@ -1,5 +1,5 @@
 """
-Unified Movie Meter API — semantic search + Indian cinema recommender.
+Unified Fliks API — semantic search + Indian cinema recommender.
 
 Run:  python main.py
 Port: 8000
@@ -21,7 +21,7 @@ from typing import Dict
 
 from indian_movies import get_survey_catalog, load_indian_movies
 
-app = FastAPI(title="Movie Meter Unified API")
+app = FastAPI(title="Fliks API")
 
 app.add_middleware(
     CORSMiddleware,

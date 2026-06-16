@@ -1,4 +1,4 @@
-# Movie Meter Unified Backend
+# Fliks Unified Backend
 
 Single FastAPI service for **Indian cinema** semantic search and personalized recommendations.
 

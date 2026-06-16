@@ -119,7 +119,7 @@ function Signup({ onNavigate }) {
                   ? `Welcome back${user?.displayName ? `, ${user.displayName}` : ''}`
                   : mode === 'register'
                     ? 'Create your account'
-                    : 'Sign in to Movie Meter'}
+                    : 'Sign in to Fliks'}
               </Typography>
               <Typography color="text.secondary" mt={1}>
                 {isAuthenticated

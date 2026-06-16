@@ -1,6 +1,6 @@
-/* Movie Meter Chatbot — theme-aware neutral styling */
+/* Fliks chatbot — theme-aware neutral styling */
 
-.movie-meter-container {
+.fliks-chatbot {
   display: flex;
   flex-direction: column;
   height: calc(100vh - 64px);
@@ -19,13 +19,13 @@
   font-weight: 700;
   letter-spacing: -0.02em;
   margin: 0;
-  color: var(--mm-text, #f5f5f5);
+  color: var(--fliks-text, #f5f5f5);
 }
 
 .chat-page-intro p {
   margin: 0.35rem 0 0;
   font-size: 0.9rem;
-  color: var(--mm-text-muted, #a3a3a3);
+  color: var(--fliks-text-muted, #a3a3a3);
 }
 
 .chat-area {
@@ -63,17 +63,17 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  border: 1px solid var(--mm-border, rgba(255, 255, 255, 0.08));
+  border: 1px solid var(--fliks-border, rgba(255, 255, 255, 0.08));
 }
 
 .user-avatar {
-  background: var(--mm-surface, #141414);
-  color: var(--mm-text, #f5f5f5);
+  background: var(--fliks-surface, #141414);
+  color: var(--fliks-text, #f5f5f5);
 }
 
 .assistant-avatar {
-  background: var(--mm-surface-elevated, #1a1a1a);
-  color: var(--mm-text, #f5f5f5);
+  background: var(--fliks-surface-elevated, #1a1a1a);
+  color: var(--fliks-text, #f5f5f5);
 }
 
 .message-bubble {
@@ -90,22 +90,22 @@
 }
 
 .user-bubble {
-  background: var(--mm-text, #f5f5f5);
-  color: var(--mm-on-primary, #0a0a0a);
+  background: var(--fliks-text, #f5f5f5);
+  color: var(--fliks-on-primary, #0a0a0a);
   border-bottom-right-radius: 4px;
 }
 
 .assistant-bubble {
-  background: var(--mm-surface, #141414);
-  color: var(--mm-text, #f5f5f5);
-  border: 1px solid var(--mm-border, rgba(255, 255, 255, 0.08));
+  background: var(--fliks-surface, #141414);
+  color: var(--fliks-text, #f5f5f5);
+  border: 1px solid var(--fliks-border, rgba(255, 255, 255, 0.08));
   border-bottom-left-radius: 4px;
 }
 
 .movie-chip-label {
   font-size: 13px;
   margin-bottom: 8px;
-  color: var(--mm-text-muted, #a3a3a3);
+  color: var(--fliks-text-muted, #a3a3a3);
 }
 
 .movie-chip-row {
@@ -115,10 +115,10 @@
 }
 
 .movie-chip {
-  background: var(--mm-surface-elevated, #1a1a1a);
-  border: 1px solid var(--mm-border, rgba(255, 255, 255, 0.12));
+  background: var(--fliks-surface-elevated, #1a1a1a);
+  border: 1px solid var(--fliks-border, rgba(255, 255, 255, 0.12));
   border-radius: 20px;
-  color: var(--mm-text, #f5f5f5);
+  color: var(--fliks-text, #f5f5f5);
   padding: 6px 14px;
   cursor: pointer;
   font-size: 13px;
@@ -126,8 +126,8 @@
 }
 
 .movie-chip:hover {
-  border-color: var(--mm-text-muted, #a3a3a3);
-  background: var(--mm-hover, rgba(255, 255, 255, 0.06));
+  border-color: var(--fliks-text-muted, #a3a3a3);
+  background: var(--fliks-hover, rgba(255, 255, 255, 0.06));
 }
 
 .typing-indicator {
@@ -140,7 +140,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--mm-text-muted, #a3a3a3);
+  background: var(--fliks-text-muted, #a3a3a3);
   animation: pulse 1.2s ease-in-out infinite;
 }
 
@@ -154,8 +154,8 @@
 
 .input-area {
   padding: 0.75rem 1rem 1.25rem;
-  border-top: 1px solid var(--mm-border, rgba(255, 255, 255, 0.08));
-  background: var(--mm-bg, #0a0a0a);
+  border-top: 1px solid var(--fliks-border, rgba(255, 255, 255, 0.08));
+  background: var(--fliks-bg, #0a0a0a);
 }
 
 .input-container {
@@ -170,20 +170,20 @@
   flex: 1;
   padding: 0.85rem 1rem;
   border-radius: 10px;
-  border: 1px solid var(--mm-border, rgba(255, 255, 255, 0.12));
-  background: var(--mm-surface, #141414);
-  color: var(--mm-text, #f5f5f5);
+  border: 1px solid var(--fliks-border, rgba(255, 255, 255, 0.12));
+  background: var(--fliks-surface, #141414);
+  color: var(--fliks-text, #f5f5f5);
   font-size: 0.925rem;
   outline: none;
   transition: border-color 0.15s;
 }
 
 .message-input:focus {
-  border-color: var(--mm-text-muted, #a3a3a3);
+  border-color: var(--fliks-text-muted, #a3a3a3);
 }
 
 .message-input::placeholder {
-  color: var(--mm-text-muted, #a3a3a3);
+  color: var(--fliks-text-muted, #a3a3a3);
 }
 
 .send-button {
@@ -191,8 +191,8 @@
   height: 44px;
   border-radius: 10px;
   border: none;
-  background: var(--mm-text, #f5f5f5);
-  color: var(--mm-on-primary, #0a0a0a);
+  background: var(--fliks-text, #f5f5f5);
+  color: var(--fliks-on-primary, #0a0a0a);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -212,6 +212,6 @@
 .tagline {
   text-align: center;
   font-size: 0.75rem;
-  color: var(--mm-text-muted, #a3a3a3);
+  color: var(--fliks-text-muted, #a3a3a3);
   margin: 0.65rem 0 0;
 }
