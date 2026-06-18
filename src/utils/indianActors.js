@@ -6,7 +6,8 @@
  */
 export async function fetchIndianActors() {
   try {
-    const response = await fetch('/data/trending-actors.json');
+    const basePath = import.meta.env.BASE_URL || '/';
+    const response = await fetch(`${basePath}data/trending-actors.json`);
     
     if (!response.ok) {
       throw new Error(`Failed to fetch trending actors: ${response.status}`);
