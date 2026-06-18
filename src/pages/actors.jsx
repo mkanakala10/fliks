@@ -21,18 +21,11 @@ function Actors() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const apiKey = import.meta.env.VITE_TMDB_API_KEY;
-    if (!apiKey) {
-      setError('Missing TMDB API key. Add VITE_TMDB_API_KEY to your .env file.');
-      setIsLoading(false);
-      return;
-    }
-
     const fetchActors = async () => {
       setIsLoading(true);
       setError(null);
       try {
-        const indianActors = await fetchIndianActors(apiKey);
+        const indianActors = await fetchIndianActors();
         setActors(indianActors);
         setFiltered(indianActors);
       } catch (err) {

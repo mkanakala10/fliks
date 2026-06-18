@@ -40,7 +40,7 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
       setError(null);
 
       const results = await Promise.allSettled([
-        fetchIndianActors(apiKey),
+        fetchIndianActors(),
         fetchDiscoverMovies(apiKey, {
           primary_release_year: '2026',
           sort_by: 'revenue.desc',
