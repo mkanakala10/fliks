@@ -9,11 +9,15 @@ import {
   HiFilm,
   HiSearch,
   HiChartBar,
+  HiStar,
+  HiBookmark,
 } from 'react-icons/hi';
 
 const navItems = [
   { id: 'home', label: 'Home', icon: HiHome },
   { id: 'trending', label: 'Trending', icon: HiTrendingUp },
+  { id: 'ratings', label: 'My Ratings', icon: HiStar },
+  { id: 'watch-later', label: 'Watchlist', icon: HiBookmark },
   { id: 'search', label: 'Search', icon: HiSearch },
   { id: 'all-movies', label: 'All Movies', icon: HiFilm },
   { id: 'box-office', label: 'Box Office', icon: HiChartBar },

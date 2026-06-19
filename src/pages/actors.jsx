@@ -94,7 +94,7 @@ function Actors() {
               <HorizontalScroller
                 items={filtered}
                 getKey={(actor) => actor.id}
-                renderItem={(actor) => <ActorCard actor={actor} />}
+                renderItem={(actor, index) => <ActorCard actor={actor} rank={index + 1} />}
                 cardVariant="actor"
               />
             </Box>

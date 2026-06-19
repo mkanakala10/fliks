@@ -6,16 +6,21 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Alert from '@mui/material/Alert';
+import Rating from '@mui/material/Rating';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PageShell from '../components/PageShell';
 import Button from '../components/Button';
 import { useWatchLater } from '../contexts/WatchLaterContext';
 import { useNavigation } from '../contexts/NavigationContext';
+import { useUserData } from '../contexts/UserDataContext';
+import { useAuth } from '../contexts/AuthContext';
 
 function MovieDetails() {
   const { movieId: movieIdParam } = useParams();
   const movieId = Number(movieIdParam);
   const { onGoBack } = useNavigation();
+  const { ratings, rateMovie } = useUserData();
+  const { isAuthenticated } = useAuth();
   const [movie, setMovie] = useState(null);
   const [credits, setCredits] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -110,6 +115,15 @@ function MovieDetails() {
   const cast = (credits?.cast || []).slice(0, 8);
   const inWatchlist = isInWatchLater(movie.id);
   const heroBackground = movie.backdrop || movie.image;
+  const currentRating = ratings[movie.id] || 0;
+
+  const handleRate = async (value) => {
+    if (!isAuthenticated) {
+      alert('Please sign in to rate movies.');
+      return;
+    }
+    await rateMovie(movie.id, value);
+  };
 
   return (
     <PageShell>
@@ -234,10 +248,26 @@ function MovieDetails() {
                   {movie.overview || 'No overview available.'}
                 </Typography>
 
-                <Stack direction="row" spacing={2} mt={2}>
+                <Stack direction="row" spacing={2} mt={2} alignItems="center">
                   <Button variant={inWatchlist ? 'secondary' : 'primary'} onClick={handleWatchlist}>
                     {inWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}
                   </Button>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, ml: { xs: 0, sm: 2 } }}>
+                    <Typography color="text.secondary" sx={{ whiteSpace: 'nowrap' }}>
+                      Your rating
+                    </Typography>
+                    <Rating
+                      name={`detail-rating-${movie.id}`}
+                      value={currentRating}
+                      precision={0.5}
+                      onChange={(_, value) => {
+                        if (value !== null) {
+                          handleRate(value);
+                        }
+                      }}
+                      sx={{ '& .MuiRating-iconFilled': { color: '#f59e0b' } }}
+                    />
+                  </Box>
                 </Stack>
               </Stack>
 

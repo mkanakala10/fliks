@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 
-function ActorCard({ actor, onClick }) {
+function ActorCard({ actor, rank, onClick }) {
   return (
     <Box
       onClick={onClick}
@@ -49,7 +49,7 @@ function ActorCard({ actor, onClick }) {
           }}
         />
         <Chip
-          label={`${actor.trendingScore}%`}
+          label={rank ? `#${rank}` : 'Trending'}
           size="small"
           sx={{
             position: 'absolute',

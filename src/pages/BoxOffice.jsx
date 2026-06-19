@@ -28,7 +28,7 @@ function getYearOptions() {
   return Array.from({ length: currentYear - earliestYear + 1 }, (_, index) => String(currentYear - index));
 }
 
-export default function BoxOffice() {
+export default function BoxOffice({ onRate, ratings = {} }) {
   const [movies, setMovies] = useState([]);
   const [year, setYear] = useState(String(new Date().getFullYear()));
   const [language, setLanguage] = useState('');
@@ -129,8 +129,9 @@ export default function BoxOffice() {
               {movies.map((movie, index) => (
                 <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
                   <MovieCard
-                    movie={{ ...movie, ratingValue: 0 }}
+                    movie={{ ...movie, ratingValue: ratings[movie.id] || 0 }}
                     rank={index + 1}
+                    onRate={onRate}
                   />
                 </Grid>
               ))}

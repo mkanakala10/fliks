@@ -5,6 +5,8 @@ import Trending from './pages/trending';
 import Actors from './pages/actors';
 import AllMovies from './pages/allMovies';
 import BoxOffice from './pages/BoxOffice';
+import Ratings from './pages/ratings';
+import WatchLater from './pages/watchLater';
 import Signup from './pages/signup';
 import Search from './pages/search';
 import MovieDetails from './pages/movieDetails';
@@ -85,8 +87,8 @@ function AppContent() {
         <Route path="/trending" element={<Trending {...sharedProps} />} />
         <Route path="/search" element={<Search {...sharedProps} />} />
         <Route path="/recommendations" element={<Navigate to="/account?tab=for-you" replace />} />
-        <Route path="/watch-later" element={<Navigate to="/account?tab=watchlist" replace />} />
-        <Route path="/ratings" element={<Navigate to="/account?tab=ratings" replace />} />
+        <Route path="/watch-later" element={<WatchLater {...sharedProps} />} />
+        <Route path="/ratings" element={<Ratings {...sharedProps} />} />
         <Route path="/account" element={<Account {...sharedProps} />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/actors" element={<Actors />} />

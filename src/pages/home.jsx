@@ -160,7 +160,7 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
             <HorizontalScroller
               items={trendingActors}
               getKey={(actor) => actor.id}
-              renderItem={(actor) => <ActorCard actor={actor} />}
+              renderItem={(actor, index) => <ActorCard actor={actor} rank={index + 1} />}
               emptyMessage="Updating trending stars…"
               centerWhenFits
               cardVariant="actor"
