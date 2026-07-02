@@ -125,9 +125,15 @@ function HorizontalScroller({
           pb: 1,
           WebkitOverflowScrolling: 'touch',
           '&::-webkit-scrollbar': { height: 6 },
+          '&::-webkit-scrollbar-track': {
+            background: 'transparent',
+          },
           '&::-webkit-scrollbar-thumb': {
             borderRadius: 3,
-            bgcolor: 'divider',
+            bgcolor: 'rgba(99, 102, 241, 0.25)',
+          },
+          '&::-webkit-scrollbar-thumb:hover': {
+            bgcolor: 'rgba(99, 102, 241, 0.5)',
           },
         }}
       >

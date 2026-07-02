@@ -34,7 +34,9 @@ function Navbar({ isOpen, onToggle, currentPage, onNavigate }) {
           sx={{
             position: 'fixed',
             inset: 0,
-            bgcolor: 'rgba(0,0,0,0.45)',
+            bgcolor: 'rgba(3, 3, 10, 0.6)',
+            backdropFilter: 'blur(6px)',
+            WebkitBackdropFilter: 'blur(6px)',
             zIndex: 1150,
           }}
         />
@@ -43,28 +45,32 @@ function Navbar({ isOpen, onToggle, currentPage, onNavigate }) {
       <Box
         sx={{
           position: 'fixed',
-          top: 0,
-          left: 0,
-          height: '100vh',
-          width: { xs: '100%', sm: 280 },
+          top: { xs: 16, sm: 88 },
+          left: isOpen ? { xs: 16, sm: 24 } : -320,
+          height: { xs: 'calc(100vh - 32px)', sm: 'calc(100vh - 112px)' },
+          width: { xs: 'calc(100% - 32px)', sm: 260 },
           maxWidth: 280,
-          bgcolor: 'background.paper',
-          borderRight: 1,
-          borderColor: 'divider',
+          bgcolor: 'rgba(15, 14, 38, 0.7)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          borderRadius: 4,
+          border: 1,
+          borderColor: 'rgba(99, 102, 241, 0.15)',
           zIndex: 1200,
-          transform: isOpen ? 'translateX(0)' : 'translateX(-100%)',
-          transition: 'transform 0.25s ease',
+          transition: 'left 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+          boxShadow: '0 16px 40px rgba(0, 0, 0, 0.5)',
           display: 'flex',
           flexDirection: 'column',
-          pt: '64px',
+          pt: 3,
+          pb: 2,
         }}
       >
         <Stack sx={{ p: 2, flexGrow: 1 }} spacing={0.5}>
           <Typography
             variant="overline"
-            sx={{ px: 1.5, pb: 1, color: 'text.secondary', letterSpacing: '0.08em' }}
+            sx={{ px: 2, pb: 1.5, color: 'text.secondary', letterSpacing: '0.08em', fontWeight: 700 }}
           >
-            Navigation
+            Fliks Menu
           </Typography>
 
           {navItems.map((item) => {
@@ -83,21 +89,25 @@ function Navbar({ isOpen, onToggle, currentPage, onNavigate }) {
                   display: 'flex',
                   alignItems: 'center',
                   gap: 1.5,
-                  px: 1.5,
-                  py: 1.25,
-                  borderRadius: 2,
+                  px: 2.25,
+                  py: 1.5,
+                  borderRadius: 3,
                   border: 'none',
                   cursor: 'pointer',
-                  bgcolor: isActive ? 'action.selected' : 'transparent',
-                  color: isActive ? 'text.primary' : 'text.secondary',
-                  transition: 'background-color 0.15s',
+                  bgcolor: isActive ? 'rgba(99, 102, 241, 0.15)' : 'transparent',
+                  color: isActive ? '#818cf8' : 'text.secondary',
+                  borderLeft: isActive ? '4px solid #6366f1' : '4px solid transparent',
+                  pl: isActive ? 1.75 : 2.25,
+                  transition: 'all 0.2s ease',
                   '&:hover': {
-                    bgcolor: isActive ? 'action.selected' : 'action.hover',
+                    bgcolor: isActive ? 'rgba(99, 102, 241, 0.2)' : 'rgba(255, 255, 255, 0.04)',
+                    color: isActive ? '#818cf8' : 'text.primary',
+                    transform: 'translateX(4px)',
                   },
                 }}
               >
-                <IconComponent size={18} />
-                <Typography component="span" fontWeight={isActive ? 600 : 500} fontSize="0.9rem">
+                <IconComponent size={18} style={{ color: isActive ? '#818cf8' : 'inherit' }} />
+                <Typography component="span" fontWeight={isActive ? 700 : 500} fontSize="0.9rem">
                   {item.label}
                 </Typography>
               </Box>

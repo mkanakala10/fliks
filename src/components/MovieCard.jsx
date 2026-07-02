@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Rating from '@mui/material/Rating';
 import Button from './Button';
+import { useMovieFliksRating } from '../hooks/useMovieFliksRating';
 
 function MovieCard({
   movie,
@@ -22,6 +23,7 @@ function MovieCard({
   const currentRating = movie?.ratingValue || 0;
   const tmdbRating = movie?.rating > 0 ? Number(movie.rating) : null;
   const displayRating = hoverRating >= 0 ? hoverRating : currentRating;
+  const fliks = useMovieFliksRating(movie?.id);
 
   const shouldShowComingSoon = () => {
     if (!isUpcoming) return false;
@@ -66,13 +68,15 @@ function MovieCard({
       tabIndex={isClickable ? 0 : undefined}
       aria-label={isClickable ? `View details for ${movie.title}` : undefined}
       sx={{
-        bgcolor: 'background.paper',
-        borderRadius: 2,
+        bgcolor: 'rgba(15, 14, 38, 0.65)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        borderRadius: 3,
         overflow: 'hidden',
         border: 1,
-        borderColor: 'divider',
+        borderColor: 'rgba(99, 102, 241, 0.12)',
         position: 'relative',
-        transition: 'transform 0.2s, box-shadow 0.2s, border-color 0.2s',
+        transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease',
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
@@ -80,16 +84,16 @@ function MovieCard({
         cursor: isClickable ? 'pointer' : 'default',
         '&:hover': isClickable
           ? {
-              transform: 'translateY(-4px)',
-              borderColor: 'text.secondary',
+              transform: 'translateY(-6px)',
+              borderColor: 'rgba(99, 102, 241, 0.35)',
               boxShadow: (theme) =>
                 theme.palette.mode === 'dark'
-                  ? '0 12px 32px rgba(0,0,0,0.4)'
-                  : '0 12px 32px rgba(0,0,0,0.08)',
+                  ? '0 16px 36px rgba(99, 102, 241, 0.2), inset 0 0 12px rgba(99, 102, 241, 0.08)'
+                  : '0 16px 36px rgba(99, 102, 241, 0.1), inset 0 0 12px rgba(99, 102, 241, 0.04)',
             }
           : {},
         '&:hover .movie-card-poster': {
-          transform: 'scale(1.03)',
+          transform: 'scale(1.05)',
         },
       }}
     >
@@ -212,12 +216,16 @@ function MovieCard({
           />
         </Box>
 
-        <Box sx={{ minHeight: 32, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Box sx={{ minHeight: 48, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 0.25 }}>
+          <Typography variant="caption" sx={{ color: '#a855f7', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 0.5 }}>
+            Fliks: {fliks.isLoading ? '...' : fliks.count > 0 ? `★ ${fliks.average} (${fliks.count} votes)` : '★ -- (0 votes)'}
+          </Typography>
+
           {(displayRating > 0 || tmdbRating !== null) && (
             <Typography variant="caption" color="text.secondary" textAlign="center">
               {displayRating > 0 && (
                 <>
-                  Your rating:{' '}
+                  You:{' '}
                   <Box component="span" sx={{ color: '#f59e0b', fontWeight: 600 }}>
                     {displayRating.toFixed(1)}
                   </Box>

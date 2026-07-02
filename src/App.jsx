@@ -19,8 +19,10 @@ import { UserDataProvider, useUserData } from './contexts/UserDataContext';
 import { ColorModeProvider } from './contexts/ColorModeContext';
 import { NavigationProvider } from './contexts/NavigationContext';
 import { pathForPage, pageFromPath } from './navigation';
+import { ToastProvider, useToast } from './contexts/ToastContext';
 
 function AppContent() {
+  const showToast = useToast();
   const navigate = useNavigate();
   const location = useLocation();
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -52,7 +54,7 @@ function AppContent() {
 
   const handleRate = async (movieId, value) => {
     if (!isAuthenticated) {
-      alert('Please sign in to rate movies.');
+      showToast('Please sign in to rate movies.', 'warning');
       navigate(pathForPage('signup'));
       return;
     }
@@ -108,9 +110,11 @@ function App() {
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <ColorModeProvider>
         <AuthProvider>
-          <UserDataProvider>
-            <AppContent />
-          </UserDataProvider>
+          <ToastProvider>
+            <UserDataProvider>
+              <AppContent />
+            </UserDataProvider>
+          </ToastProvider>
         </AuthProvider>
       </ColorModeProvider>
     </BrowserRouter>

@@ -27,10 +27,11 @@ function Header() {
         position: 'sticky',
         top: 0,
         zIndex: 1100,
-        bgcolor: 'background.paper',
+        bgcolor: 'rgba(7, 7, 20, 0.7)',
         borderBottom: 1,
-        borderColor: 'divider',
-        backdropFilter: 'blur(12px)',
+        borderColor: 'rgba(99, 102, 241, 0.15)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
       }}
     >
       <Container maxWidth="xl">
@@ -49,8 +50,13 @@ function Header() {
                 size="small"
                 sx={{
                   border: 1,
-                  borderColor: 'divider',
+                  borderColor: 'rgba(99, 102, 241, 0.25)',
                   borderRadius: 2,
+                  color: '#818cf8',
+                  bgcolor: 'rgba(99, 102, 241, 0.05)',
+                  '&:hover': {
+                    bgcolor: 'rgba(99, 102, 241, 0.15)',
+                  },
                 }}
               >
                 <HiMenu size={20} />
@@ -60,11 +66,14 @@ function Header() {
               variant="h6"
               onClick={() => onNavigate?.('home')}
               sx={{
-                fontWeight: 700,
-                letterSpacing: '-0.03em',
+                fontWeight: 900,
+                letterSpacing: '-0.04em',
                 cursor: 'pointer',
                 whiteSpace: 'nowrap',
-                fontSize: { xs: '1rem', sm: '1.15rem' },
+                fontSize: { xs: '1.25rem', sm: '1.45rem' },
+                background: 'linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
               }}
             >
               Fliks
@@ -80,8 +89,13 @@ function Header() {
                 size="small"
                 sx={{
                   border: 1,
-                  borderColor: 'divider',
-                  borderRadius: 2,
+                  borderColor: 'rgba(99, 102, 241, 0.25)',
+                  borderRadius: 2.5,
+                  color: '#818cf8',
+                  bgcolor: 'rgba(99, 102, 241, 0.05)',
+                  '&:hover': {
+                    bgcolor: 'rgba(99, 102, 241, 0.15)',
+                  },
                 }}
               >
                 {mode === 'dark' ? <HiSun size={18} /> : <HiMoon size={18} />}
@@ -89,7 +103,7 @@ function Header() {
             </Tooltip>
 
             {isAuthenticated ? (
-              <Stack direction="row" alignItems="center" spacing={1}>
+              <Stack direction="row" alignItems="center" spacing={1.5}>
                 <Button
                   variant="outlined"
                   size="small"
@@ -97,10 +111,14 @@ function Header() {
                   onClick={() => onNavigate?.('account')}
                   sx={{
                     display: { xs: 'none', sm: 'inline-flex' },
-                    borderColor: 'divider',
+                    borderColor: 'rgba(99, 102, 241, 0.25)',
                     color: 'text.primary',
-                    borderRadius: 2,
+                    borderRadius: 2.5,
                     px: 2,
+                    '&:hover': {
+                      borderColor: 'rgba(99, 102, 241, 0.45)',
+                      bgcolor: 'rgba(99, 102, 241, 0.05)',
+                    },
                   }}
                 >
                   Account
@@ -112,8 +130,9 @@ function Header() {
                   sx={{
                     display: { xs: 'inline-flex', sm: 'none' },
                     border: 1,
-                    borderColor: 'divider',
-                    borderRadius: 2,
+                    borderColor: 'rgba(99, 102, 241, 0.25)',
+                    borderRadius: 2.5,
+                    color: '#818cf8',
                   }}
                 >
                   <HiUser size={18} />
@@ -123,12 +142,16 @@ function Header() {
                   size="small"
                   onClick={handleSignOut}
                   sx={{
-                    borderColor: 'divider',
-                    color: 'text.primary',
-                    borderRadius: 2,
+                    borderColor: 'rgba(217, 70, 239, 0.25)',
+                    color: '#f472b6',
+                    borderRadius: 2.5,
                     px: { xs: 1.25, sm: 2 },
                     minWidth: 0,
                     fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                    '&:hover': {
+                      borderColor: 'rgba(217, 70, 239, 0.45)',
+                      bgcolor: 'rgba(217, 70, 239, 0.05)',
+                    },
                   }}
                 >
                   Sign out
@@ -140,15 +163,15 @@ function Header() {
                 size="small"
                 onClick={() => onNavigate?.('signup')}
                 sx={{
-                  bgcolor: 'primary.main',
-                  color: 'primary.contrastText',
-                  borderRadius: 2,
-                  px: { xs: 1.5, sm: 2.5 },
-                  boxShadow: 'none',
+                  background: 'linear-gradient(135deg, #6366f1 0%, #d946ef 100%)',
+                  color: '#ffffff',
+                  borderRadius: 2.5,
+                  px: { xs: 2, sm: 3 },
+                  fontWeight: 700,
+                  boxShadow: '0 4px 15px rgba(99, 102, 241, 0.3)',
                   '&:hover': {
-                    bgcolor: 'primary.main',
-                    opacity: 0.9,
-                    boxShadow: 'none',
+                    background: 'linear-gradient(135deg, #4f46e5 0%, #c084fc 100%)',
+                    boxShadow: '0 6px 20px rgba(99, 102, 241, 0.4)',
                   },
                 }}
               >

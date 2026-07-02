@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import { doc, onSnapshot, setDoc, serverTimestamp } from 'firebase/firestore';
 import { db, isFirebaseConfigured } from '../firebase';
 import { useAuth } from './AuthContext';
+import { useToast } from './ToastContext';
 
 const RATINGS_STORAGE_KEY = 'fliks-ratings';
 const WATCHLATER_STORAGE_KEY = 'fliks-watch-later';
@@ -51,6 +52,7 @@ function clearLegacyStorage() {
 
 export function UserDataProvider({ children }) {
   const { user } = useAuth();
+  const showToast = useToast();
   const [ratings, setRatings] = useState({});
   const [watchLater, setWatchLater] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -145,9 +147,9 @@ export function UserDataProvider({ children }) {
   );
 
   const rateMovie = useCallback(
-    async (movieId, value) => {
+    async (movieId, value, reviewText = '') => {
       if (!user) {
-        alert('Please sign in to rate movies.');
+        showToast('Please sign in to rate movies.', 'warning');
         throw Object.assign(new Error('Sign in required'), { code: 'auth/required' });
       }
 
@@ -157,6 +159,16 @@ export function UserDataProvider({ children }) {
 
       try {
         await persistUserData({ ratings: nextRatings });
+        if (db) {
+          const ratingDocRef = doc(db, 'movies', key, 'userRatings', user.uid);
+          const username = user.displayName || user.email?.split('@')[0] || 'Anonymous User';
+          await setDoc(ratingDocRef, {
+            rating: value,
+            reviewText,
+            username,
+            updatedAt: serverTimestamp(),
+          });
+        }
       } catch (error) {
         setRatings(ratings);
         throw error;
@@ -168,7 +180,7 @@ export function UserDataProvider({ children }) {
   const addToWatchLater = useCallback(
     async (movie) => {
       if (!user) {
-        alert('Please sign in to save movies to your watchlist.');
+        showToast('Please sign in to save movies to your watchlist.', 'warning');
         throw Object.assign(new Error('Sign in required'), { code: 'auth/required' });
       }
 
