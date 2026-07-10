@@ -187,6 +187,18 @@ function MovieDetails() {
   const heroBackground = movie.backdrop || movie.image;
   const currentRating = ratings[movie.id] || 0;
 
+  const isUnreleased = (() => {
+    if (!movie?.releaseDate) return false;
+    try {
+      const releaseDate = new Date(movie.releaseDate);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return releaseDate > today;
+    } catch {
+      return false;
+    }
+  })();
+
   // Compute budget / ROI details
   const formattedBudget = movie.budget > 0 ? `₹${(movie.budget / 10000000).toFixed(1)} Cr` : null;
   const formattedRevenue = movie.revenue > 0 ? `₹${(movie.revenue / 10000000).toFixed(1)} Cr` : null;
@@ -510,7 +522,19 @@ function MovieDetails() {
                 </Box>
 
                 {/* Star Rating & Review input */}
-                {isAuthenticated ? (
+                {isUnreleased ? (
+                  <Box sx={{ bgcolor: 'rgba(15, 14, 38, 0.45)', p: 3.5, border: '1px solid rgba(99,102,241,0.15)', borderRadius: 4, textAlign: 'center' }}>
+                    <Typography variant="h6" fontWeight={700} sx={{ mb: 1 }}>
+                      Rate & Review This Film
+                    </Typography>
+                    <Typography color="text.secondary" sx={{ mb: 1, fontSize: '0.95rem' }}>
+                      Ratings and reviews are not available for upcoming movies.
+                    </Typography>
+                    <Typography variant="caption" sx={{ color: '#818cf8', fontWeight: 600 }}>
+                      Release Date: {movie.releaseDate || 'TBA'}
+                    </Typography>
+                  </Box>
+                ) : isAuthenticated ? (
                   <Box sx={{ bgcolor: 'rgba(15, 14, 38, 0.45)', p: 3, border: '1px solid rgba(99,102,241,0.15)', borderRadius: 4 }}>
                     <Typography variant="h6" fontWeight={700} sx={{ mb: 1 }}>
                       {myReview ? 'Update Your Rating & Review' : 'Rate & Review This Film'}
