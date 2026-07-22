@@ -25,6 +25,18 @@ function MovieCard({
   const displayRating = hoverRating >= 0 ? hoverRating : currentRating;
   const fliks = useMovieFliksRating(movie?.id);
 
+  const isUnreleased = (() => {
+    if (!movie?.releaseDate) return isUpcoming;
+    try {
+      const releaseDate = new Date(movie.releaseDate);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return releaseDate > today;
+    } catch {
+      return false;
+    }
+  })();
+
   const shouldShowComingSoon = () => {
     if (!isUpcoming) return false;
     if (!movie?.releaseDate) return true;
@@ -197,24 +209,26 @@ function MovieCard({
           {movie.title}
         </Typography>
 
-        <Box onClick={stopPropagation} sx={{ lineHeight: 0 }}>
-          <Rating
-            name={`rating-${movie.id}`}
-            value={currentRating}
-            precision={0.5}
-            readOnly={!onRate}
-            size="small"
-            onChange={(_, value) => {
-              if (value !== null) onRate?.(movie.id, value);
-            }}
-            onChangeActive={(_, value) => setHoverRating(value ?? -1)}
-            sx={{
-              '& .MuiRating-iconFilled': { color: '#f59e0b' },
-              '& .MuiRating-iconHover': { color: '#fbbf24' },
-              '& .MuiRating-iconEmpty': { color: 'action.disabled' },
-            }}
-          />
-        </Box>
+        {!isUnreleased && (
+          <Box onClick={stopPropagation} sx={{ lineHeight: 0 }}>
+            <Rating
+              name={`rating-${movie.id}`}
+              value={currentRating}
+              precision={0.5}
+              readOnly={!onRate}
+              size="small"
+              onChange={(_, value) => {
+                if (value !== null) onRate?.(movie.id, value);
+              }}
+              onChangeActive={(_, value) => setHoverRating(value ?? -1)}
+              sx={{
+                '& .MuiRating-iconFilled': { color: '#f59e0b' },
+                '& .MuiRating-iconHover': { color: '#fbbf24' },
+                '& .MuiRating-iconEmpty': { color: 'action.disabled' },
+              }}
+            />
+          </Box>
+        )}
 
         <Box sx={{ minHeight: 48, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 0.25 }}>
           <Typography variant="caption" sx={{ color: '#a855f7', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 0.5 }}>
