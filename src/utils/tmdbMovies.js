@@ -97,3 +97,37 @@ export async function fetchDiscoverMovies(apiKey, queryParams, { maxPages } = {}
 
   return movies;
 }
+
+export async function fetchHighestRoiMovies(apiKey) {
+  const rawMovies = await fetchDiscoverMovies(apiKey, {
+    sort_by: 'revenue.desc',
+    'primary_release_date.gte': '2023-01-01',
+  }, { maxPages: 2 });
+
+  const detailPromises = rawMovies.slice(0, 40).map(async (movie) => {
+    try {
+      const res = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${apiKey}`);
+      if (!res.ok) return null;
+      const data = await res.json();
+      return data;
+    } catch {
+      return null;
+    }
+  });
+
+  const detailedMovies = await Promise.all(detailPromises);
+
+  const moviesWithRoi = detailedMovies
+    .filter((m) => m && m.budget > 0 && m.revenue > 0)
+    .map((m) => {
+      const roiValue = ((m.revenue - m.budget) / m.budget) * 100;
+      return {
+        ...mapDiscoverMovie(m),
+        revenue: `ROI: +${roiValue.toFixed(0)}%`,
+        releaseDate: m.release_date || 'TBA',
+        roi: roiValue,
+      };
+    });
+
+  return moviesWithRoi.sort((a, b) => b.roi - a.roi);
+}

@@ -11,19 +11,25 @@ import MovieCard from '../components/MovieCard';
 import CTA from '../components/CTA';
 import HorizontalScroller from '../components/HorizontalScroller';
 import { fetchIndianActors } from '../utils/indianActors';
+import ActorModal from '../components/ActorModal';
 import {
   fetchDiscoverMovies,
   filterUnreleasedMovies,
   getUpcomingReleaseDateFloor,
   mapDiscoverMovie,
+  fetchHighestRoiMovies,
 } from '../utils/tmdbMovies';
 
 function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
   const [trendingActors, setTrendingActors] = useState([]);
   const [boxOffice, setBoxOffice] = useState([]);
+  const [roiMovies, setRoiMovies] = useState([]);
   const [anticipated, setAnticipated] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedActorId, setSelectedActorId] = useState(null);
+  const [selectedActorName, setSelectedActorName] = useState('');
+  const [isActorModalOpen, setIsActorModalOpen] = useState(false);
 
   useEffect(() => {
     const apiKey = import.meta.env.VITE_TMDB_API_KEY;
@@ -50,11 +56,12 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
           sort_by: 'popularity.desc',
           'primary_release_date.gte': getUpcomingReleaseDateFloor(),
         }),
+        fetchHighestRoiMovies(apiKey),
       ]);
 
       if (cancelled) return;
 
-      const [actorsResult, boxOfficeResult, anticipatedResult] = results;
+      const [actorsResult, boxOfficeResult, anticipatedResult, roiResult] = results;
 
       if (actorsResult.status === 'fulfilled') {
         setTrendingActors(actorsResult.value);
@@ -63,6 +70,9 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
         setBoxOffice(
           boxOfficeResult.value.map((movie) => mapDiscoverMovie(movie)).slice(0, 20)
         );
+      }
+      if (roiResult.status === 'fulfilled') {
+        setRoiMovies(roiResult.value.slice(0, 20));
       }
       if (anticipatedResult.status === 'fulfilled') {
         setAnticipated(
@@ -134,6 +144,26 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
 
           <Box component="section" py={6}>
             <SectionHeader
+              title="Highest ROI Performers"
+              subtitle="Most profitable Indian films by return on investment percentage (since 2023)"
+            />
+            <HorizontalScroller
+              items={roiMovies}
+              getKey={(movie) => movie.id}
+              renderItem={(movie, index) => (
+                <MovieCard
+                  movie={{ ...movie, ratingValue: ratings[movie.id] || 0 }}
+                  rank={index + 1}
+                  onViewDetails={() => onViewMovie?.(movie.id)}
+                  onRate={onRate}
+                />
+              )}
+              emptyMessage="Calculating profit statistics…"
+            />
+          </Box>
+
+          <Box component="section" py={6}>
+            <SectionHeader
               title="Most Anticipated 2026"
               subtitle="Upcoming Indian releases generating the most buzz on TMDB"
             />
@@ -160,7 +190,17 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
             <HorizontalScroller
               items={trendingActors}
               getKey={(actor) => actor.id}
-              renderItem={(actor, index) => <ActorCard actor={actor} rank={index + 1} />}
+              renderItem={(actor, index) => (
+                <ActorCard
+                  actor={actor}
+                  rank={index + 1}
+                  onClick={() => {
+                    setSelectedActorId(actor.id);
+                    setSelectedActorName(actor.name);
+                    setIsActorModalOpen(true);
+                  }}
+                />
+              )}
               emptyMessage="Updating trending stars…"
               centerWhenFits
               cardVariant="actor"
@@ -175,6 +215,14 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
           />
         </Stack>
       </Container>
+
+      <ActorModal
+        actorId={selectedActorId}
+        actorName={selectedActorName}
+        open={isActorModalOpen}
+        onClose={() => setIsActorModalOpen(false)}
+        onMovieClick={onViewMovie}
+      />
     </PageShell>
   );
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
@@ -23,11 +23,16 @@ import { useAuth } from '../contexts/AuthContext';
 import { useMovieFliksRating } from '../hooks/useMovieFliksRating';
 import { useToast } from '../contexts/ToastContext';
 import { formatUsdToInrCrores } from '../utils/tmdbMovies';
+import ActorModal from '../components/ActorModal';
 
 function MovieDetails() {
   const { movieId: movieIdParam } = useParams();
   const movieId = Number(movieIdParam);
   const { onGoBack, onNavigate } = useNavigation();
+  const navigate = useNavigate();
+  const [selectedActorId, setSelectedActorId] = useState(null);
+  const [selectedActorName, setSelectedActorName] = useState('');
+  const [isActorModalOpen, setIsActorModalOpen] = useState(false);
   const { ratings, rateMovie } = useUserData();
   const { isAuthenticated, user } = useAuth();
   const showToast = useToast();
@@ -322,20 +327,6 @@ function MovieDetails() {
                   </Box>
                 )}
               </Box>
-              {trailerKey && (
-                <Button
-                  variant="primary"
-                  onClick={() => setIsTrailerOpen(true)}
-                  sx={{
-                    background: 'linear-gradient(135deg, #6366f1 0%, #d946ef 100%)',
-                    borderRadius: 3,
-                    py: 1.25,
-                    fontWeight: 700,
-                  }}
-                >
-                  <PlayArrowIcon sx={{ mr: 0.5 }} /> Watch Trailer
-                </Button>
-              )}
             </Stack>
 
             {/* Movie Info Details */}
@@ -423,14 +414,10 @@ function MovieDetails() {
                   {/* Watchlist Quick Actions */}
                   <Box
                     sx={{
-                      p: 2,
-                      bgcolor: 'rgba(15, 14, 38, 0.5)',
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
-                      borderRadius: 3,
                       display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
                       alignItems: 'center',
+                      justifyContent: 'center',
+                      height: '100%',
                     }}
                   >
                     <Button
@@ -439,11 +426,11 @@ function MovieDetails() {
                       onClick={handleWatchlist}
                       sx={{
                         width: '100%',
-                        py: 1,
+                        py: 1.5,
                         background: inWatchlist ? 'transparent' : 'linear-gradient(135deg, #6366f1 0%, #d946ef 100%)',
                       }}
                     >
-                      {inWatchlist ? 'Remove Watchlist' : 'Add Watchlist'}
+                      {inWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}
                     </Button>
                   </Box>
                 </Box>
@@ -625,12 +612,30 @@ function MovieDetails() {
                       }}
                     >
                       {cast.map((person) => (
-                        <Stack key={person.id} alignItems="center" spacing={0.75} textAlign="center" sx={{
-                          p: 1.5,
-                          bgcolor: 'rgba(255,255,255,0.01)',
-                          border: '1px solid rgba(255,255,255,0.03)',
-                          borderRadius: 3,
-                        }}>
+                        <Stack
+                          key={person.id}
+                          alignItems="center"
+                          spacing={0.75}
+                          textAlign="center"
+                          onClick={() => {
+                            setSelectedActorId(person.id);
+                            setSelectedActorName(person.name);
+                            setIsActorModalOpen(true);
+                          }}
+                          sx={{
+                            p: 1.5,
+                            bgcolor: 'rgba(255,255,255,0.01)',
+                            border: '1px solid rgba(255,255,255,0.03)',
+                            borderRadius: 3,
+                            cursor: 'pointer',
+                            transition: 'all 0.3s ease',
+                            '&:hover': {
+                              bgcolor: 'rgba(99, 102, 241, 0.05)',
+                              borderColor: 'rgba(99, 102, 241, 0.25)',
+                              transform: 'translateY(-4px)',
+                            },
+                          }}
+                        >
                           <Box
                             component="img"
                             src={
@@ -759,6 +764,14 @@ function MovieDetails() {
           )}
         </Box>
       </Modal>
+
+      <ActorModal
+        actorId={selectedActorId}
+        actorName={selectedActorName}
+        open={isActorModalOpen}
+        onClose={() => setIsActorModalOpen(false)}
+        onMovieClick={(id) => navigate(`/movie/${id}`)}
+      />
     </PageShell>
   );
 }

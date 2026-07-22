@@ -63,27 +63,70 @@ function HorizontalScroller({
 
   return (
     <Box sx={{ position: 'relative', '&:hover .scroll-arrow': { opacity: 1 } }}>
+      {/* Left Edge Fade Gradient */}
+      {canScrollLeft && !shouldCenter && (
+        <Box
+          sx={{
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            bottom: 0,
+            width: 80,
+            background: `linear-gradient(to right, ${theme.palette.background.default} 0%, transparent 100%)`,
+            zIndex: 1,
+            pointerEvents: 'none',
+            transition: 'opacity 0.3s',
+          }}
+        />
+      )}
+
+      {/* Right Edge Fade Gradient */}
+      {canScrollRight && !shouldCenter && (
+        <Box
+          sx={{
+            position: 'absolute',
+            right: 0,
+            top: 0,
+            bottom: 0,
+            width: 80,
+            background: `linear-gradient(to left, ${theme.palette.background.default} 0%, transparent 100%)`,
+            zIndex: 1,
+            pointerEvents: 'none',
+            transition: 'opacity 0.3s',
+          }}
+        />
+      )}
+
       {canScrollLeft && !shouldCenter && (
         <IconButton
           className="scroll-arrow"
           onClick={() => scrollByPage(-1)}
           aria-label="Scroll left"
-          size="small"
           sx={{
             position: 'absolute',
-            left: { xs: 0, md: -4 },
-            top: '38%',
-            zIndex: 2,
+            left: { xs: 8, md: -14 },
+            top: '50%',
+            transform: 'translateY(-50%)',
+            zIndex: 3,
             opacity: { xs: 1, md: 0 },
-            transition: 'opacity 0.2s',
-            bgcolor: 'background.paper',
-            border: 1,
-            borderColor: 'divider',
-            boxShadow: 2,
-            '&:hover': { bgcolor: 'background.paper' },
+            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            bgcolor: theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.75)' : 'rgba(255, 255, 255, 0.75)',
+            backdropFilter: 'blur(8px)',
+            border: '1px solid',
+            borderColor: 'primary.main',
+            color: 'primary.main',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 10px rgba(99, 102, 241, 0.15)',
+            p: 1.25,
+            '&:hover': {
+              bgcolor: 'primary.main',
+              color: 'primary.contrastText',
+              transform: 'translateY(-50%) scale(1.1)',
+              boxShadow: '0 8px 32px rgba(99, 102, 241, 0.35), 0 0 15px rgba(217, 70, 239, 0.25)',
+              borderColor: 'secondary.main',
+            },
           }}
         >
-          <HiChevronLeft size={20} />
+          <HiChevronLeft size={24} />
         </IconButton>
       )}
 
@@ -92,22 +135,31 @@ function HorizontalScroller({
           className="scroll-arrow"
           onClick={() => scrollByPage(1)}
           aria-label="Scroll right"
-          size="small"
           sx={{
             position: 'absolute',
-            right: { xs: 0, md: -4 },
-            top: '38%',
-            zIndex: 2,
+            right: { xs: 8, md: -14 },
+            top: '50%',
+            transform: 'translateY(-50%)',
+            zIndex: 3,
             opacity: { xs: 1, md: 0 },
-            transition: 'opacity 0.2s',
-            bgcolor: 'background.paper',
-            border: 1,
-            borderColor: 'divider',
-            boxShadow: 2,
-            '&:hover': { bgcolor: 'background.paper' },
+            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            bgcolor: theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.75)' : 'rgba(255, 255, 255, 0.75)',
+            backdropFilter: 'blur(8px)',
+            border: '1px solid',
+            borderColor: 'primary.main',
+            color: 'primary.main',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 10px rgba(99, 102, 241, 0.15)',
+            p: 1.25,
+            '&:hover': {
+              bgcolor: 'primary.main',
+              color: 'primary.contrastText',
+              transform: 'translateY(-50%) scale(1.1)',
+              boxShadow: '0 8px 32px rgba(99, 102, 241, 0.35), 0 0 15px rgba(217, 70, 239, 0.25)',
+              borderColor: 'secondary.main',
+            },
           }}
         >
-          <HiChevronRight size={20} />
+          <HiChevronRight size={24} />
         </IconButton>
       )}
 
@@ -121,19 +173,12 @@ function HorizontalScroller({
           justifyContent: shouldCenter ? 'center' : 'flex-start',
           scrollSnapType: shouldCenter ? 'none' : 'x mandatory',
           scrollBehavior: 'smooth',
-          scrollbarWidth: 'thin',
-          pb: 1,
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+          pb: 0.5,
           WebkitOverflowScrolling: 'touch',
-          '&::-webkit-scrollbar': { height: 6 },
-          '&::-webkit-scrollbar-track': {
-            background: 'transparent',
-          },
-          '&::-webkit-scrollbar-thumb': {
-            borderRadius: 3,
-            bgcolor: 'rgba(99, 102, 241, 0.25)',
-          },
-          '&::-webkit-scrollbar-thumb:hover': {
-            bgcolor: 'rgba(99, 102, 241, 0.5)',
+          '&::-webkit-scrollbar': {
+            display: 'none',
           },
         }}
       >
