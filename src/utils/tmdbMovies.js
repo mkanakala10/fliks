@@ -47,6 +47,14 @@ export function getUpcomingReleaseDateFloor() {
   return tomorrow.toISOString().split('T')[0];
 }
 
+export const USD_TO_INR_RATE = 96;
+
+export function formatUsdToInrCrores(usdAmount) {
+  if (!usdAmount || usdAmount <= 0) return null;
+  const inrAmount = usdAmount * USD_TO_INR_RATE;
+  return `₹${(inrAmount / 10000000).toFixed(1)} Cr`;
+}
+
 export function mapDiscoverMovie(item, extras = {}) {
   return {
     id: item.id,
@@ -57,8 +65,7 @@ export function mapDiscoverMovie(item, extras = {}) {
     releaseDate: item.release_date || 'TBA',
     genre: GENRE_MAP[item.genre_ids?.[0]] || 'Indian Cinema',
     rating: item.vote_average,
-    revenue:
-      item.revenue > 0 ? `₹${(item.revenue / 10000000).toFixed(1)} Cr` : 'Blockbuster',
+    revenue: formatUsdToInrCrores(item.revenue) || 'Blockbuster',
     ...extras,
   };
 }

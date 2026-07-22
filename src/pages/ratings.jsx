@@ -12,6 +12,7 @@ import PageShell from '../components/PageShell';
 import SectionHeader from '../components/SectionHeader';
 import MovieCard from '../components/MovieCard';
 import HorizontalScroller from '../components/HorizontalScroller';
+import { formatUsdToInrCrores } from '../utils/tmdbMovies';
 
 const GENRE_MAP = {
   28: 'Action', 12: 'Adventure', 16: 'Animation', 35: 'Comedy',
@@ -59,9 +60,7 @@ function Ratings({ onViewMovie, onRate, ratings = {} }) {
                   : 'https://via.placeholder.com/300x450?text=No+Poster',
                 releaseDate: data.release_date || 'TBA',
                 rating: data.vote_average,
-                revenue: data.revenue
-                  ? `₹${(data.revenue / 10000000).toFixed(1)} Cr`
-                  : 'N/A',
+                revenue: formatUsdToInrCrores(data.revenue) || 'N/A',
                 genre: GENRE_MAP[data.genres?.[0]?.id] || 'Cinema',
               };
             } catch {

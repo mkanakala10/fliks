@@ -22,13 +22,14 @@ import { useUserData } from '../contexts/UserDataContext';
 import { useAuth } from '../contexts/AuthContext';
 import { useMovieFliksRating } from '../hooks/useMovieFliksRating';
 import { useToast } from '../contexts/ToastContext';
+import { formatUsdToInrCrores } from '../utils/tmdbMovies';
 
 function MovieDetails() {
   const { movieId: movieIdParam } = useParams();
   const movieId = Number(movieIdParam);
   const { onGoBack, onNavigate } = useNavigation();
   const { ratings, rateMovie } = useUserData();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const showToast = useToast();
   const [movie, setMovie] = useState(null);
   const [credits, setCredits] = useState(null);
@@ -188,8 +189,8 @@ function MovieDetails() {
   const currentRating = ratings[movie.id] || 0;
 
   // Compute budget / ROI details
-  const formattedBudget = movie.budget > 0 ? `₹${(movie.budget / 10000000).toFixed(1)} Cr` : null;
-  const formattedRevenue = movie.revenue > 0 ? `₹${(movie.revenue / 10000000).toFixed(1)} Cr` : null;
+  const formattedBudget = formatUsdToInrCrores(movie.budget);
+  const formattedRevenue = formatUsdToInrCrores(movie.revenue);
   let roi = null;
   if (movie.budget > 0 && movie.revenue > 0) {
     roi = (((movie.revenue - movie.budget) / movie.budget) * 100).toFixed(0);
