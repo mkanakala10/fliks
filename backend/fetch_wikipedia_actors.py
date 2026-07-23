@@ -18,7 +18,7 @@ OUTPUT_FILE = Path(__file__).parent.parent / 'public' / 'data' / 'trending-actor
 
 # API endpoints
 WIKIPEDIA_API = 'https://en.wikipedia.org/w/api.php'
-PAGEVIEWS_API = 'https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/daily'
+PAGEVIEWS_API = 'https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/all-agents'
 
 def get_actor_names():
     """Read actor names from actors.txt file."""
@@ -49,7 +49,7 @@ def get_pageviews(actor_name, days=30):
         start_str = start_date.strftime('%Y%m%d')
         end_str = end_date.strftime('%Y%m%d')
         
-        url = f"{PAGEVIEWS_API}/{actor_name}/{start_str}/{end_str}"
+        url = f"{PAGEVIEWS_API}/{actor_name}/daily/{start_str}/{end_str}"
         
         headers = {
             'User-Agent': 'MovieMeter/1.0 (https://github.com/arjun/movie-meter)'
