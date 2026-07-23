@@ -131,3 +131,32 @@ export async function fetchHighestRoiMovies(apiKey) {
 
   return moviesWithRoi.sort((a, b) => b.roi - a.roi);
 }
+
+export async function fetchDetailedBoxOfficeMovies(apiKey, queryParams) {
+  const rawMovies = await fetchDiscoverMovies(apiKey, {
+    sort_by: 'revenue.desc',
+    ...queryParams,
+  });
+
+  const detailPromises = rawMovies.slice(0, 20).map(async (movie) => {
+    try {
+      const res = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${apiKey}`);
+      if (!res.ok) return null;
+      return await res.json();
+    } catch {
+      return null;
+    }
+  });
+
+  const detailedMovies = await Promise.all(detailPromises);
+  return detailedMovies
+    .filter((m) => m !== null)
+    .map((m) => ({
+      ...mapDiscoverMovie(m),
+      revenue: formatUsdToInrCrores(m.revenue) || 'Blockbuster',
+      budget: formatUsdToInrCrores(m.budget) || 'N/A',
+      releaseDate: m.release_date || 'TBA',
+    }));
+}
+
+

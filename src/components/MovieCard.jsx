@@ -19,6 +19,7 @@ function MovieCard({
 }) {
   const [hoverRating, setHoverRating] = useState(-1);
   const isUpcoming = variant === 'upcoming';
+  const isLandscape = variant === 'landscape';
   const isClickable = Boolean(onViewDetails);
   const currentRating = movie?.ratingValue || 0;
   const tmdbRating = movie?.rating > 0 ? Number(movie.rating) : null;
@@ -90,7 +91,7 @@ function MovieCard({
         position: 'relative',
         transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease',
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: isLandscape ? { xs: 'column', sm: 'row' } : 'column',
         height: '100%',
         width: '100%',
         cursor: isClickable ? 'pointer' : 'default',
@@ -129,8 +130,9 @@ function MovieCard({
         sx={{
           position: 'relative',
           overflow: 'hidden',
-          aspectRatio: '2 / 3',
-          width: '100%',
+          aspectRatio: isLandscape ? { xs: '2 / 3', sm: 'unset' } : '2 / 3',
+          width: isLandscape ? { xs: '100%', sm: '130px', md: '140px' } : '100%',
+          height: isLandscape ? { xs: 'auto', sm: '100%' } : 'auto',
           flexShrink: 0,
           bgcolor: 'action.hover',
         }}
@@ -187,18 +189,18 @@ function MovieCard({
         p={1.5}
         spacing={1}
         flex={1}
-        justifyContent="flex-start"
-        alignItems="center"
-        sx={{ minHeight: 148 }}
+        justifyContent="center"
+        alignItems={isLandscape ? { xs: 'center', sm: 'flex-start' } : 'center'}
+        sx={{ minHeight: isLandscape ? { xs: 148, sm: 'unset' } : 148 }}
       >
         <Typography
           fontWeight={600}
           fontSize="0.875rem"
-          textAlign="center"
+          textAlign={isLandscape ? { xs: 'center', sm: 'left' } : 'center'}
           color="text.primary"
           sx={{
             width: '100%',
-            minHeight: '2.5em',
+            minHeight: isLandscape ? { xs: '2.5em', sm: 'auto' } : '2.5em',
             lineHeight: 1.25,
             display: '-webkit-box',
             WebkitLineClamp: 2,
@@ -230,13 +232,13 @@ function MovieCard({
           </Box>
         )}
 
-        <Box sx={{ minHeight: 48, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 0.25 }}>
+        <Box sx={{ minHeight: 48, display: 'flex', flexDirection: 'column', alignItems: isLandscape ? { xs: 'center', sm: 'flex-start' } : 'center', justifyContent: 'center', gap: 0.25 }}>
           <Typography variant="caption" sx={{ color: '#a855f7', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 0.5 }}>
             Fliks: {fliks.isLoading ? '...' : fliks.count > 0 ? `★ ${fliks.average} (${fliks.count} votes)` : '★ -- (0 votes)'}
           </Typography>
 
           {(displayRating > 0 || tmdbRating !== null) && (
-            <Typography variant="caption" color="text.secondary" textAlign="center">
+            <Typography variant="caption" color="text.secondary" textAlign={isLandscape ? { xs: 'center', sm: 'left' } : 'center'}>
               {displayRating > 0 && (
                 <>
                   You:{' '}
@@ -263,13 +265,30 @@ function MovieCard({
               <Typography
                 fontWeight={600}
                 color="text.primary"
-                textAlign="center"
+                textAlign={isLandscape ? { xs: 'center', sm: 'left' } : 'center'}
                 fontSize="0.8rem"
                 noWrap
               >
                 {movie.revenue}
               </Typography>
-              <Typography variant="caption" color="text.secondary" textAlign="center" display="block" noWrap>
+              {movie.budget && movie.budget !== 'N/A' && (
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  textAlign={isLandscape ? { xs: 'center', sm: 'left' } : 'center'}
+                  display="block"
+                  noWrap
+                >
+                  Budget: {movie.budget}
+                </Typography>
+              )}
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                textAlign={isLandscape ? { xs: 'center', sm: 'left' } : 'center'}
+                display="block"
+                noWrap
+              >
                 {movie.releaseDate}
               </Typography>
             </>

@@ -16,6 +16,14 @@ export function useItemsPerView(variant = 'movie') {
     return 3;
   }
 
+  if (variant === 'landscape') {
+    if (isXl) return 3;
+    if (isLg) return 3;
+    if (isMd) return 2;
+    if (isSm) return 2;
+    return 1;
+  }
+
   if (isXl) return 6;
   if (isLg) return 5;
   if (isMd) return 4;

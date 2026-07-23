@@ -10,7 +10,8 @@ import PageShell from '../components/PageShell';
 import SectionHeader from '../components/SectionHeader';
 import MovieCard from '../components/MovieCard';
 import Button from '../components/Button';
-import { fetchDiscoverMovies, mapDiscoverMovie } from '../utils/tmdbMovies';
+import { fetchDetailedBoxOfficeMovies } from '../utils/tmdbMovies';
+import HorizontalScroller from '../components/HorizontalScroller';
 
 const LANGUAGE_OPTIONS = [
   { label: 'All', value: '' },
@@ -28,7 +29,7 @@ function getYearOptions() {
   return Array.from({ length: currentYear - earliestYear + 1 }, (_, index) => String(currentYear - index));
 }
 
-export default function BoxOffice({ onRate, ratings = {} }) {
+export default function BoxOffice({ onViewMovie, onRate, ratings = {} }) {
   const [movies, setMovies] = useState([]);
   const [year, setYear] = useState(String(new Date().getFullYear()));
   const [language, setLanguage] = useState('');
@@ -59,10 +60,10 @@ export default function BoxOffice({ onRate, ratings = {} }) {
           queryParams.with_original_language = language;
         }
 
-        const results = await fetchDiscoverMovies(apiKey, queryParams, { maxPages: 1 });
+        const results = await fetchDetailedBoxOfficeMovies(apiKey, queryParams);
         if (cancelled) return;
 
-        setMovies(results.slice(0, 5).map(mapDiscoverMovie));
+        setMovies(results);
       } catch (fetchError) {
         setError(fetchError.message || 'Unable to load box office rankings.');
         setMovies([]);
@@ -88,7 +89,7 @@ export default function BoxOffice({ onRate, ratings = {} }) {
         <Stack spacing={4} py={6}>
           <SectionHeader
             title="Box Office Rankings"
-            subtitle="Filter by year and language to view the top 5 highest grossing Indian films."
+            subtitle="Filter by year and language to view the highest grossing Indian films."
           />
 
           <Stack direction="column" spacing={2} alignItems="center" textAlign="center">
@@ -125,17 +126,23 @@ export default function BoxOffice({ onRate, ratings = {} }) {
               <CircularProgress size={48} color="primary" thickness={4} />
             </Box>
           ) : movies.length > 0 ? (
-            <Grid container spacing={3} justifyContent="center">
-              {movies.map((movie, index) => (
-                <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
+            <Box pb={8}>
+              <HorizontalScroller
+                items={movies}
+                getKey={(movie) => movie.id}
+                cardVariant="landscape"
+                renderItem={(movie, index) => (
                   <MovieCard
                     movie={{ ...movie, ratingValue: ratings[movie.id] || 0 }}
+                    variant="landscape"
                     rank={index + 1}
+                    onViewDetails={() => onViewMovie?.(movie.id)}
                     onRate={onRate}
                   />
-                </Grid>
-              ))}
-            </Grid>
+                )}
+                emptyMessage="No box office data available yet."
+              />
+            </Box>
           ) : (
             <Alert severity="info">No top box office movies were found for this year and language filter.</Alert>
           )}

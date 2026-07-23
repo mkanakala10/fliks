@@ -22,7 +22,6 @@ import {
 
 function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
   const [trendingActors, setTrendingActors] = useState([]);
-  const [boxOffice, setBoxOffice] = useState([]);
   const [roiMovies, setRoiMovies] = useState([]);
   const [anticipated, setAnticipated] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -49,10 +48,6 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
         fetchIndianActors(),
         fetchDiscoverMovies(apiKey, {
           primary_release_year: '2026',
-          sort_by: 'revenue.desc',
-        }),
-        fetchDiscoverMovies(apiKey, {
-          primary_release_year: '2026',
           sort_by: 'popularity.desc',
           'primary_release_date.gte': getUpcomingReleaseDateFloor(),
         }),
@@ -61,15 +56,10 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
 
       if (cancelled) return;
 
-      const [actorsResult, boxOfficeResult, anticipatedResult, roiResult] = results;
+      const [actorsResult, anticipatedResult, roiResult] = results;
 
       if (actorsResult.status === 'fulfilled') {
         setTrendingActors(actorsResult.value);
-      }
-      if (boxOfficeResult.status === 'fulfilled') {
-        setBoxOffice(
-          boxOfficeResult.value.map((movie) => mapDiscoverMovie(movie)).slice(0, 20)
-        );
       }
       if (roiResult.status === 'fulfilled') {
         setRoiMovies(roiResult.value.slice(0, 20));
@@ -122,25 +112,6 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
             </Box>
           )}
 
-          <Box component="section" py={6}>
-            <SectionHeader
-              title="2026 Box Office Leaders"
-              subtitle="Highest grossing Indian films this year"
-            />
-            <HorizontalScroller
-              items={boxOffice}
-              getKey={(movie) => movie.id}
-              renderItem={(movie, index) => (
-                <MovieCard
-                  movie={{ ...movie, ratingValue: ratings[movie.id] || 0 }}
-                  rank={index + 1}
-                  onViewDetails={() => onViewMovie?.(movie.id)}
-                  onRate={onRate}
-                />
-              )}
-              emptyMessage="No box office data available yet."
-            />
-          </Box>
 
           <Box component="section" py={6}>
             <SectionHeader
