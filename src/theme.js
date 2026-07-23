@@ -15,21 +15,21 @@ function createAppTheme(mode = 'dark') {
     palette: {
       mode,
       primary: {
-        main: isDark ? '#6366f1' : '#4f46e5', // electric indigo
+        main: isDark ? '#3b82f6' : '#2563eb', // Solid Blue
         contrastText: '#ffffff',
       },
       secondary: {
-        main: isDark ? '#d946ef' : '#c084fc', // fuchsia / purple
+        main: isDark ? '#10b981' : '#059669', // Solid Emerald
       },
       background: {
-        default: isDark ? '#070714' : '#f8fafc',
-        paper: isDark ? '#0f0e26' : '#ffffff',
+        default: isDark ? '#0b0f19' : '#f3f4f6', // Slate-950 / Cool Gray
+        paper: isDark ? '#111827' : '#ffffff', // Slate-900 / White
       },
       text: {
-        primary: isDark ? '#f3f4f6' : '#0f172a',
-        secondary: isDark ? '#9ca3af' : '#475569',
+        primary: isDark ? '#f9fafb' : '#111827', // High contrast primary text
+        secondary: isDark ? '#9ca3af' : '#4b5563', // High contrast secondary text
       },
-      divider: isDark ? 'rgba(99, 102, 241, 0.12)' : 'rgba(0,0,0,0.06)',
+      divider: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
     },
     typography: sharedTypography,
     shape: { borderRadius: 16 },
@@ -37,11 +37,7 @@ function createAppTheme(mode = 'dark') {
       MuiCssBaseline: {
         styleOverrides: {
           body: {
-            backgroundColor: isDark ? '#070714' : '#f8fafc',
-            backgroundImage: isDark
-              ? 'radial-gradient(circle at 50% -20%, rgba(99, 102, 241, 0.15) 0%, rgba(217, 70, 239, 0.05) 50%, transparent 100%)'
-              : 'radial-gradient(circle at 50% -20%, rgba(99, 102, 241, 0.05) 0%, rgba(217, 70, 239, 0.02) 50%, transparent 100%)',
-            backgroundAttachment: 'fixed',
+            backgroundColor: isDark ? '#0b0f19' : '#f3f4f6',
             minHeight: '100vh',
             fontFamily: "'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
           },
@@ -51,11 +47,9 @@ function createAppTheme(mode = 'dark') {
         styleOverrides: {
           root: {
             backgroundImage: 'none',
-            ...(isDark && {
-              backgroundColor: 'rgba(15, 14, 38, 0.6)',
-              backdropFilter: 'blur(16px)',
-              border: '1px solid rgba(99, 102, 241, 0.12)',
-            }),
+            backgroundColor: isDark ? 'rgba(17, 24, 39, 0.7)' : 'rgba(255, 255, 255, 0.85)',
+            backdropFilter: 'blur(16px)',
+            border: isDark ? '1px solid rgba(255, 255, 255, 0.08)' : '1px solid rgba(0, 0, 0, 0.08)',
           },
         },
       },

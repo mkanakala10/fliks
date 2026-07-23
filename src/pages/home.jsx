@@ -115,7 +115,7 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
 
           <Box component="section" py={6}>
             <SectionHeader
-              title="Highest ROI Performers"
+              title="Top Performing"
               subtitle="Most profitable Indian films by return on investment percentage (since 2023)"
             />
             <HorizontalScroller

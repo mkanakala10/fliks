@@ -21,6 +21,14 @@ export function ColorModeProvider({ children }) {
     } catch {
       // ignore
     }
+
+    if (mode === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+    }
   }, [mode]);
 
   const colorMode = useMemo(

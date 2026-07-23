@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
-import { useTheme } from '@mui/material/styles';
+import { useTheme, alpha } from '@mui/material/styles';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
 import { useItemsPerView } from '../hooks/useItemsPerView';
 
@@ -72,7 +72,7 @@ function HorizontalScroller({
             top: 0,
             bottom: 0,
             width: 80,
-            background: `linear-gradient(to right, ${theme.palette.background.default} 0%, transparent 100%)`,
+            background: `linear-gradient(to right, ${theme.palette.background.default} 0%, ${alpha(theme.palette.background.default, 0)} 100%)`,
             zIndex: 1,
             pointerEvents: 'none',
             transition: 'opacity 0.3s',
@@ -89,7 +89,7 @@ function HorizontalScroller({
             top: 0,
             bottom: 0,
             width: 80,
-            background: `linear-gradient(to left, ${theme.palette.background.default} 0%, transparent 100%)`,
+            background: `linear-gradient(to left, ${theme.palette.background.default} 0%, ${alpha(theme.palette.background.default, 0)} 100%)`,
             zIndex: 1,
             pointerEvents: 'none',
             transition: 'opacity 0.3s',
