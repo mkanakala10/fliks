@@ -27,9 +27,9 @@ function Header() {
         position: 'sticky',
         top: 0,
         zIndex: 1100,
-        bgcolor: 'rgba(7, 7, 20, 0.7)',
+        bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(7, 7, 20, 0.7)' : 'rgba(255, 255, 255, 0.8)',
         borderBottom: 1,
-        borderColor: 'rgba(99, 102, 241, 0.15)',
+        borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(99, 102, 241, 0.15)' : 'rgba(0, 0, 0, 0.08)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
       }}
@@ -71,7 +71,9 @@ function Header() {
                 cursor: 'pointer',
                 whiteSpace: 'nowrap',
                 fontSize: { xs: '1.25rem', sm: '1.45rem' },
-                background: 'linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%)',
+                background: (theme) => theme.palette.mode === 'dark'
+                  ? 'linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%)'
+                  : 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
               }}

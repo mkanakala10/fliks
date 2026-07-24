@@ -10,13 +10,13 @@ function ActorCard({ actor, rank, onClick }) {
       onClick={onClick}
       sx={{
         width: '100%',
-        bgcolor: 'rgba(15, 14, 38, 0.65)',
+        bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.65)' : 'rgba(255, 255, 255, 0.85)',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
         borderRadius: 3,
         overflow: 'hidden',
         border: 1,
-        borderColor: 'rgba(99, 102, 241, 0.12)',
+        borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(99, 102, 241, 0.12)' : 'rgba(0, 0, 0, 0.08)',
         cursor: isClickable ? 'pointer' : 'default',
         transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease',
         '&:hover': {
@@ -89,9 +89,6 @@ function ActorCard({ actor, rank, onClick }) {
           }}
         >
           {actor.name}
-        </Typography>
-        <Typography variant="caption" sx={{ color: 'secondary.main', fontWeight: 600, display: 'block', mt: 0.5 }}>
-          Trending Star
         </Typography>
       </Box>
     </Box>

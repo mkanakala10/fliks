@@ -50,12 +50,12 @@ function Navbar({ isOpen, onToggle, currentPage, onNavigate }) {
           height: { xs: 'calc(100vh - 32px)', sm: 'calc(100vh - 112px)' },
           width: { xs: 'calc(100% - 32px)', sm: 260 },
           maxWidth: 280,
-          bgcolor: 'rgba(15, 14, 38, 0.7)',
+          bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.7)' : 'rgba(255, 255, 255, 0.9)',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
           borderRadius: 4,
           border: 1,
-          borderColor: 'rgba(99, 102, 241, 0.15)',
+          borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(99, 102, 241, 0.15)' : 'rgba(0, 0, 0, 0.08)',
           zIndex: 1200,
           transition: 'left 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
           boxShadow: '0 16px 40px rgba(0, 0, 0, 0.5)',
@@ -100,7 +100,9 @@ function Navbar({ isOpen, onToggle, currentPage, onNavigate }) {
                   pl: isActive ? 1.75 : 2.25,
                   transition: 'all 0.2s ease',
                   '&:hover': {
-                    bgcolor: isActive ? 'rgba(99, 102, 241, 0.2)' : 'rgba(255, 255, 255, 0.04)',
+                    bgcolor: isActive
+                      ? 'rgba(99, 102, 241, 0.2)'
+                      : (theme) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.04)' : 'rgba(0, 0, 0, 0.04)',
                     color: isActive ? '#818cf8' : 'text.primary',
                     transform: 'translateX(4px)',
                   },

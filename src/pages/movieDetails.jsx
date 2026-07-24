@@ -372,7 +372,7 @@ function MovieDetails() {
                   <Box
                     sx={{
                       p: 2,
-                      bgcolor: 'rgba(15, 14, 38, 0.5)',
+                      bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.5)' : 'rgba(255, 255, 255, 0.85)',
                       border: '1px solid rgba(168, 85, 247, 0.25)',
                       borderRadius: 3,
                       boxShadow: '0 8px 32px rgba(168, 85, 247, 0.08)',
@@ -394,8 +394,8 @@ function MovieDetails() {
                   <Box
                     sx={{
                       p: 2,
-                      bgcolor: 'rgba(15, 14, 38, 0.5)',
-                      border: '1px solid rgba(99, 102, 241, 0.15)',
+                      bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.5)' : 'rgba(255, 255, 255, 0.85)',
+                      border: (theme) => theme.palette.mode === 'dark' ? '1px solid rgba(99, 102, 241, 0.15)' : '1px solid rgba(0, 0, 0, 0.08)',
                       borderRadius: 3,
                       textAlign: 'center',
                     }}
@@ -511,7 +511,13 @@ function MovieDetails() {
 
                 {/* Star Rating & Review input */}
                 {isUnreleased ? (
-                  <Box sx={{ bgcolor: 'rgba(15, 14, 38, 0.45)', p: 3.5, border: '1px solid rgba(99,102,241,0.15)', borderRadius: 4, textAlign: 'center' }}>
+                  <Box sx={{
+                    bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.45)' : 'rgba(255, 255, 255, 0.85)',
+                    p: 3.5,
+                    border: (theme) => theme.palette.mode === 'dark' ? '1px solid rgba(99,102,241,0.15)' : '1px solid rgba(0, 0, 0, 0.08)',
+                    borderRadius: 4,
+                    textAlign: 'center'
+                  }}>
                     <Typography variant="h6" fontWeight={700} sx={{ mb: 1 }}>
                       Rate & Review This Film
                     </Typography>
@@ -523,7 +529,12 @@ function MovieDetails() {
                     </Typography>
                   </Box>
                 ) : isAuthenticated ? (
-                  <Box sx={{ bgcolor: 'rgba(15, 14, 38, 0.45)', p: 3, border: '1px solid rgba(99,102,241,0.15)', borderRadius: 4 }}>
+                  <Box sx={{
+                    bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.45)' : 'rgba(255, 255, 255, 0.85)',
+                    p: 3,
+                    border: (theme) => theme.palette.mode === 'dark' ? '1px solid rgba(99,102,241,0.15)' : '1px solid rgba(0, 0, 0, 0.08)',
+                    borderRadius: 4
+                  }}>
                     <Typography variant="h6" fontWeight={700} sx={{ mb: 1 }}>
                       {myReview ? 'Update Your Rating & Review' : 'Rate & Review This Film'}
                     </Typography>
@@ -554,7 +565,7 @@ function MovieDetails() {
                         sx={{
                           '& .MuiOutlinedInput-root': {
                             borderRadius: 3,
-                            bgcolor: 'rgba(7, 7, 20, 0.3)',
+                            bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(7, 7, 20, 0.3)' : 'rgba(0, 0, 0, 0.03)',
                           },
                         }}
                       />
@@ -574,7 +585,13 @@ function MovieDetails() {
                     </Stack>
                   </Box>
                 ) : (
-                  <Box sx={{ bgcolor: 'rgba(15, 14, 38, 0.45)', p: 3.5, border: '1px solid rgba(99,102,241,0.15)', borderRadius: 4, textAlign: 'center' }}>
+                  <Box sx={{
+                    bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.45)' : 'rgba(255, 255, 255, 0.85)',
+                    p: 3.5,
+                    border: (theme) => theme.palette.mode === 'dark' ? '1px solid rgba(99,102,241,0.15)' : '1px solid rgba(0, 0, 0, 0.08)',
+                    borderRadius: 4,
+                    textAlign: 'center'
+                  }}>
                     <Typography variant="h6" fontWeight={700} sx={{ mb: 1 }}>
                       Rate & Review This Film
                     </Typography>
@@ -679,8 +696,9 @@ function MovieDetails() {
                             key={index}
                             sx={{
                               p: 2.5,
-                              bgcolor: 'rgba(15, 14, 38, 0.35)',
-                              border: '1px solid rgba(255,255,255,0.05)',
+                              bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.35)' : 'rgba(255, 255, 255, 0.75)',
+                              border: '1px solid',
+                              borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0, 0, 0, 0.06)',
                               borderRadius: 3,
                             }}
                           >

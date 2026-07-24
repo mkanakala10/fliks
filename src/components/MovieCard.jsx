@@ -81,18 +81,18 @@ function MovieCard({
       tabIndex={isClickable ? 0 : undefined}
       aria-label={isClickable ? `View details for ${movie.title}` : undefined}
       sx={{
-        bgcolor: 'rgba(15, 14, 38, 0.65)',
+        bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.65)' : 'rgba(255, 255, 255, 0.85)',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
         borderRadius: 3,
         overflow: 'hidden',
         border: 1,
-        borderColor: 'rgba(99, 102, 241, 0.12)',
+        borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(99, 102, 241, 0.12)' : 'rgba(0, 0, 0, 0.08)',
         position: 'relative',
         transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease',
         display: 'flex',
         flexDirection: isLandscape ? { xs: 'column', sm: 'row' } : 'column',
-        height: '100%',
+        height: isLandscape ? { xs: 'auto', sm: '185px', md: '200px' } : '100%',
         width: '100%',
         cursor: isClickable ? 'pointer' : 'default',
         '&:hover': isClickable
@@ -191,7 +191,7 @@ function MovieCard({
         flex={1}
         justifyContent="center"
         alignItems={isLandscape ? { xs: 'center', sm: 'flex-start' } : 'center'}
-        sx={{ minHeight: isLandscape ? { xs: 148, sm: 'unset' } : 148 }}
+        sx={{ minHeight: isLandscape ? { xs: 148, sm: 'unset' } : 148, minWidth: 0 }}
       >
         <Typography
           fontWeight={600}
@@ -200,7 +200,7 @@ function MovieCard({
           color="text.primary"
           sx={{
             width: '100%',
-            minHeight: isLandscape ? { xs: '2.5em', sm: 'auto' } : '2.5em',
+            minHeight: '2.5em',
             lineHeight: 1.25,
             display: '-webkit-box',
             WebkitLineClamp: 2,
@@ -254,10 +254,19 @@ function MovieCard({
         </Box>
 
         <Box sx={{ minHeight: 36, width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          {isUpcoming && movie.genre && (
-            <Typography variant="caption" color="text.secondary" textAlign="center" display="block" noWrap>
-              {movie.genre}
-            </Typography>
+          {isUpcoming && (
+            <>
+              {movie.genre && (
+                <Typography variant="caption" color="text.secondary" textAlign="center" display="block" noWrap>
+                  {movie.genre}
+                </Typography>
+              )}
+              {movie.releaseDate && movie.releaseDate !== 'TBA' && (
+                <Typography variant="caption" color="text.secondary" textAlign="center" display="block" noWrap>
+                  {movie.releaseDate}
+                </Typography>
+              )}
+            </>
           )}
 
           {!isUpcoming && (

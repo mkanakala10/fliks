@@ -40,7 +40,9 @@ function Hero({ stats = [], onNavigate }) {
             fontSize: { xs: '2.2rem', md: '3.6rem' },
             maxWidth: 720,
             lineHeight: 1.15,
-            background: 'linear-gradient(135deg, #818cf8 0%, #c084fc 40%, #f472b6 100%)',
+            background: (theme) => theme.palette.mode === 'dark'
+              ? 'linear-gradient(135deg, #818cf8 0%, #c084fc 40%, #f472b6 100%)'
+              : 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 40%, #db2777 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
           }}
@@ -101,10 +103,11 @@ function Hero({ stats = [], onNavigate }) {
             <Box
               key={i}
               sx={{
-                bgcolor: 'rgba(15, 14, 38, 0.45)',
+                bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.45)' : 'rgba(255, 255, 255, 0.7)',
                 backdropFilter: 'blur(12px)',
                 WebkitBackdropFilter: 'blur(12px)',
-                border: '1px solid rgba(99, 102, 241, 0.1)',
+                border: '1px solid',
+                borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(99, 102, 241, 0.1)' : 'rgba(0, 0, 0, 0.08)',
                 borderRadius: 4,
                 px: { xs: 3, md: 5 },
                 py: 2.5,
@@ -123,7 +126,9 @@ function Hero({ stats = [], onNavigate }) {
                 fontWeight={800}
                 letterSpacing="-0.03em"
                 sx={{
-                  background: 'linear-gradient(135deg, #818cf8 0%, #f472b6 100%)',
+                  background: (theme) => theme.palette.mode === 'dark'
+                    ? 'linear-gradient(135deg, #818cf8 0%, #f472b6 100%)'
+                    : 'linear-gradient(135deg, #4f46e5 0%, #db2777 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                 }}

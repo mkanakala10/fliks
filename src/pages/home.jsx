@@ -67,7 +67,7 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
       if (anticipatedResult.status === 'fulfilled') {
         setAnticipated(
           filterUnreleasedMovies(anticipatedResult.value).map((movie) =>
-            mapDiscoverMovie(movie, { genre: 'Highly Anticipated' })
+            mapDiscoverMovie(movie)
           )
         );
       }

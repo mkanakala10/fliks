@@ -61,14 +61,43 @@ function AllMovies({ onViewMovie, onRate, ratings = {} }) {
         const langParam = language
           ? `&with_original_language=${language}`
           : '&with_origin_country=IN';
-        const url = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&region=IN${langParam}&sort_by=${sortBy}&page=${page}&vote_count.gte=10`;
-        const res = await fetch(url);
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.status_message || 'Failed to fetch movies');
 
-        setTotalPages(Math.min(data.total_pages || 1, 20));
+        const fetchPage = async (pageNumber) => {
+          const url = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&region=IN${langParam}&sort_by=${sortBy}&page=${pageNumber}&vote_count.gte=10`;
+          const res = await fetch(url);
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.status_message || 'Failed to fetch movies');
+          return data;
+        };
+
+        const pageSize = 18;
+        const startIdx = (page - 1) * pageSize;
+        const endIdx = page * pageSize;
+        const startTmdbPage = Math.floor(startIdx / 20) + 1;
+        const endTmdbPage = Math.floor((endIdx - 1) / 20) + 1;
+
+        let results = [];
+        let totalResults = 0;
+
+        if (startTmdbPage === endTmdbPage) {
+          const data = await fetchPage(startTmdbPage);
+          results = data.results || [];
+          totalResults = data.total_results || 0;
+        } else {
+          const [data1, data2] = await Promise.all([
+            fetchPage(startTmdbPage),
+            fetchPage(endTmdbPage),
+          ]);
+          results = [...(data1.results || []), ...(data2.results || [])];
+          totalResults = data1.total_results || data2.total_results || 0;
+        }
+
+        const startOffset = startIdx % 20;
+        const slicedResults = results.slice(startOffset, startOffset + pageSize);
+
+        setTotalPages(Math.min(Math.ceil(totalResults / pageSize), 20));
         setMovies(
-          (data.results || []).map((item) => ({
+          slicedResults.map((item) => ({
             id: item.id,
             title: item.title,
             image: item.poster_path
@@ -148,10 +177,10 @@ function AllMovies({ onViewMovie, onRate, ratings = {} }) {
             <Box pb={6}>
               <Grid container spacing={3}>
                 {movies.map((movie) => (
-                  <Grid item xs={6} sm={2.4} md={2.4} lg={2.4} key={movie.id}>
+                  <Grid size={{ xs: 12, sm: 6, md: 6, lg: 4 }} key={movie.id}>
                     <MovieCard
                       movie={{ ...movie, ratingValue: ratings[movie.id] || 0 }}
-                      variant="upcoming"
+                      variant="landscape"
                       onAddToWatchlist={() => addToWatchLater(movie)}
                       isInWatchlist={isInWatchLater(movie.id)}
                       onRate={onRate}
