@@ -12,13 +12,17 @@ import SectionHeader from '../components/SectionHeader';
 import ActorCard from '../components/ActorCard';
 import HorizontalScroller from '../components/HorizontalScroller';
 import { fetchIndianActors } from '../utils/indianActors';
+import ActorModal from '../components/ActorModal';
 
-function Actors() {
+function Actors({ onViewMovie }) {
   const [actors, setActors] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [search, setSearch] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedActorId, setSelectedActorId] = useState(null);
+  const [selectedActorName, setSelectedActorName] = useState('');
+  const [isActorModalOpen, setIsActorModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchActors = async () => {
@@ -94,7 +98,17 @@ function Actors() {
               <HorizontalScroller
                 items={filtered}
                 getKey={(actor) => actor.id}
-                renderItem={(actor, index) => <ActorCard actor={actor} rank={index + 1} />}
+                renderItem={(actor, index) => (
+                  <ActorCard
+                    actor={actor}
+                    rank={index + 1}
+                    onClick={() => {
+                      setSelectedActorId(actor.id);
+                      setSelectedActorName(actor.name);
+                      setIsActorModalOpen(true);
+                    }}
+                  />
+                )}
                 cardVariant="actor"
               />
             </Box>
@@ -110,6 +124,14 @@ function Actors() {
           )}
         </Stack>
       </Container>
+
+      <ActorModal
+        actorId={selectedActorId}
+        actorName={selectedActorName}
+        open={isActorModalOpen}
+        onClose={() => setIsActorModalOpen(false)}
+        onMovieClick={onViewMovie}
+      />
     </PageShell>
   );
 }

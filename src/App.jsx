@@ -93,7 +93,7 @@ function AppContent() {
         <Route path="/ratings" element={<Ratings {...sharedProps} />} />
         <Route path="/account" element={<Account {...sharedProps} />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/actors" element={<Actors />} />
+        <Route path="/actors" element={<Actors {...sharedProps} />} />
         <Route path="/box-office" element={<BoxOffice {...sharedProps} />} />
         <Route path="/all-movies" element={<AllMovies {...sharedProps} />} />
         <Route path="/signup" element={<Signup onNavigate={handleNavigate} />} />
