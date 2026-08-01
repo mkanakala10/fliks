@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { doc, onSnapshot, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc, serverTimestamp, deleteDoc, deleteField } from 'firebase/firestore';
 import { db, isFirebaseConfigured } from '../firebase';
 import { useAuth } from './AuthContext';
 import { useToast } from './ToastContext';
@@ -154,27 +154,53 @@ export function UserDataProvider({ children }) {
       }
 
       const key = String(movieId);
-      const nextRatings = { ...ratings, [key]: value };
+      const nextRatings = { ...ratings };
+      const isRemoving = value === null;
+
+      if (isRemoving) {
+        delete nextRatings[key];
+      } else {
+        nextRatings[key] = value;
+      }
       setRatings(nextRatings);
 
       try {
-        await persistUserData({ ratings: nextRatings });
-        if (db) {
-          const ratingDocRef = doc(db, 'movies', key, 'userRatings', user.uid);
-          const username = user.displayName || user.email?.split('@')[0] || 'Anonymous User';
-          await setDoc(ratingDocRef, {
-            rating: value,
-            reviewText,
-            username,
-            updatedAt: serverTimestamp(),
-          });
+        if (isRemoving) {
+          if (db) {
+            const userRef = doc(db, 'users', user.uid);
+            await setDoc(
+              userRef,
+              {
+                ratings: {
+                  [key]: deleteField(),
+                },
+                updatedAt: serverTimestamp(),
+              },
+              { merge: true }
+            );
+            const ratingDocRef = doc(db, 'movies', key, 'userRatings', user.uid);
+            await deleteDoc(ratingDocRef);
+          }
+          showToast('Rating removed.', 'success');
+        } else {
+          await persistUserData({ ratings: nextRatings });
+          if (db) {
+            const ratingDocRef = doc(db, 'movies', key, 'userRatings', user.uid);
+            const username = user.displayName || user.email?.split('@')[0] || 'Anonymous User';
+            await setDoc(ratingDocRef, {
+              rating: value,
+              reviewText,
+              username,
+              updatedAt: serverTimestamp(),
+            });
+          }
         }
       } catch (error) {
         setRatings(ratings);
         throw error;
       }
     },
-    [user, ratings, persistUserData]
+    [user, ratings, persistUserData, showToast]
   );
 
   const addToWatchLater = useCallback(
