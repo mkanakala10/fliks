@@ -1,602 +1,908 @@
 [
   {
-    "id": 405658948,
+    "id": 218891284,
     "name": "Aamir Khan",
     "image": "https://upload.wikimedia.org/wikipedia/commons/6/65/Aamir_Khan_at_the_success_bash_of_Secret_Superstar.jpg",
-    "trendingScore": 470816
+    "trendingScore": 471057
   },
   {
-    "id": 301641121,
+    "id": 410169000,
     "name": "C. Joseph Vijay",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/JosephVijay.jpg/500px-JosephVijay.jpg",
-    "trendingScore": 360234
+    "trendingScore": 366101
   },
   {
-    "id": 357728651,
+    "id": 1779713994,
     "name": "Akhil Akkineni",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Akkineni_Akhil.jpg/500px-Akkineni_Akhil.jpg",
-    "trendingScore": 259284
+    "trendingScore": 260170
   },
   {
-    "id": 42723021,
+    "id": 1925902703,
     "name": "Priyanka Chopra",
     "image": "https://upload.wikimedia.org/wikipedia/commons/4/45/Priyanka_Chopra_at_Bulgary_launch%2C_2024_%28cropped%29.jpg",
-    "trendingScore": 247798
+    "trendingScore": 248959
   },
   {
-    "id": 872652337,
+    "id": 163278352,
     "name": "Salman Khan",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Salman_Khan_snapped_at_the_Angry_Young_Men_trailer_launch.jpg/500px-Salman_Khan_snapped_at_the_Angry_Young_Men_trailer_launch.jpg",
-    "trendingScore": 184185
+    "trendingScore": 185949
   },
   {
-    "id": 807562397,
+    "id": 1757840236,
+    "name": "Arshad Warsi",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Arshad-Warsi.jpg/500px-Arshad-Warsi.jpg",
+    "trendingScore": 165477
+  },
+  {
+    "id": 267649762,
     "name": "Samantha Ruth Prabhu",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Samantha_at_Kushi_Musical_concert_%282%29_%28cropped%29.jpg/500px-Samantha_at_Kushi_Musical_concert_%282%29_%28cropped%29.jpg",
-    "trendingScore": 166336
+    "trendingScore": 163657
   },
   {
-    "id": 901187455,
+    "id": 1479888124,
     "name": "Shah Rukh Khan",
     "image": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Shah_Rukh_Khan_graces_the_launch_of_the_new_Santro.jpg",
-    "trendingScore": 160736
+    "trendingScore": 161230
   },
   {
-    "id": 2101259780,
+    "id": 559071167,
     "name": "Alia Bhatt",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Alia_Bhatt_attends_at_the_2026_Cannes_Film_Festival_%28cropped%29_%28cropped%29.jpg/500px-Alia_Bhatt_attends_at_the_2026_Cannes_Film_Festival_%28cropped%29_%28cropped%29.jpg",
-    "trendingScore": 160110
+    "trendingScore": 158478
   },
   {
-    "id": 1869860324,
-    "name": "Amitabh Bachchan",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Indian_actor_Amitabh_Bachchan.jpg/500px-Indian_actor_Amitabh_Bachchan.jpg",
-    "trendingScore": 140732
-  },
-  {
-    "id": 1859440080,
-    "name": "Akshay Kumar",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Akshay_Kumar_National_Award_for_Padman_%28cropped%29.jpg/500px-Akshay_Kumar_National_Award_for_Padman_%28cropped%29.jpg",
-    "trendingScore": 138530
-  },
-  {
-    "id": 955138588,
+    "id": 707039041,
     "name": "Prabhas",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Prabhas_for_Saaho_photoshoot.jpg/500px-Prabhas_for_Saaho_photoshoot.jpg",
-    "trendingScore": 138430
+    "trendingScore": 140704
   },
   {
-    "id": 839368727,
-    "name": "Kiara Advani",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Kiara_Advani_snapped_at_the_screening_of_Shershaah_%28cropped%29.jpg/500px-Kiara_Advani_snapped_at_the_screening_of_Shershaah_%28cropped%29.jpg",
-    "trendingScore": 129475
+    "id": 1014311174,
+    "name": "Amitabh Bachchan",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Indian_actor_Amitabh_Bachchan.jpg/500px-Indian_actor_Amitabh_Bachchan.jpg",
+    "trendingScore": 140613
   },
   {
-    "id": 808952813,
+    "id": 1792871344,
+    "name": "Sunny Deol",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Sunny_Paaji_2024.jpg",
+    "trendingScore": 140429
+  },
+  {
+    "id": 440924978,
+    "name": "Akshay Kumar",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Akshay_Kumar_National_Award_for_Padman_%28cropped%29.jpg/500px-Akshay_Kumar_National_Award_for_Padman_%28cropped%29.jpg",
+    "trendingScore": 136078
+  },
+  {
+    "id": 1316561171,
     "name": "Yash (actor)",
     "image": "https://upload.wikimedia.org/wikipedia/commons/4/41/Yash_at_promote_KGF_Chapter_2_in_Chennai_%28cropped%29.jpg",
-    "trendingScore": 128666
+    "trendingScore": 132781
   },
   {
-    "id": 1969226422,
-    "name": "Dhanush",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Dhanush_at_the_%E2%80%98Asuran%E2%80%99_Success_Meet_%28cropped%29.jpg/500px-Dhanush_at_the_%E2%80%98Asuran%E2%80%99_Success_Meet_%28cropped%29.jpg",
-    "trendingScore": 120982
+    "id": 1802835716,
+    "name": "Kiara Advani",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Kiara_Advani_snapped_at_the_screening_of_Shershaah_%28cropped%29.jpg/500px-Kiara_Advani_snapped_at_the_screening_of_Shershaah_%28cropped%29.jpg",
+    "trendingScore": 129603
   },
   {
-    "id": 1551941223,
+    "id": 1622156729,
     "name": "Sai Pallavi",
     "image": "https://upload.wikimedia.org/wikipedia/commons/4/40/Sai_Pallavi_at_Ramayana_launch_event_%28cropped%29.jpg",
-    "trendingScore": 118721
+    "trendingScore": 126169
   },
   {
-    "id": 1978504501,
+    "id": 1365523654,
+    "name": "Dhanush",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Dhanush_at_the_%E2%80%98Asuran%E2%80%99_Success_Meet_%28cropped%29.jpg/500px-Dhanush_at_the_%E2%80%98Asuran%E2%80%99_Success_Meet_%28cropped%29.jpg",
+    "trendingScore": 123605
+  },
+  {
+    "id": 1448965338,
     "name": "Hrithik Roshan",
     "image": "https://upload.wikimedia.org/wikipedia/commons/9/9c/Hrithik_at_Rado_launch.jpg",
-    "trendingScore": 115055
+    "trendingScore": 115504
   },
   {
-    "id": 139818878,
+    "id": 1005462360,
     "name": "Deepika Padukone",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Deepika_Padukone_2025_%281%29.png/500px-Deepika_Padukone_2025_%281%29.png",
-    "trendingScore": 112716
+    "trendingScore": 113268
   },
   {
-    "id": 1997547257,
-    "name": "Rashmika Mandanna",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Rashmika-Mandanna_at_the_music_launch_of_Chhaava_%28cropped%29.jpg",
-    "trendingScore": 102925
-  },
-  {
-    "id": 787539429,
-    "name": "Ranbir Kapoor",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Ranbir_Kapoor_snapped_at_Kalina_airport.jpg",
-    "trendingScore": 101809
-  },
-  {
-    "id": 43700559,
-    "name": "Katrina Kaif",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Katrina_Kaif_at_the_Bharat_audio_launch.jpg/500px-Katrina_Kaif_at_the_Bharat_audio_launch.jpg",
-    "trendingScore": 100998
-  },
-  {
-    "id": 2101709808,
+    "id": 351405426,
     "name": "Aishwarya Lekshmi",
     "image": "https://upload.wikimedia.org/wikipedia/commons/8/8d/Aishwarya_Lekshmi_%28Ponniyin-Selvan-Part-2-snapped-promoting-their-film-2%29_%28cropped%29.jpg",
-    "trendingScore": 97740
+    "trendingScore": 110224
   },
   {
-    "id": 1211016343,
-    "name": "Tamannaah Bhatia",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/6/60/Tamannaah_Bhatia_at_a_song_launch_from_the_film_Vedaa_%28cropped%29.jpg",
-    "trendingScore": 96313
+    "id": 1343772448,
+    "name": "Ranbir Kapoor",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Ranbir_Kapoor_snapped_at_Kalina_airport.jpg",
+    "trendingScore": 105211
   },
   {
-    "id": 864722020,
+    "id": 858673336,
+    "name": "Rashmika Mandanna",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Rashmika-Mandanna_at_the_music_launch_of_Chhaava_%28cropped%29.jpg",
+    "trendingScore": 102790
+  },
+  {
+    "id": 1047896499,
+    "name": "Katrina Kaif",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Katrina_Kaif_at_the_Bharat_audio_launch.jpg/500px-Katrina_Kaif_at_the_Bharat_audio_launch.jpg",
+    "trendingScore": 101092
+  },
+  {
+    "id": 11024144,
+    "name": "Bobby Deol",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/0/01/Lord_Bobby_2024.jpg",
+    "trendingScore": 98864
+  },
+  {
+    "id": 293220180,
     "name": "Kajal Aggarwal",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Kajal_Aggarwal_at_Bhagavanth_Kesari_Trailer_Launch_%281%29.jpg/500px-Kajal_Aggarwal_at_Bhagavanth_Kesari_Trailer_Launch_%281%29.jpg",
-    "trendingScore": 95878
+    "trendingScore": 96203
   },
   {
-    "id": 1655703310,
-    "name": "Ram Charan",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Ram_Charan_at_Game_Changer_trailer_launch.jpg/500px-Ram_Charan_at_Game_Changer_trailer_launch.jpg",
-    "trendingScore": 95178
-  },
-  {
-    "id": 805400563,
+    "id": 1856334575,
     "name": "Janhvi Kapoor",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/2025_Janhvi_Kapoor_%28cropped%29.jpg/500px-2025_Janhvi_Kapoor_%28cropped%29.jpg",
-    "trendingScore": 94636
+    "trendingScore": 95936
   },
   {
-    "id": 263911003,
-    "name": "Sanjay Dutt",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/1/13/Sanjay_Dutt_at_Mumbai_Airport%2C_2018_%28cropped%29.jpg",
-    "trendingScore": 91632
+    "id": 743315856,
+    "name": "Tamannaah Bhatia",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/6/60/Tamannaah_Bhatia_at_a_song_launch_from_the_film_Vedaa_%28cropped%29.jpg",
+    "trendingScore": 95617
   },
   {
-    "id": 1747882639,
+    "id": 1458843297,
+    "name": "Ram Charan",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Ram_Charan_at_Game_Changer_trailer_launch.jpg/500px-Ram_Charan_at_Game_Changer_trailer_launch.jpg",
+    "trendingScore": 95511
+  },
+  {
+    "id": 1101158933,
     "name": "Pooja Hegde",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Pooja_Hegde_at_Beast_Telugu_press_meet_%281%29.jpg/500px-Pooja_Hegde_at_Beast_Telugu_press_meet_%281%29.jpg",
-    "trendingScore": 91583
+    "trendingScore": 94615
   },
   {
-    "id": 374186171,
-    "name": "Suriya",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Retro_audio_launch_-_Suriya.jpg/500px-Retro_audio_launch_-_Suriya.jpg",
-    "trendingScore": 90381
+    "id": 2122132568,
+    "name": "Trisha Krishnan",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Trisha_Krishnan_at_PS1_pre_release_event_%283%29_%28cropped%29.jpg/500px-Trisha_Krishnan_at_PS1_pre_release_event_%283%29_%28cropped%29.jpg",
+    "trendingScore": 93324
   },
   {
-    "id": 1952234708,
+    "id": 1359758630,
+    "name": "Sanjay Dutt",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/13/Sanjay_Dutt_at_Mumbai_Airport%2C_2018_%28cropped%29.jpg",
+    "trendingScore": 92356
+  },
+  {
+    "id": 60065415,
+    "name": "R. Sarathkumar",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/R_Sarath_Kumar_At_The_Vaanam_Kottatum_Audio_Launch_%28cropped%29.jpg/500px-R_Sarath_Kumar_At_The_Vaanam_Kottatum_Audio_Launch_%28cropped%29.jpg",
+    "trendingScore": 90335
+  },
+  {
+    "id": 1960445474,
     "name": "Ranveer Singh",
     "image": "https://upload.wikimedia.org/wikipedia/commons/3/32/Ranveer_Singh_in_2023_%281%29_%28cropped%29.jpg",
-    "trendingScore": 90170
+    "trendingScore": 90101
   },
   {
-    "id": 1926744681,
-    "name": "Kriti Sanon",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Kriti_Sanon_at_Adipurush_pre_release_event_%282%29_%28cropped%29.jpg/500px-Kriti_Sanon_at_Adipurush_pre_release_event_%282%29_%28cropped%29.jpg",
-    "trendingScore": 89713
+    "id": 1733354575,
+    "name": "Suriya",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Retro_audio_launch_-_Suriya.jpg/500px-Retro_audio_launch_-_Suriya.jpg",
+    "trendingScore": 90063
   },
   {
-    "id": 1475683400,
+    "id": 384212000,
     "name": "Mammootty",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Mammootty%2C_2022.jpg/500px-Mammootty%2C_2022.jpg",
-    "trendingScore": 88935
+    "trendingScore": 89147
   },
   {
-    "id": 214935962,
+    "id": 1624039714,
+    "name": "Kriti Sanon",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Kriti_Sanon_at_Adipurush_pre_release_event_%282%29_%28cropped%29.jpg/500px-Kriti_Sanon_at_Adipurush_pre_release_event_%282%29_%28cropped%29.jpg",
+    "trendingScore": 88888
+  },
+  {
+    "id": 337209556,
+    "name": "Atharvaa",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Atharvaa_at_Eetti_Success_Meet_%28cropped%29.jpg/500px-Atharvaa_at_Eetti_Success_Meet_%28cropped%29.jpg",
+    "trendingScore": 85390
+  },
+  {
+    "id": 761945941,
     "name": "Rajinikanth",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Rajinikanth_in_2019.jpg/500px-Rajinikanth_in_2019.jpg",
-    "trendingScore": 85671
+    "trendingScore": 84820
   },
   {
-    "id": 271019784,
+    "id": 726149997,
+    "name": "Naga Chaitanya",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Naga_Chaitanya_%28cropped%29.jpg/500px-Naga_Chaitanya_%28cropped%29.jpg",
+    "trendingScore": 81953
+  },
+  {
+    "id": 1296709751,
     "name": "Saif Ali Khan",
     "image": "https://upload.wikimedia.org/wikipedia/commons/8/8b/Saif_SG_screening.jpg",
-    "trendingScore": 80099
+    "trendingScore": 80348
   },
   {
-    "id": 1544330668,
+    "id": 691381244,
     "name": "Ajay Devgn",
     "image": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Ajay_Devgn_at_the_trailer_launch_of_Raid_2.jpg",
-    "trendingScore": 80064
+    "trendingScore": 79983
   },
   {
-    "id": 1256558795,
-    "name": "Kamal Haasan",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Kamal_Haasan_at_2023_San_Diego_Comic-Con_International_by_Gage_Skidmore%2C_005_%28cropped%29.jpg/500px-Kamal_Haasan_at_2023_San_Diego_Comic-Con_International_by_Gage_Skidmore%2C_005_%28cropped%29.jpg",
-    "trendingScore": 78874
-  },
-  {
-    "id": 837349093,
+    "id": 157223794,
     "name": "Mahesh Babu",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Mahesh_Babu_in_Spyder_%28cropped%29.jpg/500px-Mahesh_Babu_in_Spyder_%28cropped%29.jpg",
-    "trendingScore": 78308
+    "trendingScore": 79765
   },
   {
-    "id": 1965853975,
-    "name": "Mohanlal",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Mohanlal_%28cropped%29.jpg/500px-Mohanlal_%28cropped%29.jpg",
-    "trendingScore": 76798
+    "id": 1269586205,
+    "name": "Kamal Haasan",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Kamal_Haasan_at_2023_San_Diego_Comic-Con_International_by_Gage_Skidmore%2C_005_%28cropped%29.jpg/500px-Kamal_Haasan_at_2023_San_Diego_Comic-Con_International_by_Gage_Skidmore%2C_005_%28cropped%29.jpg",
+    "trendingScore": 78813
   },
   {
-    "id": 1137213732,
+    "id": 115776170,
     "name": "Dulquer Salmaan",
     "image": "https://upload.wikimedia.org/wikipedia/commons/8/82/Dulquer_Salmaan_at_Karwaan_promotions_%28cropped%29.jpg",
-    "trendingScore": 75536
+    "trendingScore": 76640
   },
   {
-    "id": 1449781250,
+    "id": 740392316,
+    "name": "Kiran Abbavaram",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Kiran_Abbavaram.png",
+    "trendingScore": 74469
+  },
+  {
+    "id": 614329251,
+    "name": "Emraan Hashmi",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/0/08/Emraan_Filmfare_Magazine_Launch.jpg",
+    "trendingScore": 74291
+  },
+  {
+    "id": 467081398,
     "name": "Rakul Preet Singh",
     "image": "https://upload.wikimedia.org/wikipedia/commons/7/78/Rakul-Preet-snapped-at-the-Jio-Studios-Infinite-Together-event_%28cropped%29.jpg",
-    "trendingScore": 70560
+    "trendingScore": 71977
   },
   {
-    "id": 363668040,
-    "name": "Shahid Kapoor",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Shahid_Kapoor_at_Bloody_Daddy_launch_%28cropped%29.jpg/500px-Shahid_Kapoor_at_Bloody_Daddy_launch_%28cropped%29.jpg",
-    "trendingScore": 68158
+    "id": 216341672,
+    "name": "R. Madhavan",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/a/a3/Madhavan_Saala_Khadoos_2_%28cropped%29.jpg",
+    "trendingScore": 68776
   },
   {
-    "id": 966466563,
+    "id": 1722622462,
     "name": "Pawan Kalyan",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Shri_Konidela_Pawan_Kalyan.jpg/500px-Shri_Konidela_Pawan_Kalyan.jpg",
-    "trendingScore": 67885
+    "trendingScore": 68556
   },
   {
-    "id": 1181375132,
+    "id": 1801519993,
     "name": "Nagarjuna (actor)",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Nagarjuna_Akkineni_at_ANR_Awards.jpg/500px-Nagarjuna_Akkineni_at_ANR_Awards.jpg",
-    "trendingScore": 67372
+    "trendingScore": 67788
   },
   {
-    "id": 1995840927,
-    "name": "Sreeleela",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Sreeleela2026_%28cropped%29.jpg/500px-Sreeleela2026_%28cropped%29.jpg",
-    "trendingScore": 65977
+    "id": 490921624,
+    "name": "Yami Gautam",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Yami_Gautam_at_the_premiere_of_Dhoom_Dhaam_%28cropped%29.jpg",
+    "trendingScore": 67670
   },
   {
-    "id": 539964923,
-    "name": "Prithviraj Sukumaran",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/At_the_global_launch_of_-VARANASI_in_Hyderabad%21Wearing_%40shantanunikhilEyewear_%40carrera_%40rkumarop.jpg/500px-At_the_global_launch_of_-VARANASI_in_Hyderabad%21Wearing_%40shantanunikhilEyewear_%40carrera_%40rkumarop.jpg",
-    "trendingScore": 65730
-  },
-  {
-    "id": 435914974,
-    "name": "Shraddha Kapoor",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Shraddha_Kapoor_promoting_Street_Dancer_3D.jpg/500px-Shraddha_Kapoor_promoting_Street_Dancer_3D.jpg",
-    "trendingScore": 65572
-  },
-  {
-    "id": 1709203018,
-    "name": "Sidharth Malhotra",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Sidharth_Malhotra_snapped_during_Indian_Police_Force_promotion.jpg/500px-Sidharth_Malhotra_snapped_during_Indian_Police_Force_promotion.jpg",
-    "trendingScore": 64079
-  },
-  {
-    "id": 708694213,
-    "name": "Vikram (actor)",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Vikram_at_the_%E2%80%98Kadaram_Kondan%E2%80%99_Press_Meet.jpg/500px-Vikram_at_the_%E2%80%98Kadaram_Kondan%E2%80%99_Press_Meet.jpg",
-    "trendingScore": 61660
-  },
-  {
-    "id": 142949032,
-    "name": "Anushka Sharma",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/e/e6/Anushka_Sharma_promoting_Zero.jpg",
-    "trendingScore": 60804
-  },
-  {
-    "id": 1916633297,
-    "name": "Jyothika",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Jyothika_Filmfare_2014.jpg",
-    "trendingScore": 59062
-  },
-  {
-    "id": 1014288554,
-    "name": "Vijay Deverakonda",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Vijay_Deverakonda_at_NOTA_pressmeet_2_%28cropped%29.jpg/500px-Vijay_Deverakonda_at_NOTA_pressmeet_2_%28cropped%29.jpg",
-    "trendingScore": 57916
-  },
-  {
-    "id": 2134168669,
-    "name": "Vicky Kaushal",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/1/14/Vicky_Kaushal_snapped_promoting_Zara_Hatke_Zara_Bach_Ke_on_the_sets_of_The_Kapil_Sharma_Show_%28cropped%29.jpg",
-    "trendingScore": 57157
-  },
-  {
-    "id": 1873614557,
-    "name": "Chiranjeevi",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Chiranjeevi_at_ANR_Awards_2024_%28cropped%29.jpg/500px-Chiranjeevi_at_ANR_Awards_2024_%28cropped%29.jpg",
-    "trendingScore": 55579
-  },
-  {
-    "id": 1948201901,
-    "name": "Allu Arjun",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Allu_Arjun_at_Pushpa_2_The_Rule_meet.jpg/500px-Allu_Arjun_at_Pushpa_2_The_Rule_meet.jpg",
-    "trendingScore": 55477
-  },
-  {
-    "id": 225912777,
-    "name": "Kartik Aaryan",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Kartik_Aaryan_at_the_Red_Sea_International_Film_Festival_2025_%28cropped%29.jpg/500px-Kartik_Aaryan_at_the_Red_Sea_International_Film_Festival_2025_%28cropped%29.jpg",
-    "trendingScore": 53437
-  },
-  {
-    "id": 1999861211,
-    "name": "Shiva Rajkumar",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Dr_Shiva_Rajkumar_%28cropped%29.jpg/500px-Dr_Shiva_Rajkumar_%28cropped%29.jpg",
-    "trendingScore": 51919
-  },
-  {
-    "id": 990814681,
-    "name": "John Abraham",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/e/e0/JohnAbraham.jpg",
-    "trendingScore": 50475
-  },
-  {
-    "id": 871598381,
-    "name": "Vijay Sethupathi",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/e/e9/Vijay_Sethupathi_at_the_premiere_of_Merry_Christmas_2_%28cropped%29.jpg",
-    "trendingScore": 49374
-  },
-  {
-    "id": 1760540317,
-    "name": "Ajith Kumar",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Ajith_Kumar_at_Irungattukottai_Race_Track.jpg/500px-Ajith_Kumar_at_Irungattukottai_Race_Track.jpg",
-    "trendingScore": 48354
-  },
-  {
-    "id": 1889312451,
-    "name": "Fahadh Faasil",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Fahadh_Faasil_2019.jpg/500px-Fahadh_Faasil_2019.jpg",
-    "trendingScore": 48283
-  },
-  {
-    "id": 973946576,
-    "name": "Ayushmann Khurrana",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Ayushmann_Khurrana_promotos_%27Anek%27_in_Delhi_%281%29_%28cropped%29.jpg",
-    "trendingScore": 47313
-  },
-  {
-    "id": 1305073917,
-    "name": "Tovino Thomas",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Tovino_Thomas_At_The_%E2%80%98Maari_2%E2%80%99_Press_Meet.jpg/500px-Tovino_Thomas_At_The_%E2%80%98Maari_2%E2%80%99_Press_Meet.jpg",
-    "trendingScore": 45513
-  },
-  {
-    "id": 2011106574,
-    "name": "Varun Dhawan",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Varun_Dhawan_at_Mehboob_Studios_in_2025_%28cropped%29.jpg/500px-Varun_Dhawan_at_Mehboob_Studios_in_2025_%28cropped%29.jpg",
-    "trendingScore": 44512
-  },
-  {
-    "id": 501293690,
-    "name": "Ravi Teja",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Ravi_Teja_in_Dhamaka_promotions_2022_%28cropped%29.png/500px-Ravi_Teja_in_Dhamaka_promotions_2022_%28cropped%29.png",
-    "trendingScore": 42994
-  },
-  {
-    "id": 2074937307,
-    "name": "Tiger Shroff",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Tiger_Shroff_in_2019.jpg",
-    "trendingScore": 42531
-  },
-  {
-    "id": 1969749432,
-    "name": "Keerthy Suresh",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Keerthy_Suresh_at_Bhola_Shankar_pre_release_event_%282%29_%28cropped%29.jpg/500px-Keerthy_Suresh_at_Bhola_Shankar_pre_release_event_%282%29_%28cropped%29.jpg",
-    "trendingScore": 42416
-  },
-  {
-    "id": 1581889375,
-    "name": "Malavika Mohanan",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/8/89/Malavika_Mohanan_snapped_at_the_Grazia_Indie_Beauty_Awards_2025.jpg",
-    "trendingScore": 42174
-  },
-  {
-    "id": 164474669,
-    "name": "Karthi",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Karthi_Sivakumar_at_Nenjil_Thunivirunthal_Audio_Launch_%28cropped%29.jpg/500px-Karthi_Sivakumar_at_Nenjil_Thunivirunthal_Audio_Launch_%28cropped%29.jpg",
-    "trendingScore": 41788
-  },
-  {
-    "id": 150718746,
-    "name": "Arya (actor)",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/5/58/Arya_viewing_CCL_match%2C_India_%28cropped%29.jpg",
-    "trendingScore": 41315
-  },
-  {
-    "id": 418285793,
-    "name": "Sivakarthikeyan",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Sivakarthikeyan_%28cropped%29.jpg/500px-Sivakarthikeyan_%28cropped%29.jpg",
-    "trendingScore": 41178
-  },
-  {
-    "id": 1981999282,
-    "name": "Nani (actor)",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Nani_at_an_interview_for_film_companion_%28cropped%29.png/500px-Nani_at_an_interview_for_film_companion_%28cropped%29.png",
-    "trendingScore": 39719
-  },
-  {
-    "id": 1582606125,
-    "name": "Rajkummar Rao",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Actor_Rajkummar_Rao.jpg/500px-Actor_Rajkummar_Rao.jpg",
-    "trendingScore": 39347
-  },
-  {
-    "id": 763768403,
-    "name": "Venkatesh (actor)",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Venkatesh_Daggubati_at_ANR_Awards.jpg/500px-Venkatesh_Daggubati_at_ANR_Awards.jpg",
-    "trendingScore": 35416
-  },
-  {
-    "id": 1193854100,
-    "name": "Puneeth Rajkumar",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Puneeth_Rajkumar_%281%29.jpg",
-    "trendingScore": 30865
-  },
-  {
-    "id": 213895332,
-    "name": "Rana Daggubati",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Rana_Daggubati_by_Gage_Skidmore.jpg/500px-Rana_Daggubati_by_Gage_Skidmore.jpg",
-    "trendingScore": 30749
-  },
-  {
-    "id": 717097666,
-    "name": "Krithi Shetty",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/d/d6/Krithi_Shetty_in_2024_2_%28cropped%29.jpg",
-    "trendingScore": 30098
-  },
-  {
-    "id": 1596718897,
-    "name": "Silambarasan",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Silambarasan_TR.jpg/500px-Silambarasan_TR.jpg",
-    "trendingScore": 29461
-  },
-  {
-    "id": 1572390618,
-    "name": "Nivin Pauly",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Realnivi.jpg/500px-Realnivi.jpg",
-    "trendingScore": 28902
-  },
-  {
-    "id": 54244794,
-    "name": "Parvathy Thiruvothu",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Actress_Parvathi.jpg/500px-Actress_Parvathi.jpg",
-    "trendingScore": 28587
-  },
-  {
-    "id": 1517902723,
-    "name": "Nazriya Nazim",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Nazriya_Nazim.jpg/500px-Nazriya_Nazim.jpg",
-    "trendingScore": 26259
-  },
-  {
-    "id": 1340043736,
-    "name": "Joju George",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Joju_George_Latest_November_2025.jpg/500px-Joju_George_Latest_November_2025.jpg",
-    "trendingScore": 24475
-  },
-  {
-    "id": 249129042,
-    "name": "Sudeepa",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Sudeep_interview_TeachAIDS.jpg/500px-Sudeep_interview_TeachAIDS.jpg",
-    "trendingScore": 24189
-  },
-  {
-    "id": 1827767631,
-    "name": "Varun Tej",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Varun_Tej_snapped_promoting_Operation-Valentine.jpg",
-    "trendingScore": 22701
-  },
-  {
-    "id": 772738946,
-    "name": "Dileep",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Dileep2016.jpg/500px-Dileep2016.jpg",
-    "trendingScore": 22157
-  },
-  {
-    "id": 2024193934,
-    "name": "Kunchacko Boban",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Kunchacko_boban.JPG/500px-Kunchacko_boban.JPG",
-    "trendingScore": 22100
-  },
-  {
-    "id": 565472228,
-    "name": "Rishab Shetty",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Rishab_Shetty.jpg/500px-Rishab_Shetty.jpg",
-    "trendingScore": 21773
-  },
-  {
-    "id": 911616572,
-    "name": "Srinidhi Shetty",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Srinidhi_Shetty_at_the_%E2%80%98KGF%E2%80%99_Press_Meet_In_Chennai_%28cropped%29.jpg/500px-Srinidhi_Shetty_at_the_%E2%80%98KGF%E2%80%99_Press_Meet_In_Chennai_%28cropped%29.jpg",
-    "trendingScore": 20278
-  },
-  {
-    "id": 144218362,
-    "name": "Asif Ali (actor)",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Asif_Ali_Malayalam_Actor.jpg/500px-Asif_Ali_Malayalam_Actor.jpg",
-    "trendingScore": 19853
-  },
-  {
-    "id": 308302284,
-    "name": "Rakshit Shetty",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/RakshitShetty.jpg/500px-RakshitShetty.jpg",
-    "trendingScore": 18884
-  },
-  {
-    "id": 2072350063,
-    "name": "Dhananjaya (actor)",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Dhananjaya-profile.jpg/500px-Dhananjaya-profile.jpg",
-    "trendingScore": 10943
-  },
-  {
-    "id": 1728283638,
-    "name": "N. T. Rama Rao Jr.",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/NTR_Jr._%282026%29.jpg/500px-NTR_Jr._%282026%29.jpg",
-    "trendingScore": 9300
-  },
-  {
-    "id": 2006426727,
-    "name": "Sai Dharam Tej",
-    "image": null,
-    "trendingScore": 8132
-  },
-  {
-    "id": 1220501097,
-    "name": "Nayanthara",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Nayanthara_in_2023_%28cropped%29.jpg",
-    "trendingScore": 8000
-  },
-  {
-    "id": 745674528,
-    "name": "Kareena Kapoor Khan",
-    "image": null,
-    "trendingScore": 7912
-  },
-  {
-    "id": 396703162,
-    "name": "Trisha (actress)",
-    "image": null,
-    "trendingScore": 6284
-  },
-  {
-    "id": 1049837636,
-    "name": "Sara Ali Khan",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Sara_Ali_Khan_snapped_promoting_Zara_Hatke_Zara_Bach_Ke_on_the_sets_of_The_Kapil_Sharma_Show_%288%29_%28cropped%29.jpg",
-    "trendingScore": 5100
-  },
-  {
-    "id": 1717761582,
-    "name": "Ananya Panday",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Ananya_Panday_grace_the_premiere_of_Merry_Christmas_%28cropped%29.png",
-    "trendingScore": 4900
-  },
-  {
-    "id": 1224672843,
+    "id": 207313784,
     "name": "Siddharth (actor)",
     "image": "https://upload.wikimedia.org/wikipedia/commons/0/06/SiddharthNarayan.jpg",
-    "trendingScore": 2100
+    "trendingScore": 67519
   },
   {
-    "id": 1880192215,
+    "id": 1041553410,
+    "name": "Shahid Kapoor",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Shahid_Kapoor_at_Bloody_Daddy_launch_%28cropped%29.jpg/500px-Shahid_Kapoor_at_Bloody_Daddy_launch_%28cropped%29.jpg",
+    "trendingScore": 67435
+  },
+  {
+    "id": 140076183,
+    "name": "Sreeleela",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Sreeleela2026_%28cropped%29.jpg/500px-Sreeleela2026_%28cropped%29.jpg",
+    "trendingScore": 65832
+  },
+  {
+    "id": 915542920,
+    "name": "Prithviraj Sukumaran",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/At_the_global_launch_of_-VARANASI_in_Hyderabad%21Wearing_%40shantanunikhilEyewear_%40carrera_%40rkumarop.jpg/500px-At_the_global_launch_of_-VARANASI_in_Hyderabad%21Wearing_%40shantanunikhilEyewear_%40carrera_%40rkumarop.jpg",
+    "trendingScore": 65294
+  },
+  {
+    "id": 402560582,
+    "name": "Shraddha Kapoor",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Shraddha_Kapoor_promoting_Street_Dancer_3D.jpg/500px-Shraddha_Kapoor_promoting_Street_Dancer_3D.jpg",
+    "trendingScore": 65247
+  },
+  {
+    "id": 515514487,
+    "name": "Sidharth Malhotra",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Sidharth_Malhotra_snapped_during_Indian_Police_Force_promotion.jpg/500px-Sidharth_Malhotra_snapped_during_Indian_Police_Force_promotion.jpg",
+    "trendingScore": 64838
+  },
+  {
+    "id": 1933921525,
+    "name": "Vikram (actor)",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Vikram_at_the_%E2%80%98Kadaram_Kondan%E2%80%99_Press_Meet.jpg/500px-Vikram_at_the_%E2%80%98Kadaram_Kondan%E2%80%99_Press_Meet.jpg",
+    "trendingScore": 61714
+  },
+  {
+    "id": 2027216501,
+    "name": "Sara Ali Khan",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Sara_Ali_Khan_snapped_promoting_Zara_Hatke_Zara_Bach_Ke_on_the_sets_of_The_Kapil_Sharma_Show_%288%29_%28cropped%29.jpg",
+    "trendingScore": 61424
+  },
+  {
+    "id": 512349978,
+    "name": "Anushka Sharma",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/e/e6/Anushka_Sharma_promoting_Zero.jpg",
+    "trendingScore": 60691
+  },
+  {
+    "id": 1821562202,
+    "name": "Anushka Shetty",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Anushka_Shetty_first_look_Baahubali_2.jpg/500px-Anushka_Shetty_first_look_Baahubali_2.jpg",
+    "trendingScore": 59811
+  },
+  {
+    "id": 991777478,
+    "name": "Jyothika",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/7/77/Jyothika_Filmfare_2014.jpg",
+    "trendingScore": 58729
+  },
+  {
+    "id": 1656483848,
+    "name": "Vijay Deverakonda",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Vijay_Deverakonda_at_NOTA_pressmeet_2_%28cropped%29.jpg/500px-Vijay_Deverakonda_at_NOTA_pressmeet_2_%28cropped%29.jpg",
+    "trendingScore": 58600
+  },
+  {
+    "id": 1162823277,
+    "name": "N. T. Rama Rao Jr.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/NTR_Jr._%282026%29.jpg/500px-NTR_Jr._%282026%29.jpg",
+    "trendingScore": 58468
+  },
+  {
+    "id": 1441390493,
+    "name": "Vicky Kaushal",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/14/Vicky_Kaushal_snapped_promoting_Zara_Hatke_Zara_Bach_Ke_on_the_sets_of_The_Kapil_Sharma_Show_%28cropped%29.jpg",
+    "trendingScore": 57385
+  },
+  {
+    "id": 215977822,
+    "name": "Allu Arjun",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Allu_Arjun_at_Pushpa_2_The_Rule_meet.jpg/500px-Allu_Arjun_at_Pushpa_2_The_Rule_meet.jpg",
+    "trendingScore": 55953
+  },
+  {
+    "id": 480679463,
+    "name": "Chiranjeevi",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Chiranjeevi_at_ANR_Awards_2024_%28cropped%29.jpg/500px-Chiranjeevi_at_ANR_Awards_2024_%28cropped%29.jpg",
+    "trendingScore": 55919
+  },
+  {
+    "id": 1721002490,
+    "name": "Abhishek Bachchan",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Abhishek_Bachchan_promoting_Be_Happy.jpg",
+    "trendingScore": 55275
+  },
+  {
+    "id": 953264588,
+    "name": "G. V. Prakash Kumar",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/GvprakashRecent_%28cropped%29.jpg/500px-GvprakashRecent_%28cropped%29.jpg",
+    "trendingScore": 53986
+  },
+  {
+    "id": 1293523635,
+    "name": "Kartik Aaryan",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Kartik_Aaryan_at_the_Red_Sea_International_Film_Festival_2025_%28cropped%29.jpg/500px-Kartik_Aaryan_at_the_Red_Sea_International_Film_Festival_2025_%28cropped%29.jpg",
+    "trendingScore": 53465
+  },
+  {
+    "id": 616434129,
+    "name": "Shiva Rajkumar",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Dr_Shiva_Rajkumar_%28cropped%29.jpg/500px-Dr_Shiva_Rajkumar_%28cropped%29.jpg",
+    "trendingScore": 52137
+  },
+  {
+    "id": 1406864317,
+    "name": "John Abraham",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/e/e0/JohnAbraham.jpg",
+    "trendingScore": 50569
+  },
+  {
+    "id": 2081159311,
+    "name": "Vijay Sethupathi",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/e/e9/Vijay_Sethupathi_at_the_premiere_of_Merry_Christmas_2_%28cropped%29.jpg",
+    "trendingScore": 49662
+  },
+  {
+    "id": 157934837,
+    "name": "Boman Irani",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/IIFA_2017_Green_Carpet_%2836349841166%29_%28cropped%29.jpg/500px-IIFA_2017_Green_Carpet_%2836349841166%29_%28cropped%29.jpg",
+    "trendingScore": 48903
+  },
+  {
+    "id": 1018181979,
+    "name": "Ajith Kumar",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Ajith_Kumar_at_Irungattukottai_Race_Track.jpg/500px-Ajith_Kumar_at_Irungattukottai_Race_Track.jpg",
+    "trendingScore": 48516
+  },
+  {
+    "id": 994287229,
+    "name": "Fahadh Faasil",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Fahadh_Faasil_2019.jpg/500px-Fahadh_Faasil_2019.jpg",
+    "trendingScore": 48410
+  },
+  {
+    "id": 533574067,
+    "name": "Prashanth",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Prashanth_at_Saahasam_Audio_Launch.jpg/500px-Prashanth_at_Saahasam_Audio_Launch.jpg",
+    "trendingScore": 47953
+  },
+  {
+    "id": 1572308117,
+    "name": "Ayushmann Khurrana",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Ayushmann_Khurrana_promotos_%27Anek%27_in_Delhi_%281%29_%28cropped%29.jpg",
+    "trendingScore": 47764
+  },
+  {
+    "id": 1107489703,
+    "name": "Tovino Thomas",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Tovino_Thomas_At_The_%E2%80%98Maari_2%E2%80%99_Press_Meet.jpg/500px-Tovino_Thomas_At_The_%E2%80%98Maari_2%E2%80%99_Press_Meet.jpg",
+    "trendingScore": 46934
+  },
+  {
+    "id": 600439,
+    "name": "Varun Dhawan",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Varun_Dhawan_at_Mehboob_Studios_in_2025_%28cropped%29.jpg/500px-Varun_Dhawan_at_Mehboob_Studios_in_2025_%28cropped%29.jpg",
+    "trendingScore": 45945
+  },
+  {
+    "id": 1939811263,
+    "name": "Priyamani",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Priyamani_at_CCL_match%2C_2011_%28cropped%29.jpg",
+    "trendingScore": 45321
+  },
+  {
+    "id": 1922885109,
+    "name": "Ravi Teja",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Ravi_Teja_in_Dhamaka_promotions_2022_%28cropped%29.png/500px-Ravi_Teja_in_Dhamaka_promotions_2022_%28cropped%29.png",
+    "trendingScore": 43365
+  },
+  {
+    "id": 702353983,
+    "name": "Tiger Shroff",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Tiger_Shroff_in_2019.jpg",
+    "trendingScore": 42898
+  },
+  {
+    "id": 1476645858,
+    "name": "Vidya Balan",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Vidya_Balan_at_BB3_interviews%2C_2024_%28cropped%29.jpg",
+    "trendingScore": 42509
+  },
+  {
+    "id": 1423939059,
+    "name": "Keerthy Suresh",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Keerthy_Suresh_at_Bhola_Shankar_pre_release_event_%282%29_%28cropped%29.jpg/500px-Keerthy_Suresh_at_Bhola_Shankar_pre_release_event_%282%29_%28cropped%29.jpg",
+    "trendingScore": 42390
+  },
+  {
+    "id": 1511067743,
+    "name": "Malavika Mohanan",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/8/89/Malavika_Mohanan_snapped_at_the_Grazia_Indie_Beauty_Awards_2025.jpg",
+    "trendingScore": 42146
+  },
+  {
+    "id": 1105426399,
+    "name": "Sivakarthikeyan",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Sivakarthikeyan_%28cropped%29.jpg/500px-Sivakarthikeyan_%28cropped%29.jpg",
+    "trendingScore": 41331
+  },
+  {
+    "id": 845710767,
+    "name": "Sundeep Kishan",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Sundeep_Kishan_at_%27Shor_in_the_City%27_screening_%28cropped%29.jpg",
+    "trendingScore": 41212
+  },
+  {
+    "id": 934018314,
+    "name": "Arjun Das",
+    "image": null,
+    "trendingScore": 40914
+  },
+  {
+    "id": 927715085,
+    "name": "Arya (actor)",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/5/58/Arya_viewing_CCL_match%2C_India_%28cropped%29.jpg",
+    "trendingScore": 40733
+  },
+  {
+    "id": 1159283472,
+    "name": "Vishal (actor)",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/8/86/Vishal_at_CCL_4_Launch_%28cropped%29.jpg",
+    "trendingScore": 40712
+  },
+  {
+    "id": 259230191,
+    "name": "Nani (actor)",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Nani_at_an_interview_for_film_companion_%28cropped%29.png/500px-Nani_at_an_interview_for_film_companion_%28cropped%29.png",
+    "trendingScore": 39553
+  },
+  {
+    "id": 472499743,
+    "name": "Rajkummar Rao",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Actor_Rajkummar_Rao.jpg/500px-Actor_Rajkummar_Rao.jpg",
+    "trendingScore": 39467
+  },
+  {
+    "id": 623789650,
+    "name": "Manoj Bajpayee",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Manoj_Bajpai_at_52nd_IFFI.jpg/500px-Manoj_Bajpai_at_52nd_IFFI.jpg",
+    "trendingScore": 37938
+  },
+  {
+    "id": 1242590277,
+    "name": "Prabhu (actor)",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Prabhu_at_Wagah_Audio_Launch.jpg/500px-Prabhu_at_Wagah_Audio_Launch.jpg",
+    "trendingScore": 37691
+  },
+  {
+    "id": 919791179,
+    "name": "Jagapathi Babu",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/d/d3/Jagapathi_Babu_at_62nd_Filmfare_awards_south.jpg",
+    "trendingScore": 36430
+  },
+  {
+    "id": 68215285,
+    "name": "Randeep Hooda",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Randeep_Hooda_BIG_Star_Entertainment_Awards.jpg",
+    "trendingScore": 36391
+  },
+  {
+    "id": 735014959,
+    "name": "Yogi Babu",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Yogi_Babu_at_the_Sema_Press_Meet.jpg/500px-Yogi_Babu_at_the_Sema_Press_Meet.jpg",
+    "trendingScore": 36217
+  },
+  {
+    "id": 658789261,
+    "name": "Venkatesh (actor)",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Venkatesh_Daggubati_at_ANR_Awards.jpg/500px-Venkatesh_Daggubati_at_ANR_Awards.jpg",
+    "trendingScore": 35516
+  },
+  {
+    "id": 164178343,
+    "name": "Nawazuddin Siddiqui",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Nawazuddin_Siddiqui_at_IFFK_2021_4_%28cropped%29.jpg/500px-Nawazuddin_Siddiqui_at_IFFK_2021_4_%28cropped%29.jpg",
+    "trendingScore": 33646
+  },
+  {
+    "id": 1257007353,
+    "name": "Puneeth Rajkumar",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Puneeth_Rajkumar_%281%29.jpg",
+    "trendingScore": 31080
+  },
+  {
+    "id": 987222623,
+    "name": "Rana Daggubati",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Rana_Daggubati_by_Gage_Skidmore.jpg/500px-Rana_Daggubati_by_Gage_Skidmore.jpg",
+    "trendingScore": 31003
+  },
+  {
+    "id": 1010890918,
+    "name": "Taapsee Pannu",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/15/Taapsee_Pannu_in_March_2022.jpg",
+    "trendingScore": 30364
+  },
+  {
+    "id": 1112518900,
+    "name": "Krithi Shetty",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/d/d6/Krithi_Shetty_in_2024_2_%28cropped%29.jpg",
+    "trendingScore": 30080
+  },
+  {
+    "id": 2093067983,
+    "name": "Silambarasan",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Silambarasan_TR.jpg/500px-Silambarasan_TR.jpg",
+    "trendingScore": 29638
+  },
+  {
+    "id": 158711686,
+    "name": "Nivin Pauly",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Realnivi.jpg/500px-Realnivi.jpg",
+    "trendingScore": 28874
+  },
+  {
+    "id": 2143710964,
+    "name": "Parvathy Thiruvothu",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Actress_Parvathi.jpg/500px-Actress_Parvathi.jpg",
+    "trendingScore": 28003
+  },
+  {
+    "id": 2061601953,
+    "name": "Nazriya Nazim",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Nazriya_Nazim.jpg/500px-Nazriya_Nazim.jpg",
+    "trendingScore": 26272
+  },
+  {
+    "id": 896572764,
+    "name": "Joju George",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Joju_George_Latest_November_2025.jpg/500px-Joju_George_Latest_November_2025.jpg",
+    "trendingScore": 24638
+  },
+  {
+    "id": 1797657131,
+    "name": "Sunil (actor)",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/5/50/Sunil_Telugu_Film_Actor.jpg",
+    "trendingScore": 24494
+  },
+  {
+    "id": 599632555,
+    "name": "Pankaj Tripathi",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Pankaj_Tripathi_World_Premiere_Newton_Zoopalast_Berlinale_2017_06.jpg/500px-Pankaj_Tripathi_World_Premiere_Newton_Zoopalast_Berlinale_2017_06.jpg",
+    "trendingScore": 24461
+  },
+  {
+    "id": 186459542,
+    "name": "Soori (actor)",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Soori_at_Marudhu_Press_Meet.jpg/500px-Soori_at_Marudhu_Press_Meet.jpg",
+    "trendingScore": 23812
+  },
+  {
+    "id": 254259750,
+    "name": "Adivi Sesh",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Adivi_Sesh.png/500px-Adivi_Sesh.png",
+    "trendingScore": 23766
+  },
+  {
+    "id": 228076162,
+    "name": "Sudeepa",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Sudeep_interview_TeachAIDS.jpg/500px-Sudeep_interview_TeachAIDS.jpg",
+    "trendingScore": 23739
+  },
+  {
+    "id": 1659343706,
+    "name": "Varun Tej",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Varun_Tej_snapped_promoting_Operation-Valentine.jpg",
+    "trendingScore": 23560
+  },
+  {
+    "id": 108541497,
+    "name": "Jimmy Sheirgill",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/5/54/Jimmy_Shergill.jpg",
+    "trendingScore": 23475
+  },
+  {
+    "id": 1811060935,
+    "name": "Arvind Swamy",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Aravind_Swamy_at_63rd_Filmfare_Awards_2016_%28South%29_Press_Meet.jpg/500px-Aravind_Swamy_at_63rd_Filmfare_Awards_2016_%28South%29_Press_Meet.jpg",
+    "trendingScore": 23156
+  },
+  {
+    "id": 729621819,
+    "name": "Jiiva",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Jiiva_latest_photoshoot.jpg/500px-Jiiva_latest_photoshoot.jpg",
+    "trendingScore": 23100
+  },
+  {
+    "id": 864737961,
+    "name": "Kunchacko Boban",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Kunchacko_boban.JPG/500px-Kunchacko_boban.JPG",
+    "trendingScore": 22729
+  },
+  {
+    "id": 1562174570,
+    "name": "Nithiin",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/0/04/Actor_Nithiin.png",
+    "trendingScore": 22536
+  },
+  {
+    "id": 1339840649,
+    "name": "Dileep",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Dileep2016.jpg/500px-Dileep2016.jpg",
+    "trendingScore": 22272
+  },
+  {
+    "id": 1800217179,
+    "name": "Rishab Shetty",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Rishab_Shetty.jpg/500px-Rishab_Shetty.jpg",
+    "trendingScore": 21968
+  },
+  {
+    "id": 1904667619,
+    "name": "Srinidhi Shetty",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Srinidhi_Shetty_at_the_%E2%80%98KGF%E2%80%99_Press_Meet_In_Chennai_%28cropped%29.jpg/500px-Srinidhi_Shetty_at_the_%E2%80%98KGF%E2%80%99_Press_Meet_In_Chennai_%28cropped%29.jpg",
+    "trendingScore": 20764
+  },
+  {
+    "id": 484085674,
+    "name": "Sharwanand",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Sharwanand_Myneni.jpg/500px-Sharwanand_Myneni.jpg",
+    "trendingScore": 20282
+  },
+  {
+    "id": 2130926279,
+    "name": "Asif Ali (actor)",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Asif_Ali_Malayalam_Actor.jpg/500px-Asif_Ali_Malayalam_Actor.jpg",
+    "trendingScore": 19801
+  },
+  {
+    "id": 413655223,
+    "name": "Rakshit Shetty",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/RakshitShetty.jpg/500px-RakshitShetty.jpg",
+    "trendingScore": 18907
+  },
+  {
+    "id": 704826605,
+    "name": "Allari Naresh",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Allari_Naresh_at_Ugram_pressmeet.jpg/500px-Allari_Naresh_at_Ugram_pressmeet.jpg",
+    "trendingScore": 16391
+  },
+  {
+    "id": 609770663,
+    "name": "Santhanam (actor)",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Santhanam_at_the_%E2%80%98A1%E2%80%99_Press_Meet_%28cropped%29.jpg/500px-Santhanam_at_the_%E2%80%98A1%E2%80%99_Press_Meet_%28cropped%29.jpg",
+    "trendingScore": 16218
+  },
+  {
+    "id": 24767781,
+    "name": "Vadivelu",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Vadivelu_1_at_Trailer_%26_HD_Songs_Launch_of_Kaththi_Sandai_%28cropped%29.jpg/500px-Vadivelu_1_at_Trailer_%26_HD_Songs_Launch_of_Kaththi_Sandai_%28cropped%29.jpg",
+    "trendingScore": 16115
+  },
+  {
+    "id": 1296373104,
+    "name": "Naveen Polishetty",
+    "image": null,
+    "trendingScore": 15656
+  },
+  {
+    "id": 1706397866,
+    "name": "Kalidas Jayaram",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Kalidas_Jayaram_2.jpg/500px-Kalidas_Jayaram_2.jpg",
+    "trendingScore": 15271
+  },
+  {
+    "id": 1534961074,
+    "name": "Bharath (actor)",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/The_U.S_Consulate_Chennai_celebrated_its_two-year_anniversary_on_Facebook_with_U.S._Consul_General_Jennifer_McIntyre%2C_actors_Bharath_Srinivasan_and_Jeyam_Ravi20_%28cropped%29.jpg/500px-thumbnail.jpg",
+    "trendingScore": 15271
+  },
+  {
+    "id": 145909702,
+    "name": "Mohanlal",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Mohanlal_%28cropped%29.jpg/500px-Mohanlal_%28cropped%29.jpg",
+    "trendingScore": 13900
+  },
+  {
+    "id": 2117218661,
+    "name": "Nayanthara",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Nayanthara_in_2023_%28cropped%29.jpg",
+    "trendingScore": 13100
+  },
+  {
+    "id": 1709762069,
+    "name": "Ashok Selvan",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Ashok_Selvan_%28cropped%29.jpg/500px-Ashok_Selvan_%28cropped%29.jpg",
+    "trendingScore": 12496
+  },
+  {
+    "id": 2025317731,
+    "name": "Sree Vishnu",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Actor_Sree_Vishnu.png/500px-Actor_Sree_Vishnu.png",
+    "trendingScore": 12228
+  },
+  {
+    "id": 2027896483,
+    "name": "Dhananjaya (actor)",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Dhananjaya-profile.jpg/500px-Dhananjaya-profile.jpg",
+    "trendingScore": 10842
+  },
+  {
+    "id": 1364835877,
+    "name": "Ananya Panday",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Ananya_Panday_grace_the_premiere_of_Merry_Christmas_%28cropped%29.png",
+    "trendingScore": 10000
+  },
+  {
+    "id": 1604136860,
+    "name": "Harish Kalyan",
+    "image": null,
+    "trendingScore": 9238
+  },
+  {
+    "id": 114696631,
+    "name": "Manchu Manoj",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Manchu_Manoj_babu.jpg/500px-Manchu_Manoj_babu.jpg",
+    "trendingScore": 9037
+  },
+  {
+    "id": 1892454180,
+    "name": "Bellamkonda Sai Sreenivas",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Bellamkonda_Sai_Srinivas_%28cropped%29.jpg/500px-Bellamkonda_Sai_Srinivas_%28cropped%29.jpg",
+    "trendingScore": 8979
+  },
+  {
+    "id": 70846690,
+    "name": "Sai Dharam Tej",
+    "image": null,
+    "trendingScore": 8329
+  },
+  {
+    "id": 71490859,
+    "name": "Kareena Kapoor Khan",
+    "image": null,
+    "trendingScore": 7926
+  },
+  {
+    "id": 1802345607,
+    "name": "Karthi",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Karthi_Sivakumar_at_Nenjil_Thunivirunthal_Audio_Launch_%28cropped%29.jpg/500px-Karthi_Sivakumar_at_Nenjil_Thunivirunthal_Audio_Launch_%28cropped%29.jpg",
+    "trendingScore": 7900
+  },
+  {
+    "id": 1971491031,
+    "name": "Gautham Karthik",
+    "image": null,
+    "trendingScore": 5375
+  },
+  {
+    "id": 676444404,
+    "name": "Aadhi Pinikisetty",
+    "image": null,
+    "trendingScore": 3200
+  },
+  {
+    "id": 1642977923,
+    "name": "Sarathkumar",
+    "image": null,
+    "trendingScore": 1009
+  },
+  {
+    "id": 1627806216,
+    "name": "Manchu Vishnu",
+    "image": null,
+    "trendingScore": 999
+  },
+  {
+    "id": 1277730500,
     "name": "Jayam Ravi",
     "image": null,
     "trendingScore": 978
   },
   {
-    "id": 1864737742,
+    "id": 48192376,
     "name": "Darshan (actor)",
     "image": null,
-    "trendingScore": 267
+    "trendingScore": 263
   },
   {
-    "id": 1448160477,
+    "id": 35364694,
     "name": "Madhavan",
     "image": null,
-    "trendingScore": 233
+    "trendingScore": 229
   }
 ]

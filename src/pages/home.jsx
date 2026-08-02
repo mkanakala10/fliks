@@ -11,6 +11,7 @@ import MovieCard from '../components/MovieCard';
 import CTA from '../components/CTA';
 import HorizontalScroller from '../components/HorizontalScroller';
 import { fetchIndianActors } from '../utils/indianActors';
+import { fetchIndianDirectors } from '../utils/indianDirectors';
 import ActorModal from '../components/ActorModal';
 import {
   fetchDiscoverMovies,
@@ -22,6 +23,7 @@ import {
 
 function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
   const [trendingActors, setTrendingActors] = useState([]);
+  const [trendingDirectors, setTrendingDirectors] = useState([]);
   const [roiMovies, setRoiMovies] = useState([]);
   const [anticipated, setAnticipated] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -46,6 +48,7 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
 
       const results = await Promise.allSettled([
         fetchIndianActors(),
+        fetchIndianDirectors(),
         fetchDiscoverMovies(apiKey, {
           primary_release_year: '2026',
           sort_by: 'popularity.desc',
@@ -56,10 +59,13 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
 
       if (cancelled) return;
 
-      const [actorsResult, anticipatedResult, roiResult] = results;
+      const [actorsResult, directorsResult, anticipatedResult, roiResult] = results;
 
       if (actorsResult.status === 'fulfilled') {
         setTrendingActors(actorsResult.value);
+      }
+      if (directorsResult.status === 'fulfilled') {
+        setTrendingDirectors(directorsResult.value);
       }
       if (roiResult.status === 'fulfilled') {
         setRoiMovies(roiResult.value.slice(0, 20));
@@ -173,6 +179,31 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
                 />
               )}
               emptyMessage="Updating trending stars…"
+              centerWhenFits
+              cardVariant="actor"
+            />
+          </Box>
+
+          <Box component="section" py={6}>
+            <SectionHeader
+              title="Trending Indian Directors"
+              subtitle="Most popular filmmakers in 2026 based on recent hits"
+            />
+            <HorizontalScroller
+              items={trendingDirectors}
+              getKey={(director) => director.id}
+              renderItem={(director, index) => (
+                <ActorCard
+                  actor={director}
+                  rank={index + 1}
+                  onClick={() => {
+                    setSelectedActorId(director.id);
+                    setSelectedActorName(director.name);
+                    setIsActorModalOpen(true);
+                  }}
+                />
+              )}
+              emptyMessage="Updating trending directors…"
               centerWhenFits
               cardVariant="actor"
             />
