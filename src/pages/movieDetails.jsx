@@ -10,10 +10,12 @@ import Rating from '@mui/material/Rating';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import Modal from '@mui/material/Modal';
+import Tooltip from '@mui/material/Tooltip';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ShareIcon from '@mui/icons-material/Share';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import CloseIcon from '@mui/icons-material/Close';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import PageShell from '../components/PageShell';
 import Button from '../components/Button';
 import { useWatchLater } from '../contexts/WatchLaterContext';
@@ -33,7 +35,7 @@ function MovieDetails() {
   const [selectedActorId, setSelectedActorId] = useState(null);
   const [selectedActorName, setSelectedActorName] = useState('');
   const [isActorModalOpen, setIsActorModalOpen] = useState(false);
-  const { ratings, rateMovie } = useUserData();
+  const { ratings, rateMovie, removeRating } = useUserData();
   const { isAuthenticated, user } = useAuth();
   const showToast = useToast();
   const [movie, setMovie] = useState(null);
@@ -155,6 +157,22 @@ function MovieDetails() {
     } catch (e) {
       console.error(e);
       showToast('Failed to save review.', 'error');
+    } finally {
+      setIsSubmittingReview(false);
+    }
+  };
+
+  const handleRemoveReview = async () => {
+    if (!isAuthenticated) {
+      showToast('Please sign in to remove a review.', 'warning');
+      return;
+    }
+    setIsSubmittingReview(true);
+    try {
+      await removeRating(movie.id);
+      setReviewInput('');
+    } catch (e) {
+      console.error(e);
     } finally {
       setIsSubmittingReview(false);
     }
@@ -569,7 +587,25 @@ function MovieDetails() {
                           },
                         }}
                       />
-                      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                      <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1.5 }}>
+                        {(currentRating > 0 || (myReview && (myReview.reviewText || myReview.rating))) && (
+                          <Button
+                            variant="secondary"
+                            onClick={handleRemoveReview}
+                            disabled={isSubmittingReview}
+                            sx={{
+                              borderColor: 'rgba(239, 68, 68, 0.4)',
+                              color: '#ef4444',
+                              px: 2.5,
+                              '&:hover': {
+                                borderColor: '#ef4444',
+                                bgcolor: 'rgba(239, 68, 68, 0.1)',
+                              },
+                            }}
+                          >
+                            Remove Review
+                          </Button>
+                        )}
                         <Button
                           variant="primary"
                           onClick={handleSaveReview}
@@ -691,37 +727,64 @@ function MovieDetails() {
                     <Stack spacing={2}>
                       {fliks.reviews
                         .filter((r) => r.reviewText.trim())
-                        .map((rev, index) => (
-                          <Box
-                            key={index}
-                            sx={{
-                              p: 2.5,
-                              bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.35)' : 'rgba(255, 255, 255, 0.75)',
-                              border: '1px solid',
-                              borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0, 0, 0, 0.06)',
-                              borderRadius: 3,
-                            }}
-                          >
-                            <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 1 }}>
-                              <Typography fontWeight={700} variant="body2" sx={{ color: '#818cf8' }}>
-                                {rev.username}
+                        .map((rev, index) => {
+                          const isMyReview = user && rev.userId === user.uid;
+                          return (
+                            <Box
+                              key={index}
+                              sx={{
+                                p: 2.5,
+                                bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.35)' : 'rgba(255, 255, 255, 0.75)',
+                                border: '1px solid',
+                                borderColor: isMyReview ? 'rgba(99, 102, 241, 0.3)' : (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0, 0, 0, 0.06)',
+                                borderRadius: 3,
+                              }}
+                            >
+                              <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 1 }}>
+                                <Stack direction="row" alignItems="center" spacing={1}>
+                                  <Typography fontWeight={700} variant="body2" sx={{ color: '#818cf8' }}>
+                                    {rev.username}
+                                  </Typography>
+                                  {isMyReview && (
+                                    <Chip label="You" size="small" sx={{ height: 20, fontSize: '0.65rem', bgcolor: 'rgba(99, 102, 241, 0.15)', color: '#818cf8', fontWeight: 700 }} />
+                                  )}
+                                </Stack>
+                                <Stack direction="row" alignItems="center" spacing={1}>
+                                  <Rating
+                                    value={rev.rating}
+                                    precision={0.5}
+                                    readOnly
+                                    size="small"
+                                    sx={{ '& .MuiRating-iconFilled': { color: '#f59e0b' } }}
+                                  />
+                                  {isMyReview && (
+                                    <Tooltip title="Remove your review">
+                                      <IconButton
+                                        size="small"
+                                        onClick={handleRemoveReview}
+                                        disabled={isSubmittingReview}
+                                        sx={{
+                                          color: '#ef4444',
+                                          p: 0.5,
+                                          opacity: 0.8,
+                                          '&:hover': { opacity: 1, bgcolor: 'rgba(239, 68, 68, 0.1)' },
+                                        }}
+                                      >
+                                        <DeleteOutlineIcon sx={{ fontSize: 18 }} />
+                                      </IconButton>
+                                    </Tooltip>
+                                  )}
+                                </Stack>
+                              </Stack>
+                              <Typography variant="body2" color="text.primary" sx={{ fontStyle: 'italic', lineHeight: 1.6 }}>
+                                "{rev.reviewText}"
                               </Typography>
-                              <Rating
-                                value={rev.rating}
-                                precision={0.5}
-                                readOnly
-                                size="small"
-                                sx={{ '& .MuiRating-iconFilled': { color: '#f59e0b' } }}
-                              />
-                            </Stack>
-                            <Typography variant="body2" color="text.primary" sx={{ fontStyle: 'italic', lineHeight: 1.6 }}>
-                              "{rev.reviewText}"
-                            </Typography>
-                            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1 }}>
-                              {rev.updatedAt?.toLocaleDateString()}
-                            </Typography>
-                          </Box>
-                        ))}
+                              <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1 }}>
+                                {rev.updatedAt?.toLocaleDateString()}
+                              </Typography>
+                            </Box>
+                          );
+                        })}
                     </Stack>
                   ) : (
                     <Typography variant="body2" color="text.secondary">

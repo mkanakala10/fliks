@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="fliksGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="50%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#ec4899" />
+    </linearGradient>
+    <linearGradient id="symbolGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f1f5f9" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Rounded Base Icon -->
+  <rect width="512" height="512" rx="128" fill="url(#fliksGrad)" />
+
+  <!-- Movie Clapperboard & Play Icon -->
+  <g fill="url(#symbolGrad)">
+    <!-- Clapper Top Stick (slanted) -->
+    <path d="M 100 148 L 382 98 L 398 140 L 116 190 Z" />
+    
+    <!-- Clapper Bottom Body -->
+    <path d="M 116 206 L 398 156 C 408 154 416 162 416 172 L 416 380 C 416 398 402 412 384 412 L 128 412 C 110 412 96 398 96 380 L 96 220 C 96 208 106 198 116 206 Z" />
+    
+    <!-- Play Triangle cutout in body -->
+    <path d="M 220 250 L 320 310 L 220 370 Z" fill="url(#fliksGrad)" />
+    
+    <!-- Cutout notches on top clapper stick -->
+    <path d="M 150 139 L 180 134 L 195 176 L 165 181 Z" fill="url(#fliksGrad)" />
+    <path d="M 230 125 L 260 120 L 275 162 L 245 167 Z" fill="url(#fliksGrad)" />
+    <path d="M 310 111 L 340 106 L 355 148 L 325 153 Z" fill="url(#fliksGrad)" />
+  </g>
+</svg>

@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { doc, onSnapshot, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc, deleteDoc, deleteField, serverTimestamp } from 'firebase/firestore';
 import { db, isFirebaseConfigured } from '../firebase';
 import { useAuth } from './AuthContext';
 import { useToast } from './ToastContext';
@@ -146,11 +146,53 @@ export function UserDataProvider({ children }) {
     [user]
   );
 
+  const removeRating = useCallback(
+    async (movieId) => {
+      if (!user) {
+        showToast('Please sign in to update ratings.', 'warning');
+        throw Object.assign(new Error('Sign in required'), { code: 'auth/required' });
+      }
+
+      const key = String(movieId);
+      const nextRatings = { ...ratings };
+      delete nextRatings[key];
+      setRatings(nextRatings);
+
+      try {
+        if (db) {
+          const userRef = doc(db, 'users', user.uid);
+          await setDoc(
+            userRef,
+            {
+              [`ratings.${key}`]: deleteField(),
+              updatedAt: serverTimestamp(),
+            },
+            { merge: true }
+          );
+
+          const ratingDocRef = doc(db, 'movies', key, 'userRatings', user.uid);
+          await deleteDoc(ratingDocRef);
+        }
+        showToast('Rating and review removed.', 'success');
+      } catch (error) {
+        console.error('Error removing rating:', error);
+        setRatings(ratings);
+        showToast('Failed to remove rating.', 'error');
+        throw error;
+      }
+    },
+    [user, ratings, showToast]
+  );
+
   const rateMovie = useCallback(
     async (movieId, value, reviewText = '') => {
       if (!user) {
         showToast('Please sign in to rate movies.', 'warning');
         throw Object.assign(new Error('Sign in required'), { code: 'auth/required' });
+      }
+
+      if (value === 0 || value === null || value === undefined) {
+        return removeRating(movieId);
       }
 
       const key = String(movieId);
@@ -174,7 +216,7 @@ export function UserDataProvider({ children }) {
         throw error;
       }
     },
-    [user, ratings, persistUserData]
+    [user, ratings, persistUserData, removeRating]
   );
 
   const addToWatchLater = useCallback(
@@ -228,6 +270,7 @@ export function UserDataProvider({ children }) {
       loading,
       syncError,
       rateMovie,
+      removeRating,
       addToWatchLater,
       removeFromWatchLater,
       isInWatchLater,
@@ -238,6 +281,7 @@ export function UserDataProvider({ children }) {
       loading,
       syncError,
       rateMovie,
+      removeRating,
       addToWatchLater,
       removeFromWatchLater,
       isInWatchLater,
