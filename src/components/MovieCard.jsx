@@ -4,6 +4,8 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Rating from '@mui/material/Rating';
+import IconButton from '@mui/material/IconButton';
+import ClearIcon from '@mui/icons-material/Clear';
 import Button from './Button';
 import { useMovieFliksRating } from '../hooks/useMovieFliksRating';
 
@@ -212,7 +214,7 @@ function MovieCard({
         </Typography>
 
         {!isUnreleased && (
-          <Box onClick={stopPropagation} sx={{ lineHeight: 0 }}>
+          <Box onClick={stopPropagation} sx={{ display: 'flex', alignItems: 'center', gap: 0.5, lineHeight: 0 }}>
             <Rating
               name={`rating-${movie.id}`}
               value={currentRating}
@@ -220,7 +222,7 @@ function MovieCard({
               readOnly={!onRate}
               size="small"
               onChange={(_, value) => {
-                if (value !== null) onRate?.(movie.id, value);
+                onRate?.(movie.id, value);
               }}
               onChangeActive={(_, value) => setHoverRating(value ?? -1)}
               sx={{
@@ -229,6 +231,20 @@ function MovieCard({
                 '& .MuiRating-iconEmpty': { color: 'action.disabled' },
               }}
             />
+            {currentRating > 0 && onRate && (
+              <IconButton
+                size="small"
+                onClick={() => onRate?.(movie.id, null)}
+                title="Remove rating"
+                sx={{
+                  p: 0.25,
+                  color: 'text.secondary',
+                  '&:hover': { color: 'error.main' },
+                }}
+              >
+                <ClearIcon sx={{ fontSize: 14 }} />
+              </IconButton>
+            )}
           </Box>
         )}
 

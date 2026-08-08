@@ -11,13 +11,17 @@ echo "📅 Timestamp: $(date)"
 # Activate virtual environment
 source backend/venv/Scripts/activate
 
-# Run the fetch script
+# Run the fetch scripts
 python backend/fetch_wikipedia_actors.py
+ACTORS_STATUS=$?
 
-if [ $? -eq 0 ]; then
+python backend/fetch_wikipedia_directors.py
+DIRECTORS_STATUS=$?
+
+if [ $ACTORS_STATUS -eq 0 ] && [ $DIRECTORS_STATUS -eq 0 ]; then
     echo ""
     echo "✅ Update completed successfully!"
-    echo "📍 Updated file: public/data/trending-actors.json"
+    echo "📍 Updated files: public/data/trending-actors.json and public/data/trending-directors.json"
     
     # Optional: Commit to git if running in CI/CD
     if command -v git &> /dev/null; then

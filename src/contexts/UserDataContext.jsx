@@ -216,7 +216,7 @@ export function UserDataProvider({ children }) {
         throw error;
       }
     },
-    [user, ratings, persistUserData, removeRating]
+    [user, ratings, persistUserData, removeRating, showToast]
   );
 
   const addToWatchLater = useCallback(

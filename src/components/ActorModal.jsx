@@ -56,14 +56,18 @@ function ActorModal({ actorId, actorName, open, onClose, onMovieClick }) {
         if (!detailsRes.ok) throw new Error('Failed to load actor profile');
 
         const detailsData = await detailsRes.json();
-        const creditsData = creditsRes.ok ? await creditsRes.json() : { cast: [] };
+        const creditsData = creditsRes.ok ? await creditsRes.json() : { cast: [], crew: [] };
 
-        const castCredits = creditsData.cast || [];
+        const isDirector = detailsData.known_for_department === 'Directing';
+        const rawCredits = isDirector ? (creditsData.crew || []) : (creditsData.cast || []);
+        const credits = isDirector
+          ? rawCredits.filter((m) => m.job === 'Director')
+          : rawCredits;
         const now = new Date();
         now.setHours(0, 0, 0, 0);
 
         // Filter and sort unreleased / upcoming movies (TBA or release date > now)
-        const upcoming = castCredits
+        const upcoming = credits
           .filter((m) => {
             if (!m.poster_path) return false;
             if (!m.release_date || m.release_date === 'TBA') return true;
@@ -81,7 +85,7 @@ function ActorModal({ actorId, actorName, open, onClose, onMovieClick }) {
           .slice(0, 10);
 
         // Filter and sort released movies by popularity
-        const notable = castCredits
+        const notable = credits
           .filter((m) => {
             if (!m.poster_path) return false;
             if (!m.release_date || m.release_date === 'TBA') return false;
@@ -190,7 +194,7 @@ function ActorModal({ actorId, actorName, open, onClose, onMovieClick }) {
                   {details.name}
                 </Typography>
                 <Typography variant="subtitle2" color="secondary.main" fontWeight={700} sx={{ textTransform: 'uppercase', mb: 2 }}>
-                  {details.known_for_department || 'Actor'}
+                  {details.known_for_department === 'Directing' ? 'Director' : (details.known_for_department || 'Actor')}
                 </Typography>
 
                 <Stack spacing={1} sx={{ fontSize: '0.85rem', color: 'text.secondary' }}>

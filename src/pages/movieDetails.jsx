@@ -143,6 +143,9 @@ function MovieDetails() {
       return;
     }
     await rateMovie(movie.id, value, reviewInput);
+    if (value === null) {
+      setReviewInput('');
+    }
   };
 
   const handleSaveReview = async () => {
@@ -564,13 +567,35 @@ function MovieDetails() {
                           value={currentRating}
                           precision={0.5}
                           onChange={(_, value) => {
-                            if (value !== null) handleRate(value);
+                            handleRate(value);
                           }}
                           sx={{
                             '& .MuiRating-iconFilled': { color: '#f59e0b' },
                             '& .MuiRating-iconHover': { color: '#fbbf24' },
                           }}
                         />
+                        {currentRating > 0 && (
+                          <Button
+                            variant="secondary"
+                            size="sm"
+                            onClick={() => handleRate(null)}
+                            sx={{
+                              py: 0.5,
+                              px: 1.5,
+                              minWidth: 'auto',
+                              fontSize: '0.75rem',
+                              borderColor: 'rgba(239, 68, 68, 0.4)',
+                              color: '#f87171',
+                              '&:hover': {
+                                bgcolor: 'rgba(239, 68, 68, 0.08)',
+                                borderColor: '#ef4444',
+                                color: '#ef4444',
+                              },
+                            }}
+                          >
+                            Remove Rating
+                          </Button>
+                        )}
                       </Box>
                       <TextField
                         multiline
