@@ -159,4 +159,63 @@ export async function fetchDetailedBoxOfficeMovies(apiKey, queryParams) {
     }));
 }
 
+export function getSixMonthsAgoReleaseDateFloor() {
+  const d = new Date();
+  d.setMonth(d.getMonth() - 6);
+  return d.toISOString().split('T')[0];
+}
+
+export function getTodayReleaseDateCeiling() {
+  const d = new Date();
+  return d.toISOString().split('T')[0];
+}
+
+export async function fetchRecentReleaseMovies(apiKey) {
+  const gte = getSixMonthsAgoReleaseDateFloor();
+  const lte = getTodayReleaseDateCeiling();
+  let rawMovies = await fetchDiscoverMovies(
+    apiKey,
+    {
+      'primary_release_date.gte': gte,
+      'primary_release_date.lte': lte,
+      sort_by: 'revenue.desc',
+    },
+    { maxPages: 2 }
+  );
+
+  if (!rawMovies || rawMovies.length === 0) {
+    rawMovies = await fetchDiscoverMovies(
+      apiKey,
+      {
+        'primary_release_date.gte': gte,
+        'primary_release_date.lte': lte,
+        sort_by: 'popularity.desc',
+      },
+      { maxPages: 2 }
+    );
+  }
+
+  const detailPromises = rawMovies.slice(0, 20).map(async (movie) => {
+    try {
+      const res = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${apiKey}`);
+      if (!res.ok) return movie;
+      return await res.json();
+    } catch {
+      return movie;
+    }
+  });
+
+  const detailedMovies = await Promise.all(detailPromises);
+
+  const mapped = detailedMovies.map((m) => ({
+    ...mapDiscoverMovie(m),
+    revenue: formatUsdToInrCrores(m.revenue) || 'Blockbuster',
+    budget: formatUsdToInrCrores(m.budget) || 'N/A',
+    releaseDate: m.release_date || 'TBA',
+    rawRevenue: m.revenue || 0,
+  }));
+
+  mapped.sort((a, b) => b.rawRevenue - a.rawRevenue);
+  return mapped;
+}
 

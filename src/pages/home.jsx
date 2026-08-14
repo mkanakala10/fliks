@@ -19,12 +19,14 @@ import {
   getUpcomingReleaseDateFloor,
   mapDiscoverMovie,
   fetchHighestRoiMovies,
+  fetchRecentReleaseMovies,
 } from '../utils/tmdbMovies';
 
 function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
   const [trendingActors, setTrendingActors] = useState([]);
   const [trendingDirectors, setTrendingDirectors] = useState([]);
   const [roiMovies, setRoiMovies] = useState([]);
+  const [recentReleases, setRecentReleases] = useState([]);
   const [anticipated, setAnticipated] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -55,11 +57,12 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
           'primary_release_date.gte': getUpcomingReleaseDateFloor(),
         }),
         fetchHighestRoiMovies(apiKey),
+        fetchRecentReleaseMovies(apiKey),
       ]);
 
       if (cancelled) return;
 
-      const [actorsResult, directorsResult, anticipatedResult, roiResult] = results;
+      const [actorsResult, directorsResult, anticipatedResult, roiResult, recentReleasesResult] = results;
 
       if (actorsResult.status === 'fulfilled') {
         setTrendingActors(actorsResult.value);
@@ -76,6 +79,9 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
             mapDiscoverMovie(movie)
           )
         );
+      }
+      if (recentReleasesResult.status === 'fulfilled') {
+        setRecentReleases(recentReleasesResult.value);
       }
 
       const allFailed = results.every((r) => r.status === 'rejected');
@@ -118,6 +124,25 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
             </Box>
           )}
 
+          <Box component="section" py={6}>
+            <SectionHeader
+              title="Recent Releases"
+              subtitle="Highest grossing Indian movies released in the last 6 months"
+            />
+            <HorizontalScroller
+              items={recentReleases}
+              getKey={(movie) => movie.id}
+              renderItem={(movie, index) => (
+                <MovieCard
+                  movie={{ ...movie, ratingValue: ratings[movie.id] || 0 }}
+                  rank={index + 1}
+                  onViewDetails={() => onViewMovie?.(movie.id)}
+                  onRate={onRate}
+                />
+              )}
+              emptyMessage="No recent releases found."
+            />
+          </Box>
 
           <Box component="section" py={6}>
             <SectionHeader
@@ -138,6 +163,7 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
               emptyMessage="Calculating profit statistics…"
             />
           </Box>
+
 
           <Box component="section" py={6}>
             <SectionHeader
