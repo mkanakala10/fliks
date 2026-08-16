@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
 Fetch trending Indian actors from Wikipedia pageviews.
-Queries Wikimedia Pageviews API for the last 30 days and Wikipedia API for actor images.
+Queries Wikimedia Pageviews API for the last 7 days and Wikipedia API for actor images.
 Outputs JSON compatible with TMDB schema for seamless frontend integration.
+Also appends a weekly snapshot to trending-actors-history.json for the trend chart.
 """
 
 import json
@@ -29,13 +30,13 @@ def get_actor_names():
         print(f"Error: actors.txt not found at {ACTORS_FILE}")
         sys.exit(1)
 
-def get_pageviews(actor_name, days=30):
+def get_pageviews(actor_name, days=7):
     """
     Fetch pageviews for an actor from Wikimedia Pageviews API.
     
     Args:
         actor_name: Wikipedia article title (e.g., 'Shah_Rukh_Khan')
-        days: Number of days to look back (default 30)
+        days: Number of days to look back (default 7)
     
     Returns:
         Total pageviews for the period, or 0 if not found
@@ -186,15 +187,67 @@ def save_to_json(actors_data):
         print(f"🏆 Top actor: {actors_data[0]['name']} (Score: {actors_data[0]['trendingScore']})")
         print(f"📸 Images: {sum(1 for a in actors_data if a['image'])} with images")
 
+
+HISTORY_FILE = Path(__file__).parent.parent / 'public' / 'data' / 'trending-actors-history.json'
+MAX_HISTORY_WEEKS = 12
+
+
+def update_history(actors_data):
+    """
+    Append a weekly snapshot of the top 10 actors to the history file.
+    Keeps a rolling window of the last MAX_HISTORY_WEEKS weeks.
+    Each entry: { "week": "YYYY-MM-DD", "actors": [{name, trendingScore, rank}] }
+    """
+    # Use the Monday of the current week as the week identifier
+    today = datetime.now(timezone.utc).date()
+    monday = today - timedelta(days=today.weekday())  # 0=Monday
+    week_str = monday.isoformat()
+
+    # Build top-10 snapshot
+    top_10 = actors_data[:10]
+    snapshot = {
+        'week': week_str,
+        'actors': [
+            {'name': a['name'], 'trendingScore': a['trendingScore'], 'rank': rank}
+            for rank, a in enumerate(top_10, 1)
+        ]
+    }
+
+    # Load existing history
+    history = []
+    if HISTORY_FILE.exists():
+        try:
+            with open(HISTORY_FILE, 'r', encoding='utf-8') as f:
+                history = json.load(f)
+        except (json.JSONDecodeError, IOError):
+            history = []
+
+    # Replace entry for this week if it already exists, otherwise append
+    existing_weeks = [entry['week'] for entry in history]
+    if week_str in existing_weeks:
+        history = [snapshot if e['week'] == week_str else e for e in history]
+    else:
+        history.append(snapshot)
+
+    # Keep only the last MAX_HISTORY_WEEKS entries
+    history = history[-MAX_HISTORY_WEEKS:]
+
+    HISTORY_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with open(HISTORY_FILE, 'w', encoding='utf-8') as f:
+        json.dump(history, f, indent=2, ensure_ascii=False)
+
+    print(f"📈 History updated: {len(history)} week(s) recorded → {HISTORY_FILE}")
+
 if __name__ == '__main__':
     try:
         print("="*70)
-        print("Wikipedia Pageviews to JSON Converter")
+        print("Wikipedia Pageviews to JSON Converter (Weekly)")
         print("="*70)
         print()
         
         actors = fetch_trending_actors()
         save_to_json(actors)
+        update_history(actors)
         
         print("\n" + "="*70)
         print("✨ Process completed successfully!")

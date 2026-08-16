@@ -11,8 +11,9 @@ import PageShell from '../components/PageShell';
 import SectionHeader from '../components/SectionHeader';
 import ActorCard from '../components/ActorCard';
 import HorizontalScroller from '../components/HorizontalScroller';
-import { fetchIndianActors } from '../utils/indianActors';
+import { fetchIndianActors, fetchActorHistory } from '../utils/indianActors';
 import ActorModal from '../components/ActorModal';
+import ActorTrendChart from '../components/ActorTrendChart';
 
 function Actors({ onViewMovie }) {
   const [actors, setActors] = useState([]);
@@ -23,15 +24,20 @@ function Actors({ onViewMovie }) {
   const [selectedActorId, setSelectedActorId] = useState(null);
   const [selectedActorName, setSelectedActorName] = useState('');
   const [isActorModalOpen, setIsActorModalOpen] = useState(false);
+  const [actorHistory, setActorHistory] = useState([]);
 
   useEffect(() => {
     const fetchActors = async () => {
       setIsLoading(true);
       setError(null);
       try {
-        const indianActors = await fetchIndianActors();
+        const [indianActors, history] = await Promise.all([
+          fetchIndianActors(),
+          fetchActorHistory(),
+        ]);
         setActors(indianActors);
         setFiltered(indianActors);
+        setActorHistory(history);
       } catch (err) {
         setError('Unable to load actors. Please try again later.');
         console.error(err);
@@ -84,6 +90,13 @@ function Actors({ onViewMovie }) {
               />
             </Box>
           </Box>
+
+          {/* Weekly trend chart — shown above the actor cards */}
+          {!isLoading && (
+            <Box px={{ xs: 0, md: 1 }} pb={4}>
+              <ActorTrendChart history={actorHistory} />
+            </Box>
+          )}
 
           {error && (
             <Typography color="error" textAlign="center" pb={3}>{error}</Typography>

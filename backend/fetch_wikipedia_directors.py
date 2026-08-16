@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Fetch trending Indian directors from Wikipedia pageviews.
-Queries Wikimedia Pageviews API for the last 30 days and Wikipedia API for director images.
+Queries Wikimedia Pageviews API for the last 7 days and Wikipedia API for director images.
 Outputs JSON compatible with TMDB schema for seamless frontend integration.
 """
 
@@ -29,13 +29,13 @@ def get_director_names():
         print(f"Error: directors.txt not found at {DIRECTORS_FILE}")
         sys.exit(1)
 
-def get_pageviews(director_name, days=30):
+def get_pageviews(director_name, days=7):
     """
     Fetch pageviews for a director from Wikimedia Pageviews API.
     
     Args:
         director_name: Wikipedia article title (e.g., 'S._S._Rajamouli')
-        days: Number of days to look back (default 30)
+        days: Number of days to look back (default 7)
     
     Returns:
         Total pageviews for the period, or 0 if not found
@@ -188,7 +188,7 @@ def save_to_json(directors_data):
 if __name__ == '__main__':
     try:
         print("="*70)
-        print("Wikipedia Pageviews to JSON Converter (Directors)")
+        print("Wikipedia Pageviews to JSON Converter — Directors (Weekly)")
         print("="*70)
         print()
         
