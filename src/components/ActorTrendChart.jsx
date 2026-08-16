@@ -1,4 +1,4 @@
-import { useEffect, useRef, useMemo } from 'react';
+import { useMemo } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -54,14 +54,25 @@ function formatWeekLabel(isoDate) {
 /**
  * ActorTrendChart
  *
- * Renders a multi-line chart showing weekly Wikipedia pageview scores for the
- * top-10 trending Indian actors. Each line represents one actor.
+ * Renders a compact multi-line chart showing weekly Wikipedia pageview scores for
+ * the top-10 trending Indian actors. Each line has standard bullet-point dots.
  *
  * Props:
  *   history  – Array of { week: string, actors: [{name, trendingScore, rank}] }
  */
 function ActorTrendChart({ history }) {
-  // Need at least 1 data point to render anything useful
+  const allActorNames = useMemo(() => {
+    if (!history || history.length === 0) return [];
+    const set = new Set();
+    history.forEach((entry) => entry.actors.forEach((a) => set.add(a.name)));
+    const latest = history[history.length - 1];
+    const orderedNames = latest.actors.map((a) => a.name);
+    set.forEach((name) => {
+      if (!orderedNames.includes(name)) orderedNames.push(name);
+    });
+    return orderedNames.slice(0, 10);
+  }, [history]);
+
   if (!history || history.length === 0) {
     return (
       <Box
@@ -69,140 +80,111 @@ function ActorTrendChart({ history }) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          minHeight: 160,
+          minHeight: 120,
           borderRadius: 3,
           border: '1px dashed rgba(255,255,255,0.12)',
           bgcolor: 'rgba(255,255,255,0.03)',
-          mb: 4,
+          mb: 2,
         }}
       >
-        <Typography color="text.secondary" fontSize="0.95rem">
-          No history data yet — check back after the first automated weekly update.
+        <Typography color="text.secondary" fontSize="0.9rem">
+          No history yet — the chart will populate after the first automated weekly update.
         </Typography>
       </Box>
     );
   }
 
-  // Collect the union of all actor names that appear in any week's top-10
-  const allActorNames = useMemo(() => {
-    const set = new Set();
-    history.forEach((entry) =>
-      entry.actors.forEach((a) => set.add(a.name))
-    );
-    // Preserve order: rank from the most recent week first
-    const latest = history[history.length - 1];
-    const orderedNames = latest.actors.map((a) => a.name);
-    // Append any names found in older weeks but not in the latest
-    set.forEach((name) => {
-      if (!orderedNames.includes(name)) orderedNames.push(name);
-    });
-    return orderedNames.slice(0, 10);
-  }, [history]);
-
   const labels = history.map((entry) => formatWeekLabel(entry.week));
 
-  const datasets = useMemo(
-    () =>
-      allActorNames.map((name, idx) => {
-        const color = LINE_COLORS[idx % LINE_COLORS.length];
-        const data = history.map((entry) => {
-          const actor = entry.actors.find((a) => a.name === name);
-          return actor ? actor.trendingScore : null;
-        });
+  const datasets = allActorNames.map((name, idx) => {
+    const color = LINE_COLORS[idx % LINE_COLORS.length];
+    const data = history.map((entry) => {
+      const actor = entry.actors.find((a) => a.name === name);
+      return actor ? actor.trendingScore : null;
+    });
+    return {
+      label: name,
+      data,
+      borderColor: color,
+      backgroundColor: color + '18',
+      pointBackgroundColor: color,
+      pointBorderColor: '#1a1a2e',
+      pointBorderWidth: 2,
+      pointRadius: 5,
+      pointHoverRadius: 7,
+      borderWidth: 2,
+      tension: 0.35,
+      spanGaps: true,
+      fill: false,
+    };
+  });
 
-        return {
-          label: name,
-          data,
-          borderColor: color,
-          backgroundColor: color + '22', // 13% opacity fill
-          pointBackgroundColor: color,
-          pointBorderColor: '#1a1a2e',
-          pointBorderWidth: 2,
-          pointRadius: 5,
-          pointHoverRadius: 7,
-          borderWidth: 2.5,
-          tension: 0.35,
-          spanGaps: true, // connect lines even if a week is missing
-          fill: false,
-        };
-      }),
-    [allActorNames, history]
-  );
-
-  const options = useMemo(
-    () => ({
-      responsive: true,
-      maintainAspectRatio: true,
-      interaction: {
-        mode: 'index',
-        intersect: false,
+  const options = {
+    responsive: true,
+    maintainAspectRatio: true,
+    aspectRatio: 16 / 5,
+    layout: {
+      padding: { top: 8, bottom: 4, left: 4, right: 8 },
+    },
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          color: 'rgba(255,255,255,0.7)',
+          font: { size: 10, family: "'Inter', sans-serif" },
+          boxWidth: 12,
+          boxHeight: 12,
+          padding: 12,
+          usePointStyle: true,
+          pointStyle: 'circle',
+        },
       },
-      plugins: {
-        legend: {
-          position: 'bottom',
-          labels: {
-            color: 'rgba(255,255,255,0.75)',
-            font: { size: 11, family: "'Inter', sans-serif" },
-            boxWidth: 14,
-            boxHeight: 14,
-            padding: 16,
-            usePointStyle: true,
-            pointStyle: 'circle',
+      title: { display: false },
+      tooltip: {
+        backgroundColor: 'rgba(15,15,30,0.92)',
+        borderColor: 'rgba(255,255,255,0.15)',
+        borderWidth: 1,
+        titleColor: '#fff',
+        bodyColor: 'rgba(255,255,255,0.8)',
+        padding: 10,
+        callbacks: {
+          label(ctx) {
+            const val = ctx.parsed.y;
+            if (val == null) return null;
+            return ` ${ctx.dataset.label}: ${val.toLocaleString()} views`;
+          },
+        },
+      },
+    },
+    scales: {
+      x: {
+        grid: { color: 'rgba(255,255,255,0.05)' },
+        ticks: { color: 'rgba(255,255,255,0.5)', font: { size: 10 } },
+      },
+      y: {
+        grid: { color: 'rgba(255,255,255,0.05)' },
+        ticks: {
+          color: 'rgba(255,255,255,0.5)',
+          font: { size: 10 },
+          callback(value) {
+            if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
+            if (value >= 1_000) return `${Math.round(value / 1_000)}K`;
+            return value;
           },
         },
         title: {
-          display: false,
-        },
-        tooltip: {
-          backgroundColor: 'rgba(15,15,30,0.92)',
-          borderColor: 'rgba(255,255,255,0.15)',
-          borderWidth: 1,
-          titleColor: '#fff',
-          bodyColor: 'rgba(255,255,255,0.8)',
-          padding: 12,
-          callbacks: {
-            label(ctx) {
-              const val = ctx.parsed.y;
-              if (val === null) return null;
-              return ` ${ctx.dataset.label}: ${val.toLocaleString()} views`;
-            },
-          },
+          display: true,
+          text: 'Weekly Wikipedia Views',
+          color: 'rgba(255,255,255,0.35)',
+          font: { size: 10 },
         },
       },
-      scales: {
-        x: {
-          grid: {
-            color: 'rgba(255,255,255,0.06)',
-          },
-          ticks: {
-            color: 'rgba(255,255,255,0.55)',
-            font: { size: 11 },
-          },
-        },
-        y: {
-          grid: {
-            color: 'rgba(255,255,255,0.06)',
-          },
-          ticks: {
-            color: 'rgba(255,255,255,0.55)',
-            font: { size: 11 },
-            callback(value) {
-              if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
-              if (value >= 1_000) return `${Math.round(value / 1_000)}K`;
-              return value;
-            },
-          },
-          title: {
-            display: true,
-            text: 'Weekly Wikipedia Views',
-            color: 'rgba(255,255,255,0.4)',
-            font: { size: 11 },
-          },
-        },
-      },
-    }),
-    []
-  );
+    },
+  };
 
   return (
     <Box
@@ -213,26 +195,25 @@ function ActorTrendChart({ history }) {
         background:
           'linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)',
         backdropFilter: 'blur(10px)',
-        p: { xs: 2, md: 3 },
-        mb: 2,
+        p: { xs: 2, md: 2.5 },
       }}
     >
       {/* Header */}
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 3 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
         <Box
           sx={{
             width: 4,
-            height: 28,
+            height: 24,
             borderRadius: 1,
             background: 'linear-gradient(180deg, #f97316 0%, #a855f7 100%)',
             flexShrink: 0,
           }}
         />
         <Box>
-          <Typography fontWeight={700} fontSize="1rem" lineHeight={1.2}>
+          <Typography fontWeight={700} fontSize="0.9rem" lineHeight={1.2}>
             Trending Score Tracker
           </Typography>
-          <Typography fontSize="0.78rem" color="text.secondary" lineHeight={1.4}>
+          <Typography fontSize="0.72rem" color="text.secondary" lineHeight={1.4}>
             Weekly Wikipedia pageviews · Top 10 actors · Updates every Monday
           </Typography>
         </Box>
@@ -241,14 +222,15 @@ function ActorTrendChart({ history }) {
             sx={{
               ml: 'auto',
               px: 1.5,
-              py: 0.5,
+              py: 0.4,
               borderRadius: 99,
-              bgcolor: 'rgba(249,115,22,0.15)',
-              border: '1px solid rgba(249,115,22,0.3)',
+              bgcolor: 'rgba(249,115,22,0.12)',
+              border: '1px solid rgba(249,115,22,0.25)',
+              flexShrink: 0,
             }}
           >
-            <Typography fontSize="0.72rem" color="warning.main" fontWeight={600}>
-              1 week — more history accumulates weekly
+            <Typography fontSize="0.68rem" color="warning.main" fontWeight={600}>
+              Week 1 — grows each Monday
             </Typography>
           </Box>
         )}

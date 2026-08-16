@@ -63,12 +63,21 @@ function Actors({ onViewMovie }) {
     <PageShell>
       <Container maxWidth="xl">
         <Stack spacing={0}>
-          <Box component="section" py={6} textAlign="center">
+          {/* Page header */}
+          <Box component="section" pt={6} pb={3} textAlign="center">
             <SectionHeader
               title="Indian Actors"
               subtitle="Explore the most popular stars of Indian cinema"
             />
-            <Box sx={{ maxWidth: '400px', mx: 'auto', mt: 2 }}>
+          </Box>
+
+          {error && (
+            <Typography color="error" textAlign="center" pb={3}>{error}</Typography>
+          )}
+
+          {/* Search bar directly above actor cards */}
+          {!isLoading && (
+            <Box sx={{ maxWidth: '400px', mx: 'auto', mb: 3 }}>
               <TextField
                 fullWidth
                 placeholder="Search actors..."
@@ -89,25 +98,15 @@ function Actors({ onViewMovie }) {
                 }}
               />
             </Box>
-          </Box>
-
-          {/* Weekly trend chart — shown above the actor cards */}
-          {!isLoading && (
-            <Box px={{ xs: 0, md: 1 }} pb={4}>
-              <ActorTrendChart history={actorHistory} />
-            </Box>
           )}
 
-          {error && (
-            <Typography color="error" textAlign="center" pb={3}>{error}</Typography>
-          )}
-
+          {/* Trending actor cards — centre of the page */}
           {isLoading ? (
             <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>
               <CircularProgress size={44} color="primary" thickness={4} />
             </Box>
           ) : filtered.length > 0 ? (
-            <Box pb={8}>
+            <Box pb={6}>
               <HorizontalScroller
                 items={filtered}
                 getKey={(actor) => actor.id}
@@ -133,6 +132,13 @@ function Actors({ onViewMovie }) {
               <Typography color="text.secondary">
                 {search ? `No results for "${search}"` : 'Check back soon!'}
               </Typography>
+            </Box>
+          )}
+
+          {/* Weekly trend chart — at the bottom, smaller */}
+          {!isLoading && (
+            <Box px={{ xs: 0, md: 1 }} pb={8}>
+              <ActorTrendChart history={actorHistory} />
             </Box>
           )}
         </Stack>
