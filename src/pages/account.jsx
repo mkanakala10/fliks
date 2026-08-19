@@ -75,7 +75,10 @@ function Account({ onViewMovie, onRate }) {
     if (tab !== 'ratings') return undefined;
 
     const loadRatedMovies = async () => {
-      setLoadingMovies(true);
+      const isInitialLoad = ratedMovies.length === 0;
+      if (isInitialLoad) {
+        setLoadingMovies(true);
+      }
       try {
         const apiKey = import.meta.env.VITE_TMDB_API_KEY;
         if (!apiKey) return;
@@ -126,7 +129,9 @@ function Account({ onViewMovie, onRate }) {
 
         setRatedMovies(sorted);
       } finally {
-        setLoadingMovies(false);
+        if (isInitialLoad) {
+          setLoadingMovies(false);
+        }
       }
     };
 
@@ -239,7 +244,7 @@ function Account({ onViewMovie, onRate }) {
                   getKey={(movie) => movie.id}
                   renderItem={(movie) => (
                     <MovieCard
-                      movie={movie}
+                      movie={{ ...movie, ratingValue: (ratings[movie.id] ?? ratings[String(movie.id)]) || 0 }}
                       onViewDetails={() => onViewMovie?.(movie.id)}
                       onRate={onRate}
                     />

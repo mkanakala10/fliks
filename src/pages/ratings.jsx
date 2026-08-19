@@ -29,7 +29,10 @@ function Ratings({ onViewMovie, onRate, ratings = {} }) {
 
   useEffect(() => {
     const loadRatedMovies = async () => {
-      setIsLoading(true);
+      const isInitialLoad = ratedMovies.length === 0;
+      if (isInitialLoad) {
+        setIsLoading(true);
+      }
       try {
         const apiKey = import.meta.env.VITE_TMDB_API_KEY;
         if (!apiKey) {
@@ -86,7 +89,9 @@ function Ratings({ onViewMovie, onRate, ratings = {} }) {
       } catch (error) {
         console.error('Error loading rated movies:', error);
       } finally {
-        setIsLoading(false);
+        if (isInitialLoad) {
+          setIsLoading(false);
+        }
       }
     };
 
@@ -136,7 +141,7 @@ function Ratings({ onViewMovie, onRate, ratings = {} }) {
                 getKey={(movie) => movie.id}
                 renderItem={(movie) => (
                   <MovieCard
-                    movie={movie}
+                    movie={{ ...movie, ratingValue: (ratings[movie.id] ?? ratings[String(movie.id)]) || 0 }}
                     onViewDetails={() => onViewMovie?.(movie.id)}
                     onRate={onRate}
                   />
