@@ -53,5 +53,60 @@
         "rank": 10
       }
     ]
+  },
+  {
+    "week": "2026-08-17",
+    "actors": [
+      {
+        "name": "Yash (actor)",
+        "trendingScore": 54297,
+        "rank": 1
+      },
+      {
+        "name": "C. Joseph Vijay",
+        "trendingScore": 36354,
+        "rank": 2
+      },
+      {
+        "name": "Nayanthara",
+        "trendingScore": 29386,
+        "rank": 3
+      },
+      {
+        "name": "Priyanka Chopra",
+        "trendingScore": 28564,
+        "rank": 4
+      },
+      {
+        "name": "Salman Khan",
+        "trendingScore": 25994,
+        "rank": 5
+      },
+      {
+        "name": "Suriya",
+        "trendingScore": 25407,
+        "rank": 6
+      },
+      {
+        "name": "Atharvaa",
+        "trendingScore": 22267,
+        "rank": 7
+      },
+      {
+        "name": "Shah Rukh Khan",
+        "trendingScore": 21353,
+        "rank": 8
+      },
+      {
+        "name": "Amitabh Bachchan",
+        "trendingScore": 20740,
+        "rank": 9
+      },
+      {
+        "name": "Dhanush",
+        "trendingScore": 18656,
+        "rank": 10
+      }
+    ]
   }
 ]
