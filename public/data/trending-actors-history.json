@@ -108,5 +108,60 @@
         "rank": 10
       }
     ]
+  },
+  {
+    "week": "2026-08-24",
+    "actors": [
+      {
+        "name": "Emraan Hashmi",
+        "trendingScore": 104419,
+        "rank": 1
+      },
+      {
+        "name": "Yash (actor)",
+        "trendingScore": 84221,
+        "rank": 2
+      },
+      {
+        "name": "Siddharth (actor)",
+        "trendingScore": 74615,
+        "rank": 3
+      },
+      {
+        "name": "Ravi Teja",
+        "trendingScore": 67244,
+        "rank": 4
+      },
+      {
+        "name": "C. Joseph Vijay",
+        "trendingScore": 64934,
+        "rank": 5
+      },
+      {
+        "name": "Priyanka Chopra",
+        "trendingScore": 59556,
+        "rank": 6
+      },
+      {
+        "name": "Suriya",
+        "trendingScore": 58018,
+        "rank": 7
+      },
+      {
+        "name": "Salman Khan",
+        "trendingScore": 45303,
+        "rank": 8
+      },
+      {
+        "name": "Pawan Kalyan",
+        "trendingScore": 43904,
+        "rank": 9
+      },
+      {
+        "name": "Sunny Deol",
+        "trendingScore": 43156,
+        "rank": 10
+      }
+    ]
   }
 ]
