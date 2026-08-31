@@ -163,5 +163,60 @@
         "rank": 10
       }
     ]
+  },
+  {
+    "week": "2026-08-31",
+    "actors": [
+      {
+        "name": "Yash (actor)",
+        "trendingScore": 196519,
+        "rank": 1
+      },
+      {
+        "name": "Kiara Advani",
+        "trendingScore": 136669,
+        "rank": 2
+      },
+      {
+        "name": "Nayanthara",
+        "trendingScore": 98917,
+        "rank": 3
+      },
+      {
+        "name": "Nivin Pauly",
+        "trendingScore": 76788,
+        "rank": 4
+      },
+      {
+        "name": "Ravi Teja",
+        "trendingScore": 76212,
+        "rank": 5
+      },
+      {
+        "name": "Priyanka Chopra",
+        "trendingScore": 62484,
+        "rank": 6
+      },
+      {
+        "name": "C. Joseph Vijay",
+        "trendingScore": 53541,
+        "rank": 7
+      },
+      {
+        "name": "Emraan Hashmi",
+        "trendingScore": 45774,
+        "rank": 8
+      },
+      {
+        "name": "Kriti Sanon",
+        "trendingScore": 43569,
+        "rank": 9
+      },
+      {
+        "name": "Shah Rukh Khan",
+        "trendingScore": 41788,
+        "rank": 10
+      }
+    ]
   }
 ]
