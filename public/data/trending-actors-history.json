@@ -218,5 +218,60 @@
         "rank": 10
       }
     ]
+  },
+  {
+    "week": "2026-09-07",
+    "actors": [
+      {
+        "name": "Yash (actor)",
+        "trendingScore": 70810,
+        "rank": 1
+      },
+      {
+        "name": "Kiara Advani",
+        "trendingScore": 59505,
+        "rank": 2
+      },
+      {
+        "name": "Nivin Pauly",
+        "trendingScore": 57342,
+        "rank": 3
+      },
+      {
+        "name": "Priyanka Chopra",
+        "trendingScore": 48181,
+        "rank": 4
+      },
+      {
+        "name": "Siddharth (actor)",
+        "trendingScore": 46492,
+        "rank": 5
+      },
+      {
+        "name": "Nayanthara",
+        "trendingScore": 45624,
+        "rank": 6
+      },
+      {
+        "name": "C. Joseph Vijay",
+        "trendingScore": 45393,
+        "rank": 7
+      },
+      {
+        "name": "Dulquer Salmaan",
+        "trendingScore": 43406,
+        "rank": 8
+      },
+      {
+        "name": "Alia Bhatt",
+        "trendingScore": 43059,
+        "rank": 9
+      },
+      {
+        "name": "Shah Rukh Khan",
+        "trendingScore": 42632,
+        "rank": 10
+      }
+    ]
   }
 ]
