@@ -328,5 +328,60 @@
         "rank": 10
       }
     ]
+  },
+  {
+    "week": "2026-09-21",
+    "actors": [
+      {
+        "name": "Jyothika",
+        "trendingScore": 312105,
+        "rank": 1
+      },
+      {
+        "name": "Suriya",
+        "trendingScore": 191844,
+        "rank": 2
+      },
+      {
+        "name": "Katrina Kaif",
+        "trendingScore": 79848,
+        "rank": 3
+      },
+      {
+        "name": "Salman Khan",
+        "trendingScore": 68843,
+        "rank": 4
+      },
+      {
+        "name": "Deepika Padukone",
+        "trendingScore": 65536,
+        "rank": 5
+      },
+      {
+        "name": "C. Joseph Vijay",
+        "trendingScore": 58710,
+        "rank": 6
+      },
+      {
+        "name": "Soori (actor)",
+        "trendingScore": 52520,
+        "rank": 7
+      },
+      {
+        "name": "Priyanka Chopra",
+        "trendingScore": 47413,
+        "rank": 8
+      },
+      {
+        "name": "Karthi",
+        "trendingScore": 46814,
+        "rank": 9
+      },
+      {
+        "name": "Nivin Pauly",
+        "trendingScore": 45607,
+        "rank": 10
+      }
+    ]
   }
 ]
