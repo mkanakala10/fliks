@@ -7,6 +7,7 @@ Also appends a weekly snapshot to trending-actors-history.json for the trend cha
 """
 
 import json
+import re
 import requests
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -118,8 +119,14 @@ def get_actor_image(actor_name):
         return None
 
 def format_actor_name(wiki_title):
-    """Convert Wikipedia title to readable actor name (replace underscores with spaces)."""
-    return wiki_title.replace('_', ' ')
+    """Convert a Wikipedia article title to a clean display/search name."""
+    readable_name = wiki_title.replace('_', ' ')
+    return re.sub(
+        r'\s+\((?:actor|actress|film actor|television actor)\)\s*$',
+        '',
+        readable_name,
+        flags=re.IGNORECASE,
+    ).strip()
 
 def fetch_trending_actors():
     """
@@ -258,4 +265,3 @@ if __name__ == '__main__':
         import traceback
         traceback.print_exc()
         sys.exit(1)
-

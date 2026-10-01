@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import CircularProgress from '@mui/material/CircularProgress';
 import CloseIcon from '@mui/icons-material/Close';
 import PersonImage from './PersonImage';
+import { normalizeActorName } from '../utils/indianActors';
 
 function ActorModal({ actorId, actorName, open, onClose, onMovieClick }) {
   const [details, setDetails] = useState(null);
@@ -33,16 +34,25 @@ function ActorModal({ actorId, actorName, open, onClose, onMovieClick }) {
         // If the actor ID is a Wikipedia hash (which are typically > 10,000,000) or missing,
         // perform a TMDB name-based person search lookup.
         if (actorName && (!realActorId || realActorId > 10000000)) {
+          const searchName = normalizeActorName(actorName);
           const searchRes = await fetch(
-            `https://api.themoviedb.org/3/search/person?api_key=${apiKey}&query=${encodeURIComponent(actorName)}`
+            `https://api.themoviedb.org/3/search/person?api_key=${apiKey}&query=${encodeURIComponent(searchName)}`
           );
           if (searchRes.ok) {
             const searchData = await searchRes.json();
-            const firstResult = searchData.results?.[0];
-            if (firstResult) {
-              realActorId = firstResult.id;
+            const results = searchData.results || [];
+            const comparableName = searchName.toLocaleLowerCase();
+            const exactActor = results.find((person) =>
+              person.known_for_department === 'Acting'
+              && normalizeActorName(person.name).toLocaleLowerCase() === comparableName
+            );
+            const bestResult = exactActor
+              || results.find((person) => person.known_for_department === 'Acting')
+              || results[0];
+            if (bestResult) {
+              realActorId = bestResult.id;
             } else {
-              throw new Error(`Could not find actor "${actorName}" on TMDB`);
+              throw new Error(`Could not find actor "${searchName}" on TMDB`);
             }
           } else {
             throw new Error('Search failed');

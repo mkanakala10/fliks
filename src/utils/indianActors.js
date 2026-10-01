@@ -1,3 +1,10 @@
+const WIKIPEDIA_PERSON_QUALIFIER = /\s+\((?:actor|actress|film actor|television actor)\)\s*$/i;
+
+/** Remove Wikipedia-only disambiguators before showing or searching a person's name. */
+export function normalizeActorName(name = '') {
+  return String(name).replaceAll('_', ' ').replace(WIKIPEDIA_PERSON_QUALIFIER, '').trim();
+}
+
 /**
  * Fetch trending Indian actors from Wikipedia pageviews data.
  * Data is generated weekly via fetch_wikipedia_actors.py (GitHub Actions every Monday).
@@ -20,7 +27,10 @@ export async function fetchIndianActors({ throwOnError = false } = {}) {
       throw new Error('Invalid actors data format');
     }
     
-    return actors;
+    return actors.map((actor) => ({
+      ...actor,
+      name: normalizeActorName(actor.name),
+    }));
   } catch (error) {
     console.error('Error fetching trending actors:', error);
     if (throwOnError) throw error;
@@ -51,7 +61,14 @@ export async function fetchActorHistory() {
     }
 
     // Sort chronologically (oldest first) so the chart reads left-to-right
-    return history.sort((a, b) => a.week.localeCompare(b.week));
+    return history
+      .map((entry) => ({
+        ...entry,
+        actors: Array.isArray(entry.actors)
+          ? entry.actors.map((actor) => ({ ...actor, name: normalizeActorName(actor.name) }))
+          : [],
+      }))
+      .sort((a, b) => a.week.localeCompare(b.week));
   } catch (error) {
     console.error('Error fetching actor history:', error);
     return [];
