@@ -1,3 +1,9 @@
+const WIKIPEDIA_DIRECTOR_QUALIFIER = /\s+\((?:director|filmmaker)\)\s*$/i;
+
+export function normalizeDirectorName(name = '') {
+  return String(name).replaceAll('_', ' ').replace(WIKIPEDIA_DIRECTOR_QUALIFIER, '').trim();
+}
+
 /**
  * Fetch trending Indian directors from Wikipedia pageviews data.
  * Data is generated via fetch_wikipedia_directors.py script.
@@ -20,7 +26,11 @@ export async function fetchIndianDirectors() {
       throw new Error('Invalid directors data format');
     }
     
-    return directors;
+    return directors.map((director) => ({
+      ...director,
+      name: normalizeDirectorName(director.name),
+      department: 'Directing',
+    }));
   } catch (error) {
     console.error('Error fetching trending directors:', error);
     // Return empty array on error - UI will handle gracefully

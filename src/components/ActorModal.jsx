@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import PersonImage from './PersonImage';
 import { normalizeActorName } from '../utils/indianActors';
 
-function ActorModal({ actorId, actorName, open, onClose, onMovieClick }) {
+function ActorModal({ actorId, actorName, department = 'Acting', open, onClose, onMovieClick }) {
   const [details, setDetails] = useState(null);
   const [notableCredits, setNotableCredits] = useState([]);
   const [upcomingCredits, setUpcomingCredits] = useState([]);
@@ -42,12 +42,16 @@ function ActorModal({ actorId, actorName, open, onClose, onMovieClick }) {
             const searchData = await searchRes.json();
             const results = searchData.results || [];
             const comparableName = searchName.toLocaleLowerCase();
-            const exactActor = results.find((person) =>
-              person.known_for_department === 'Acting'
+            const exactDepartmentMatch = results.find((person) =>
+              person.known_for_department === department
               && normalizeActorName(person.name).toLocaleLowerCase() === comparableName
             );
-            const bestResult = exactActor
-              || results.find((person) => person.known_for_department === 'Acting')
+            const exactNameMatch = results.find((person) =>
+              normalizeActorName(person.name).toLocaleLowerCase() === comparableName
+            );
+            const bestResult = exactDepartmentMatch
+              || exactNameMatch
+              || results.find((person) => person.known_for_department === department)
               || results[0];
             if (bestResult) {
               realActorId = bestResult.id;
@@ -120,7 +124,7 @@ function ActorModal({ actorId, actorName, open, onClose, onMovieClick }) {
     };
 
     fetchActorData();
-  }, [actorId, actorName, open]);
+  }, [actorId, actorName, department, open]);
 
   return (
     <Modal

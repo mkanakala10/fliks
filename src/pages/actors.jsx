@@ -103,7 +103,7 @@ function Actors({ onViewMovie }) {
         {!search.trim() && actors.length > 0 && <Box component="section" aria-label="Actor popularity trends" sx={{ mt: { xs: 6, md: 8 } }}><ActorTrendChart history={actorHistory} /></Box>}
       </>}
     </Container>
-    <ActorModal actorId={selectedActor?.id} actorName={selectedActor?.name} open={!!selectedActor} onClose={() => setSelectedActor(null)} onMovieClick={onViewMovie} />
+    <ActorModal actorId={selectedActor?.id} actorName={selectedActor?.name} department="Acting" open={!!selectedActor} onClose={() => setSelectedActor(null)} onMovieClick={onViewMovie} />
   </PageShell>;
 }
 

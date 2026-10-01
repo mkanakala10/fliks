@@ -45,6 +45,8 @@ jobs:
 
       - name: Fetch trending directors (7-day window)
         run: python backend/fetch_wikipedia_directors.py
+        env:
+          TMDB_API_KEY: ${{ secrets.VITE_TMDB_API_KEY }}
 
       - name: Commit updated data files
         id: commit

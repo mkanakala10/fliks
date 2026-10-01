@@ -39,6 +39,7 @@ function Home({ onReplayIntro, onNavigate, onViewMovie, onRate, ratings = {} }) 
   const [error, setError] = useState(null);
   const [selectedActorId, setSelectedActorId] = useState(null);
   const [selectedActorName, setSelectedActorName] = useState('');
+  const [selectedPersonDepartment, setSelectedPersonDepartment] = useState('Acting');
   const [isActorModalOpen, setIsActorModalOpen] = useState(false);
 
   useEffect(() => {
@@ -254,6 +255,7 @@ function Home({ onReplayIntro, onNavigate, onViewMovie, onRate, ratings = {} }) 
                   onClick={() => {
                     setSelectedActorId(actor.id);
                     setSelectedActorName(actor.name);
+                    setSelectedPersonDepartment('Acting');
                     setIsActorModalOpen(true);
                   }}
                 />
@@ -279,6 +281,7 @@ function Home({ onReplayIntro, onNavigate, onViewMovie, onRate, ratings = {} }) 
                   onClick={() => {
                     setSelectedActorId(director.id);
                     setSelectedActorName(director.name);
+                    setSelectedPersonDepartment('Directing');
                     setIsActorModalOpen(true);
                   }}
                 />
@@ -309,6 +312,7 @@ function Home({ onReplayIntro, onNavigate, onViewMovie, onRate, ratings = {} }) 
       <ActorModal
         actorId={selectedActorId}
         actorName={selectedActorName}
+        department={selectedPersonDepartment}
         open={isActorModalOpen}
         onClose={() => setIsActorModalOpen(false)}
         onMovieClick={onViewMovie}

@@ -6,7 +6,11 @@ Outputs JSON compatible with TMDB schema for seamless frontend integration.
 """
 
 import json
+import os
+import re
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 import sys
@@ -19,6 +23,16 @@ OUTPUT_FILE = Path(__file__).parent.parent / 'public' / 'data' / 'trending-direc
 # API endpoints
 WIKIPEDIA_API = 'https://en.wikipedia.org/w/api.php'
 PAGEVIEWS_API = 'https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/all-agents'
+TMDB_SEARCH_API = 'https://api.themoviedb.org/3/search/person'
+TMDB_API_KEY = os.environ.get('TMDB_API_KEY') or os.environ.get('VITE_TMDB_API_KEY')
+
+SESSION = requests.Session()
+SESSION.mount('https://', HTTPAdapter(max_retries=Retry(
+    total=3,
+    backoff_factor=0.5,
+    status_forcelist=(429, 500, 502, 503, 504),
+    allowed_methods=('GET',),
+)))
 
 def get_director_names():
     """Read director names from directors.txt file."""
@@ -55,7 +69,7 @@ def get_pageviews(director_name, days=7):
             'User-Agent': 'MovieMeter/1.0 (https://github.com/arjun/movie-meter)'
         }
         
-        response = requests.get(url, headers=headers, timeout=10)
+        response = SESSION.get(url, headers=headers, timeout=10)
         
         # Handle both 404 and other errors gracefully
         if response.status_code == 404:
@@ -100,7 +114,7 @@ def get_director_image(director_name):
             'User-Agent': 'MovieMeter/1.0 (https://github.com/arjun/movie-meter)'
         }
         
-        response = requests.get(WIKIPEDIA_API, params=params, headers=headers, timeout=10)
+        response = SESSION.get(WIKIPEDIA_API, params=params, headers=headers, timeout=10)
         response.raise_for_status()
         
         data = response.json()
@@ -116,9 +130,41 @@ def get_director_image(director_name):
         print(f"  ⚠️  Image fetch error for {director_name}: {str(e)[:50]}")
         return None
 
+def get_tmdb_director_image(director_name):
+    """Use TMDB as a portrait fallback when Wikipedia has no usable image."""
+    if not TMDB_API_KEY:
+        return None
+    try:
+        response = SESSION.get(
+            TMDB_SEARCH_API,
+            params={'api_key': TMDB_API_KEY, 'query': director_name},
+            timeout=10,
+        )
+        response.raise_for_status()
+        results = response.json().get('results', [])
+        comparable_name = director_name.casefold()
+        exact_department_match = next((
+            person for person in results
+            if person.get('known_for_department') == 'Directing'
+            and format_director_name(person.get('name', '')).casefold() == comparable_name
+        ), None)
+        exact_name_match = next((
+            person for person in results
+            if format_director_name(person.get('name', '')).casefold() == comparable_name
+        ), None)
+        match = exact_department_match or exact_name_match or next((
+            person for person in results if person.get('known_for_department') == 'Directing'
+        ), None)
+        profile_path = match.get('profile_path') if match else None
+        return f'https://image.tmdb.org/t/p/w500{profile_path}' if profile_path else None
+    except requests.exceptions.RequestException as error:
+        print(f"  ⚠️  TMDB image fetch error for {director_name}: {str(error)[:50]}")
+        return None
+
 def format_director_name(wiki_title):
-    """Convert Wikipedia title to readable director name (replace underscores with spaces)."""
-    return wiki_title.replace('_', ' ')
+    """Convert a Wikipedia title to a clean display/search name."""
+    readable_name = wiki_title.replace('_', ' ')
+    return re.sub(r'\s+\((?:director|filmmaker)\)\s*$', '', readable_name, flags=re.IGNORECASE).strip()
 
 def fetch_trending_directors():
     """
@@ -146,13 +192,14 @@ def fetch_trending_directors():
         # Use pageviews if available, otherwise use base score
         score = pageviews if pageviews > 0 else base_score
         
-        # Fetch image
-        image_url = get_director_image(director_name)
+        # Fetch image, using TMDB only when Wikipedia has no usable portrait.
+        display_name = format_director_name(director_name)
+        image_url = get_director_image(director_name) or get_tmdb_director_image(display_name)
         
         # Create director object matching TMDB schema
         director = {
             'id': hash(director_name) & 0x7FFFFFFF,  # Positive integer ID based on name
-            'name': format_director_name(director_name),
+            'name': display_name,
             'image': image_url,
             'trendingScore': int(score)
         }

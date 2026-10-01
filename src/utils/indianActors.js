@@ -30,6 +30,7 @@ export async function fetchIndianActors({ throwOnError = false } = {}) {
     return actors.map((actor) => ({
       ...actor,
       name: normalizeActorName(actor.name),
+      department: 'Acting',
     }));
   } catch (error) {
     console.error('Error fetching trending actors:', error);
