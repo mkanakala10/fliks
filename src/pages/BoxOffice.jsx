@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import { useSearchParams } from 'react-router-dom';
+import MovieBoxOffice from '../components/MovieBoxOffice';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import PageShell from '../components/PageShell';
-import SectionHeader from '../components/SectionHeader';
+import PageHeading from '../components/PageHeading';
 import MovieCard from '../components/MovieCard';
 import Button from '../components/Button';
 import { fetchDetailedBoxOfficeMovies } from '../utils/tmdbMovies';
@@ -30,6 +33,8 @@ function getYearOptions() {
 }
 
 export default function BoxOffice({ onViewMovie, onRate, ratings = {} }) {
+  const [params, setParams] = useSearchParams();
+  const tab = params.get('tab') === 'trends' ? 'trends' : 'rankings';
   const [movies, setMovies] = useState([]);
   const [year, setYear] = useState(String(new Date().getFullYear()));
   const [language, setLanguage] = useState('');
@@ -37,6 +42,7 @@ export default function BoxOffice({ onViewMovie, onRate, ratings = {} }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (tab !== 'rankings') return;
     const apiKey = import.meta.env.VITE_TMDB_API_KEY;
     if (!apiKey) {
       setError('Missing TMDB API key. Add VITE_TMDB_API_KEY to your .env file.');
@@ -79,7 +85,7 @@ export default function BoxOffice({ onViewMovie, onRate, ratings = {} }) {
     return () => {
       cancelled = true;
     };
-  }, [year, language]);
+  }, [year, language, tab]);
 
   const yearOptions = getYearOptions();
 
@@ -87,11 +93,15 @@ export default function BoxOffice({ onViewMovie, onRate, ratings = {} }) {
     <PageShell>
       <Container maxWidth="xl">
         <Stack spacing={4} py={6}>
-          <SectionHeader
-            title="Box Office Rankings"
-            subtitle="Filter by year and language to view the highest grossing Indian films."
+          <PageHeading
+            title="Box office"
+            subtitle="Explore the highest grossing Indian films and follow how a movie’s earnings grew over time."
           />
 
+          <Tabs value={tab} onChange={(_, value) => setParams(value === 'trends' ? { tab: 'trends' } : {})} aria-label="Box office views" sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tab id="rankings-tab" aria-controls="rankings-panel" value="rankings" label="Rankings" /><Tab id="trends-tab" aria-controls="trends-panel" value="trends" label="Movie trends" />
+          </Tabs>
+          {tab === 'trends' ? <Box role="tabpanel" id="trends-panel" aria-labelledby="trends-tab"><MovieBoxOffice /></Box> : <Stack role="tabpanel" id="rankings-panel" aria-labelledby="rankings-tab" spacing={4}>
           <Stack direction="column" spacing={2} alignItems="center" textAlign="center">
             <Stack direction="row" spacing={1} flexWrap="wrap" justifyContent="center">
               {yearOptions.map((option) => (
@@ -146,6 +156,7 @@ export default function BoxOffice({ onViewMovie, onRate, ratings = {} }) {
           ) : (
             <Alert severity="info">No top box office movies were found for this year and language filter.</Alert>
           )}
+          </Stack>}
         </Stack>
       </Container>
     </PageShell>

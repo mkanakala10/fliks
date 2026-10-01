@@ -37,27 +37,18 @@ export function ToastProvider({ children }) {
         <Alert
           onClose={handleClose}
           severity={toast.severity}
-          variant="filled"
+          variant="outlined"
           sx={{
             width: '100%',
-            borderRadius: 3,
-            fontWeight: 600,
-            fontSize: '0.9rem',
-            fontFamily: "'Plus Jakarta Sans', sans-serif",
-            boxShadow: '0 12px 32px rgba(0, 0, 0, 0.4)',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
-            ...(toast.severity === 'success' && {
-              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-            }),
-            ...(toast.severity === 'info' && {
-              background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
-            }),
-            ...(toast.severity === 'error' && {
-              background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
-            }),
-            ...(toast.severity === 'warning' && {
-              background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
-            }),
+            borderRadius: '6px',
+            fontWeight: 500,
+            fontSize: '0.85rem',
+            bgcolor: 'background.paper',
+            color: 'text.primary',
+            border: 1,
+            borderColor: 'divider',
+            boxShadow: '0 4px 16px #0002',
+
           }}
         >
           {toast.message}

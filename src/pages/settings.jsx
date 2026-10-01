@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -13,7 +13,7 @@ import { useUserData } from '../contexts/UserDataContext';
 
 function Settings() {
   const navigate = useNavigate();
-  const { user, isAuthenticated, resetPassword } = useAuth();
+  const { user, isAuthenticated, resetPassword, loading: authLoading } = useAuth();
   const { ratings, loading } = useUserData();
   const [status, setStatus] = useState(null);
   const [error, setError] = useState(null);
@@ -40,10 +40,8 @@ function Settings() {
     }
   };
 
-  if (!isAuthenticated) {
-    navigate('/signup', { replace: true });
-    return null;
-  }
+  if (authLoading) return <PageShell loading />;
+  if (!isAuthenticated) return <Navigate to="/signup" replace />;
 
   return (
     <PageShell>
@@ -55,7 +53,7 @@ function Settings() {
                 {(user?.displayName || user?.email || 'U').charAt(0).toUpperCase()
               }</Avatar>
               <Box>
-                <Typography variant="h5" fontWeight={700}>
+                <Typography component="h1" variant="h5" fontWeight={700}>
                   Settings
                 </Typography>
                 <Typography color="text.secondary">{user?.email}</Typography>
@@ -91,7 +89,7 @@ function Settings() {
                 Rating summary
               </Typography>
               <Typography fontSize="2rem" fontWeight={700}>
-                {loading ? '—' : averageRating.toFixed(1)} / 10
+                {loading ? '—' : averageRating.toFixed(1)} / 5
               </Typography>
               <Typography color="text.secondary">
                 Average rating across {Object.values(ratings).filter((value) => Number(value) > 0).length} films.

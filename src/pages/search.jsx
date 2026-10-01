@@ -10,7 +10,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Paper from '@mui/material/Paper';
 import SearchIcon from '@mui/icons-material/Search';
 import PageShell from '../components/PageShell';
-import SectionHeader from '../components/SectionHeader';
+import PageHeading from '../components/PageHeading';
 import Button from '../components/Button';
 import { semanticSearch } from '../config/api';
 
@@ -35,7 +35,7 @@ function Search({ onViewMovie }) {
       setResults(data.results || []);
     } catch {
       setError(
-        'Could not reach the API. Start the unified backend: cd backend && python main.py'
+        'Search is temporarily unavailable. Please try again shortly.'
       );
       setResults([]);
     } finally {
@@ -47,8 +47,8 @@ function Search({ onViewMovie }) {
     <PageShell>
       <Container maxWidth="md">
         <Stack spacing={4} py={6}>
-          <SectionHeader
-            title="Semantic Indian Cinema Search"
+          <PageHeading
+            title="Find your next film"
             subtitle="Describe a mood, plot, or vibe — search by meaning across Indian films."
           />
 
@@ -56,6 +56,7 @@ function Search({ onViewMovie }) {
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
               <TextField
                 fullWidth
+                inputProps={{ 'aria-label': 'Search films' }}
                 placeholder='e.g. "underdog sports drama" or "romantic train journey"'
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
@@ -68,7 +69,7 @@ function Search({ onViewMovie }) {
                 }}
                 sx={{
                   '& .MuiOutlinedInput-root': {
-                    borderRadius: 3,
+                    borderRadius: '6px',
                     bgcolor: 'background.paper',
                   },
                 }}

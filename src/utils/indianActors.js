@@ -4,7 +4,7 @@
  * 
  * @returns {Promise<Array>} Array of actor objects with schema: {id, name, image, trendingScore}
  */
-export async function fetchIndianActors() {
+export async function fetchIndianActors({ throwOnError = false } = {}) {
   try {
     const basePath = import.meta.env.BASE_URL || '/';
     const response = await fetch(`${basePath}data/trending-actors.json`);
@@ -20,10 +20,10 @@ export async function fetchIndianActors() {
       throw new Error('Invalid actors data format');
     }
     
-    // Filter out actors without images for UI consistency
-    return actors.filter(actor => actor.image !== null && actor.image !== undefined);
+    return actors;
   } catch (error) {
     console.error('Error fetching trending actors:', error);
+    if (throwOnError) throw error;
     // Return empty array on error - UI will handle gracefully
     return [];
   }

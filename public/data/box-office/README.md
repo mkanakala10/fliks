@@ -1,0 +1,7 @@
+# Movie box-office history
+
+`history.json` is a curated series of dated reports, separate from TMDB's worldwide lifetime revenue. It currently covers the first 14 days of RRR's Hindi release (India net) and Jawan (India net, all languages), transcribed from the linked Bollywood Hungama daily tables. The dates follow each reported Indian theatrical release, which can differ from TMDB's earliest international release date.
+
+To add a movie, provide its verified TMDB `movieId`, title, territory/language/basis in `scope`, reported local `releaseDate`, `currency: INR`, `unit: crore`, source name/URL, verification date, coverage description, and `daily` entries containing an ISO date and numeric daily amount. Use null for unknown or withdrawn amounts. Do not mix net/gross, currencies, territories, dubbed versions, or re-releases in a single series. Do not insert lifetime totals as daily earnings or distribute multi-day aggregates across dates.
+
+The chart sorts dates, keeps the last report per date, inserts gaps for missing days, and derives cumulative totals only while the series remains complete from release day. Percentage change compares consecutive known days and is unavailable when the prior day is zero or unknown. Period filters retain the cumulative total from release day. The source, coverage and verification date are visible beside each chart. There is no scheduled refresh or claim of live data.

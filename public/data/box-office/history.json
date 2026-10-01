@@ -1,0 +1,146 @@
+[
+  {
+    "movieId": 579974,
+    "title": "RRR",
+    "releaseDate": "2022-03-25",
+    "scope": "India net \u00b7 Hindi version",
+    "currency": "INR",
+    "unit": "crore",
+    "source": {
+      "name": "Bollywood Hungama",
+      "url": "https://www.bollywoodhungama.com/movie/rrr/box-office/"
+    },
+    "verifiedOn": "2026-09-29",
+    "coverage": "First 14 days of the original theatrical release",
+    "daily": [
+      {
+        "date": "2022-03-25",
+        "amount": 20.07
+      },
+      {
+        "date": "2022-03-26",
+        "amount": 24
+      },
+      {
+        "date": "2022-03-27",
+        "amount": 31.5
+      },
+      {
+        "date": "2022-03-28",
+        "amount": 17
+      },
+      {
+        "date": "2022-03-29",
+        "amount": 15.02
+      },
+      {
+        "date": "2022-03-30",
+        "amount": 13
+      },
+      {
+        "date": "2022-03-31",
+        "amount": 12
+      },
+      {
+        "date": "2022-04-01",
+        "amount": 13.5
+      },
+      {
+        "date": "2022-04-02",
+        "amount": 18
+      },
+      {
+        "date": "2022-04-03",
+        "amount": 20.5
+      },
+      {
+        "date": "2022-04-04",
+        "amount": 7
+      },
+      {
+        "date": "2022-04-05",
+        "amount": 6.5
+      },
+      {
+        "date": "2022-04-06",
+        "amount": 5.5
+      },
+      {
+        "date": "2022-04-07",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "movieId": 872906,
+    "title": "Jawan",
+    "releaseDate": "2023-09-07",
+    "scope": "India net \u00b7 All languages",
+    "currency": "INR",
+    "unit": "crore",
+    "source": {
+      "name": "Bollywood Hungama",
+      "url": "https://www.bollywoodhungama.com/movie/jawan/box-office/"
+    },
+    "verifiedOn": "2026-09-29",
+    "coverage": "First 14 days of the original theatrical release",
+    "daily": [
+      {
+        "date": "2023-09-07",
+        "amount": 75
+      },
+      {
+        "date": "2023-09-08",
+        "amount": 53.23
+      },
+      {
+        "date": "2023-09-09",
+        "amount": 77.83
+      },
+      {
+        "date": "2023-09-10",
+        "amount": 80.1
+      },
+      {
+        "date": "2023-09-11",
+        "amount": 32.92
+      },
+      {
+        "date": "2023-09-12",
+        "amount": 26.52
+      },
+      {
+        "date": "2023-09-13",
+        "amount": 23.83
+      },
+      {
+        "date": "2023-09-14",
+        "amount": 21.9
+      },
+      {
+        "date": "2023-09-15",
+        "amount": 19.1
+      },
+      {
+        "date": "2023-09-16",
+        "amount": 32.3
+      },
+      {
+        "date": "2023-09-17",
+        "amount": 37.26
+      },
+      {
+        "date": "2023-09-18",
+        "amount": 16.25
+      },
+      {
+        "date": "2023-09-19",
+        "amount": 14.8
+      },
+      {
+        "date": "2023-09-20",
+        "amount": 9.4
+      }
+    ]
+  }
+]

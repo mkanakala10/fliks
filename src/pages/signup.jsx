@@ -114,7 +114,7 @@ function Signup({ onNavigate }) {
         >
           <Stack spacing={3} alignItems="center">
             <Box textAlign="center">
-              <Typography variant="h4" fontWeight={700} letterSpacing="-0.02em">
+              <Typography component="h1" variant="h4" fontWeight={700} letterSpacing="-0.02em">
                 {isAuthenticated
                   ? `Welcome back${user?.displayName ? `, ${user.displayName}` : ''}`
                   : mode === 'register'

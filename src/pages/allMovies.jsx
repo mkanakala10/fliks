@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import PageShell from '../components/PageShell';
-import SectionHeader from '../components/SectionHeader';
+import PageHeading from '../components/PageHeading';
 import MovieCard from '../components/MovieCard';
 import Button from '../components/Button';
 import { useWatchLater } from '../contexts/WatchLaterContext';
@@ -44,7 +44,7 @@ function AllMovies({ onViewMovie, onRate, ratings = {} }) {
   const [language, setLanguage] = useState('');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const { addToWatchLater, isInWatchLater } = useWatchLater();
+  const { addToWatchLater, removeFromWatchLater, isInWatchLater } = useWatchLater();
 
   useEffect(() => {
     const apiKey = import.meta.env.VITE_TMDB_API_KEY;
@@ -127,14 +127,14 @@ function AllMovies({ onViewMovie, onRate, ratings = {} }) {
     <PageShell>
       <Container maxWidth="xl">
         <Stack spacing={0}>
-          <Box component="section" py={6} textAlign="center">
-            <SectionHeader
+          <Box component="section" py={5}>
+            <PageHeading
               title="All Indian Movies"
               subtitle="Browse the complete collection of Indian cinema"
             />
 
-            <Stack spacing={2} mt={1} alignItems="center">
-              <Stack direction="row" spacing={1} flexWrap="wrap" justifyContent="center">
+            <Stack spacing={2} mt={1} alignItems="flex-start">
+              <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
                 {LANGUAGE_OPTIONS.map((opt) => (
                   <Button
                     key={opt.value}
@@ -147,7 +147,7 @@ function AllMovies({ onViewMovie, onRate, ratings = {} }) {
                   </Button>
                 ))}
               </Stack>
-              <Stack direction="row" spacing={1} flexWrap="wrap" justifyContent="center">
+              <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
                 {SORT_OPTIONS.map((opt) => (
                   <Button
                     key={opt.value}
@@ -182,6 +182,7 @@ function AllMovies({ onViewMovie, onRate, ratings = {} }) {
                       movie={{ ...movie, ratingValue: ratings[movie.id] || 0 }}
                       variant="landscape"
                       onAddToWatchlist={() => addToWatchLater(movie)}
+                      onRemoveFromWatchlist={() => removeFromWatchLater(movie.id)}
                       isInWatchlist={isInWatchLater(movie.id)}
                       onRate={onRate}
                       onViewDetails={() => onViewMovie?.(movie.id)}

@@ -67,7 +67,7 @@ function ForYouPanel({ onViewMovie, onRate, ratings: userRatings = {} }) {
   const [isLoading, setIsLoading] = useState(false);
   const [catalogError, setCatalogError] = useState(null);
   const [submitError, setSubmitError] = useState(null);
-  const { addToWatchLater, isInWatchLater } = useWatchLater();
+  const { addToWatchLater, removeFromWatchLater, isInWatchLater } = useWatchLater();
 
   useEffect(() => {
     const loadCatalog = async () => {
@@ -222,6 +222,7 @@ function ForYouPanel({ onViewMovie, onRate, ratings: userRatings = {} }) {
                 movie={{ ...movie, ratingValue: userRatings[movie.id] || 0 }}
                 variant="upcoming"
                 onAddToWatchlist={() => addToWatchLater(movie)}
+                onRemoveFromWatchlist={() => removeFromWatchLater(movie.id)}
                 isInWatchlist={isInWatchLater(movie.id)}
                 onViewDetails={() => onViewMovie?.(movie.id)}
                 onRate={onRate}

@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { doc, onSnapshot, setDoc, deleteDoc, deleteField, serverTimestamp } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc, deleteDoc, serverTimestamp } from 'firebase/firestore';
 import { db, isFirebaseConfigured } from '../firebase';
 import { useAuth } from './AuthContext';
 import { useToast } from './ToastContext';
@@ -52,6 +52,7 @@ function clearLegacyStorage() {
 
 export function UserDataProvider({ children }) {
   const { user } = useAuth();
+  const userId = user?.uid;
   const showToast = useToast();
   const [ratings, setRatings] = useState({});
   const [watchLater, setWatchLater] = useState([]);
@@ -67,7 +68,7 @@ export function UserDataProvider({ children }) {
       return undefined;
     }
 
-    if (!user) {
+    if (!userId) {
       setRatings({});
       setWatchLater([]);
       setLoading(false);
@@ -79,7 +80,7 @@ export function UserDataProvider({ children }) {
     setLoading(true);
     setSyncError(null);
 
-    const userRef = doc(db, 'users', user.uid);
+    const userRef = doc(db, 'users', userId);
 
     const unsubscribe = onSnapshot(
       userRef,
@@ -133,7 +134,7 @@ export function UserDataProvider({ children }) {
     );
 
     return () => unsubscribe();
-  }, [user?.uid, hasMigratedLegacy]);
+  }, [userId, hasMigratedLegacy]);
 
   const persistUserData = useCallback(
     async (partial) => {
@@ -160,16 +161,7 @@ export function UserDataProvider({ children }) {
 
       try {
         if (db) {
-          const userRef = doc(db, 'users', user.uid);
-          await setDoc(
-            userRef,
-            {
-              [`ratings.${key}`]: deleteField(),
-              updatedAt: serverTimestamp(),
-            },
-            { merge: true }
-          );
-
+          await persistUserData({ ratings: nextRatings });
           const ratingDocRef = doc(db, 'movies', key, 'userRatings', user.uid);
           await deleteDoc(ratingDocRef);
         }
@@ -181,11 +173,11 @@ export function UserDataProvider({ children }) {
         throw error;
       }
     },
-    [user, ratings, showToast]
+    [user, ratings, persistUserData, showToast]
   );
 
   const rateMovie = useCallback(
-    async (movieId, value, reviewText = '') => {
+    async (movieId, value, reviewText) => {
       if (!user) {
         showToast('Please sign in to rate movies.', 'warning');
         throw Object.assign(new Error('Sign in required'), { code: 'auth/required' });
@@ -195,8 +187,13 @@ export function UserDataProvider({ children }) {
         return removeRating(movieId);
       }
 
+      const numericValue = Number(value);
+      if (!Number.isFinite(numericValue) || numericValue < 0.5 || numericValue > 5) {
+        throw new RangeError('Ratings must be between 0.5 and 5.');
+      }
+
       const key = String(movieId);
-      const nextRatings = { ...ratings, [key]: value };
+      const nextRatings = { ...ratings, [key]: numericValue };
       setRatings(nextRatings);
 
       try {
@@ -204,12 +201,16 @@ export function UserDataProvider({ children }) {
         if (db) {
           const ratingDocRef = doc(db, 'movies', key, 'userRatings', user.uid);
           const username = user.displayName || user.email?.split('@')[0] || 'Anonymous User';
-          await setDoc(ratingDocRef, {
-            rating: value,
-            reviewText,
-            username,
-            updatedAt: serverTimestamp(),
-          });
+          await setDoc(
+            ratingDocRef,
+            {
+              rating: numericValue,
+              ...(reviewText !== undefined ? { reviewText } : {}),
+              username,
+              updatedAt: serverTimestamp(),
+            },
+            { merge: true }
+          );
         }
       } catch (error) {
         setRatings(ratings);
@@ -226,9 +227,11 @@ export function UserDataProvider({ children }) {
         throw Object.assign(new Error('Sign in required'), { code: 'auth/required' });
       }
 
-      if (watchLater.some((m) => m.id === movie.id)) return;
+      if (watchLater.some((m) => String(m.id) === String(movie.id))) return;
 
-      const nextWatchLater = [...watchLater, movie];
+      // Firestore rejects undefined values, which optional TMDB card fields can contain.
+      const savedMovie = Object.fromEntries(Object.entries(movie).filter(([, value]) => value !== undefined));
+      const nextWatchLater = [...watchLater, savedMovie];
       setWatchLater(nextWatchLater);
 
       try {
@@ -238,14 +241,14 @@ export function UserDataProvider({ children }) {
         throw error;
       }
     },
-    [user, watchLater, persistUserData]
+    [user, watchLater, persistUserData, showToast]
   );
 
   const removeFromWatchLater = useCallback(
     async (movieId) => {
       if (!user) return;
 
-      const nextWatchLater = watchLater.filter((m) => m.id !== movieId);
+      const nextWatchLater = watchLater.filter((m) => String(m.id) !== String(movieId));
       setWatchLater(nextWatchLater);
 
       try {
@@ -259,7 +262,7 @@ export function UserDataProvider({ children }) {
   );
 
   const isInWatchLater = useCallback(
-    (movieId) => watchLater.some((m) => m.id === movieId),
+    (movieId) => watchLater.some((m) => String(m.id) === String(movieId)),
     [watchLater]
   );
 

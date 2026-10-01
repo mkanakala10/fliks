@@ -3,6 +3,9 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Alert from '@mui/material/Alert';
+import Skeleton from '@mui/material/Skeleton';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import PageShell from '../components/PageShell';
 import Hero from '../components/Hero';
 import SectionHeader from '../components/SectionHeader';
@@ -20,12 +23,16 @@ import {
   mapDiscoverMovie,
   fetchHighestRoiMovies,
   fetchRecentReleaseMovies,
+  fetchNowPlayingMovies,
 } from '../utils/tmdbMovies';
 
-function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
+function Home({ onReplayIntro, onNavigate, onViewMovie, onRate, ratings = {} }) {
   const [trendingActors, setTrendingActors] = useState([]);
   const [trendingDirectors, setTrendingDirectors] = useState([]);
   const [roiMovies, setRoiMovies] = useState([]);
+  const [nowPlaying, setNowPlaying] = useState([]);
+  const [theaterError, setTheaterError] = useState(null);
+  const [theatersLoading, setTheatersLoading] = useState(true);
   const [recentReleases, setRecentReleases] = useState([]);
   const [anticipated, setAnticipated] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -35,9 +42,28 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
   const [isActorModalOpen, setIsActorModalOpen] = useState(false);
 
   useEffect(() => {
+    const controller = new AbortController();
     const apiKey = import.meta.env.VITE_TMDB_API_KEY;
     if (!apiKey) {
-      setError('Missing TMDB API key. Add VITE_TMDB_API_KEY to your .env file.');
+      setTheaterError('Theater listings are currently unavailable.');
+      setTheatersLoading(false);
+      return;
+    }
+    fetchNowPlayingMovies(apiKey, { signal: controller.signal })
+      .then(setNowPlaying)
+      .catch(() => {
+        if (!controller.signal.aborted) setTheaterError('We couldn’t load theater listings. Please try again later.');
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) setTheatersLoading(false);
+      });
+    return () => controller.abort();
+  }, []);
+
+  useEffect(() => {
+    const apiKey = import.meta.env.VITE_TMDB_API_KEY;
+    if (!apiKey) {
+      setError('The film catalog is currently unavailable. Please try again later.');
       setIsLoading(false);
       return;
     }
@@ -86,7 +112,7 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
 
       const allFailed = results.every((r) => r.status === 'rejected');
       if (allFailed) {
-        setError('Unable to load homepage data. Check your TMDB API key and connection.');
+        setError('We couldn’t load the film catalog. Please try again later.');
       }
 
       setIsLoading(false);
@@ -104,32 +130,58 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
     };
   }, []);
 
-  const heroStats = [
-    { value: '12K+', label: 'Movies Tracked' },
-    { value: '8K+', label: 'Actors' },
-    { value: '2M+', label: 'User Reviews' },
-  ];
-
-  if (isLoading) return <PageShell loading />;
-
   return (
     <PageShell>
+      <Hero
+        loading={isLoading}
+        onNavigate={onNavigate}
+        onViewMovie={onViewMovie}
+        featuredMovies={recentReleases}
+      />
+
       <Container maxWidth="xl">
         <Stack spacing={0}>
-          <Hero stats={heroStats} onNavigate={onNavigate} />
-
           {error && (
             <Box py={2}>
               <Alert severity="warning">{error}</Alert>
             </Box>
           )}
 
-          <Box component="section" py={6}>
+          <Box component="section" aria-labelledby="in-theaters-title" aria-busy={theatersLoading} sx={{ py: { xs: 3.5, md: 4.5 } }}>
+            <SectionHeader
+              id="in-theaters-title"
+              title="Currently in theaters"
+              subtitle="Indian films now playing in India. Availability varies by cinema."
+            />
+            {theatersLoading ? (
+              <Stack direction="row" spacing={2} aria-label="Loading theater listings">
+                {[1, 2, 3, 4].map((n) => <Skeleton key={n} variant="rounded" height={230} sx={{ flex: 1 }} />)}
+              </Stack>
+            ) : theaterError ? (
+              <Alert severity="info">{theaterError}</Alert>
+            ) : (
+              <HorizontalScroller
+                items={nowPlaying}
+                getKey={(movie) => movie.id}
+                renderItem={(movie) => (
+                  <MovieCard
+                    movie={{ ...movie, ratingValue: ratings[movie.id] || 0 }}
+                    onViewDetails={() => onViewMovie?.(movie.id)}
+                    onRate={onRate}
+                  />
+                )}
+                emptyMessage="No theater listings are available right now."
+              />
+            )}
+          </Box>
+
+          <Box component="section" sx={{ py: { xs: 3.5, md: 4.5 } }}>
             <SectionHeader
               title="Recent Releases"
-              subtitle="Highest grossing Indian movies released in the last 6 months"
+              subtitle="The biggest releases from the last six months."
+              onAction={() => onNavigate?.('all-movies')}
             />
-            <HorizontalScroller
+            {isLoading ? <Stack direction="row" spacing={2} aria-label="Loading catalog">{[1, 2, 3, 4].map((n) => <Skeleton key={n} variant="rounded" height={230} sx={{ flex: 1 }} />)}</Stack> : <HorizontalScroller
               items={recentReleases}
               getKey={(movie) => movie.id}
               renderItem={(movie, index) => (
@@ -140,16 +192,18 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
                   onRate={onRate}
                 />
               )}
-              emptyMessage="No recent releases found."
-            />
+              emptyMessage="No recent releases available."
+            />}
           </Box>
 
-          <Box component="section" py={6}>
+          <Box component="section" sx={{ py: { xs: 3.5, md: 4.5 } }}>
             <SectionHeader
-              title="Top Performing"
-              subtitle="Most profitable Indian films by return on investment percentage (since 2023)"
+              title="Small budgets. Big returns."
+              subtitle="Indian films with the highest return on investment since 2023."
+              actionLabel="Box office"
+              onAction={() => onNavigate?.('box-office')}
             />
-            <HorizontalScroller
+            {isLoading ? <Stack direction="row" spacing={2} aria-label="Loading catalog">{[1, 2, 3, 4].map((n) => <Skeleton key={n} variant="rounded" height={230} sx={{ flex: 1 }} />)}</Stack> : <HorizontalScroller
               items={roiMovies}
               getKey={(movie) => movie.id}
               renderItem={(movie, index) => (
@@ -160,17 +214,16 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
                   onRate={onRate}
                 />
               )}
-              emptyMessage="Calculating profit statistics…"
-            />
+              emptyMessage="Box office figures are currently unavailable."
+            />}
           </Box>
 
-
-          <Box component="section" py={6}>
+          <Box component="section" sx={{ py: { xs: 3.5, md: 4.5 } }}>
             <SectionHeader
-              title="Most Anticipated 2026"
-              subtitle="Upcoming Indian releases generating the most buzz on TMDB"
+              title="Coming to a screen near you"
+              subtitle="Upcoming releases to keep on your radar."
             />
-            <HorizontalScroller
+            {isLoading ? <Stack direction="row" spacing={2} aria-label="Loading catalog">{[1, 2, 3, 4].map((n) => <Skeleton key={n} variant="rounded" height={230} sx={{ flex: 1 }} />)}</Stack> : <HorizontalScroller
               items={anticipated}
               getKey={(film) => film.id}
               renderItem={(film) => (
@@ -181,16 +234,17 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
                   onViewDetails={() => onViewMovie?.(film.id)}
                 />
               )}
-              emptyMessage="No anticipated releases found yet."
-            />
+              emptyMessage="No upcoming releases available."
+            />}
           </Box>
 
-          <Box component="section" py={6}>
+          <Box component="section" sx={{ py: { xs: 3.5, md: 4.5 } }}>
             <SectionHeader
-              title="Trending Indian Actors"
-              subtitle="Most popular stars in 2026 based on recent hits"
+              title="People in the spotlight"
+              subtitle="Explore the faces behind the films."
+              onAction={() => onNavigate?.('actors')}
             />
-            <HorizontalScroller
+            {isLoading ? <Stack direction="row" spacing={2} aria-label="Loading catalog">{[1, 2, 3, 4].map((n) => <Skeleton key={n} variant="rounded" height={230} sx={{ flex: 1 }} />)}</Stack> : <HorizontalScroller
               items={trendingActors}
               getKey={(actor) => actor.id}
               renderItem={(actor, index) => (
@@ -207,15 +261,15 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
               emptyMessage="Updating trending stars…"
               centerWhenFits
               cardVariant="actor"
-            />
+            />}
           </Box>
 
-          <Box component="section" py={6}>
+          <Box component="section" sx={{ py: { xs: 3.5, md: 4.5 } }}>
             <SectionHeader
-              title="Trending Indian Directors"
-              subtitle="Most popular filmmakers in 2026 based on recent hits"
+              title="Behind the camera"
+              subtitle="Get to know the filmmakers shaping Indian cinema."
             />
-            <HorizontalScroller
+            {isLoading ? <Stack direction="row" spacing={2} aria-label="Loading catalog">{[1, 2, 3, 4].map((n) => <Skeleton key={n} variant="rounded" height={230} sx={{ flex: 1 }} />)}</Stack> : <HorizontalScroller
               items={trendingDirectors}
               getKey={(director) => director.id}
               renderItem={(director, index) => (
@@ -232,15 +286,23 @@ function Home({ onNavigate, onViewMovie, onRate, ratings = {} }) {
               emptyMessage="Updating trending directors…"
               centerWhenFits
               cardVariant="actor"
-            />
+            />}
           </Box>
 
           <CTA
-            title="Ready to Dive Deeper?"
-            description="Track your favorite stars and never miss a release date in 2026."
-            buttonText="Explore All Trends"
+            title="There’s always another great film."
+            description="Find what’s trending and make your next watch a good one."
+            buttonText="Explore trending films"
             onButtonClick={() => onNavigate?.('trending')}
           />
+        </Stack>
+      </Container>
+
+      <Container component="footer" maxWidth="xl" sx={{ py: 3, pb: 5 }}>
+        <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" spacing={1}>
+          <Typography sx={{ fontSize: 12, fontWeight: 600 }}>fliks. <Box component="span" sx={{ fontWeight: 400, color: 'text.secondary', ml: 1 }}>A closer look at Indian cinema.</Box></Typography>
+          <Button onClick={onReplayIntro} sx={{ fontSize: 11, color: 'text.secondary', p: 0, minHeight: 24, alignSelf: 'flex-start' }}>Replay intro</Button>
+          <Typography sx={{ fontSize: 10, color: 'text.secondary' }}>Film data and imagery provided by TMDB.</Typography>
         </Stack>
       </Container>
 

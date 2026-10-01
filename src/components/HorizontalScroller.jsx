@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
-import { useTheme, alpha } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
 import { useItemsPerView } from '../hooks/useItemsPerView';
 
@@ -63,40 +63,6 @@ function HorizontalScroller({
 
   return (
     <Box sx={{ position: 'relative', '&:hover .scroll-arrow': { opacity: 1 } }}>
-      {/* Left Edge Fade Gradient */}
-      {canScrollLeft && !shouldCenter && (
-        <Box
-          sx={{
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            bottom: 0,
-            width: 80,
-            background: `linear-gradient(to right, ${theme.palette.background.default} 0%, ${alpha(theme.palette.background.default, 0)} 100%)`,
-            zIndex: 1,
-            pointerEvents: 'none',
-            transition: 'opacity 0.3s',
-          }}
-        />
-      )}
-
-      {/* Right Edge Fade Gradient */}
-      {canScrollRight && !shouldCenter && (
-        <Box
-          sx={{
-            position: 'absolute',
-            right: 0,
-            top: 0,
-            bottom: 0,
-            width: 80,
-            background: `linear-gradient(to left, ${theme.palette.background.default} 0%, ${alpha(theme.palette.background.default, 0)} 100%)`,
-            zIndex: 1,
-            pointerEvents: 'none',
-            transition: 'opacity 0.3s',
-          }}
-        />
-      )}
-
       {canScrollLeft && !shouldCenter && (
         <IconButton
           className="scroll-arrow"
@@ -108,21 +74,21 @@ function HorizontalScroller({
             top: '50%',
             transform: 'translateY(-50%)',
             zIndex: 3,
-            opacity: { xs: 1, md: 0 },
+            opacity: 1,
             transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-            bgcolor: theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.75)' : 'rgba(255, 255, 255, 0.75)',
-            backdropFilter: 'blur(8px)',
+            bgcolor: 'background.paper',
+
             border: '1px solid',
-            borderColor: 'primary.main',
-            color: 'primary.main',
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 10px rgba(99, 102, 241, 0.15)',
+            borderColor: 'divider',
+            color: 'text.primary',
+            boxShadow: '0 2px 8px #0002',
             p: 1.25,
             '&:hover': {
-              bgcolor: 'primary.main',
+              bgcolor: 'text.primary',
               color: 'primary.contrastText',
-              transform: 'translateY(-50%) scale(1.1)',
-              boxShadow: '0 8px 32px rgba(99, 102, 241, 0.35), 0 0 15px rgba(217, 70, 239, 0.25)',
-              borderColor: 'secondary.main',
+              transform: 'translateY(-50%)',
+              boxShadow: 'none',
+              borderColor: 'text.secondary',
             },
           }}
         >
@@ -141,21 +107,21 @@ function HorizontalScroller({
             top: '50%',
             transform: 'translateY(-50%)',
             zIndex: 3,
-            opacity: { xs: 1, md: 0 },
+            opacity: 1,
             transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-            bgcolor: theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.75)' : 'rgba(255, 255, 255, 0.75)',
-            backdropFilter: 'blur(8px)',
+            bgcolor: 'background.paper',
+
             border: '1px solid',
-            borderColor: 'primary.main',
-            color: 'primary.main',
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 10px rgba(99, 102, 241, 0.15)',
+            borderColor: 'divider',
+            color: 'text.primary',
+            boxShadow: '0 2px 8px #0002',
             p: 1.25,
             '&:hover': {
-              bgcolor: 'primary.main',
+              bgcolor: 'text.primary',
               color: 'primary.contrastText',
-              transform: 'translateY(-50%) scale(1.1)',
-              boxShadow: '0 8px 32px rgba(99, 102, 241, 0.35), 0 0 15px rgba(217, 70, 239, 0.25)',
-              borderColor: 'secondary.main',
+              transform: 'translateY(-50%)',
+              boxShadow: 'none',
+              borderColor: 'text.secondary',
             },
           }}
         >
@@ -165,6 +131,9 @@ function HorizontalScroller({
 
       <Box
         ref={scrollRef}
+        tabIndex={0}
+        role="region"
+        aria-label="Browse collection"
         sx={{
           display: 'flex',
           alignItems: isActor ? 'flex-start' : 'stretch',

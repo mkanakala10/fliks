@@ -20,8 +20,7 @@ export async function fetchIndianDirectors() {
       throw new Error('Invalid directors data format');
     }
     
-    // Filter out directors without images for UI consistency
-    return directors.filter(director => director.image !== null && director.image !== undefined);
+    return directors;
   } catch (error) {
     console.error('Error fetching trending directors:', error);
     // Return empty array on error - UI will handle gracefully

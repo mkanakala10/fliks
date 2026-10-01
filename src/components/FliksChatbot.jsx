@@ -160,6 +160,7 @@ export default function FliksChatbot({ onViewMovie }) {
     <div
       className="fliks-chatbot"
       style={{
+        '--fliks-primary': theme.palette.primary.main,
         '--fliks-bg': theme.palette.background.default,
         '--fliks-surface': theme.palette.background.paper,
         '--fliks-surface-elevated': theme.palette.action.hover,
@@ -168,9 +169,9 @@ export default function FliksChatbot({ onViewMovie }) {
         '--fliks-on-primary': theme.palette.primary.contrastText,
         '--fliks-border': theme.palette.divider,
         '--fliks-hover': theme.palette.action.hover,
-        '--fliks-bubble-bg': theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.5)' : 'rgba(255, 255, 255, 0.85)',
-        '--fliks-input-bg': theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.5)' : 'rgba(255, 255, 255, 0.85)',
-        '--fliks-bubble-border': theme.palette.mode === 'dark' ? 'rgba(99, 102, 241, 0.2)' : 'rgba(0, 0, 0, 0.08)',
+        '--fliks-bubble-bg': theme.palette.background.paper,
+        '--fliks-input-bg': theme.palette.background.paper,
+        '--fliks-bubble-border': theme.palette.divider,
       }}
     >
       <div className="chat-page-intro">

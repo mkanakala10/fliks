@@ -1,0 +1,95 @@
+.cinema-intro {
+  --cinema-ink: #ede9df;
+  --cinema-muted: #97988d;
+  --cinema-accent: #e9a06e;
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  color: var(--cinema-ink);
+  background: #101310;
+  font-family: 'Inter', sans-serif;
+  isolation: isolate;
+}
+.cinema-intro button { font: inherit; cursor: pointer; }
+.cinema-intro button:focus-visible { outline: 2px solid #e9a06e; outline-offset: 5px; }
+.cinema-intro__scene { position: fixed; inset: 0; z-index: -2; opacity: 0; transition: opacity 650ms ease; pointer-events: none; }
+.cinema-intro__veil { position: fixed; inset: 0; z-index: -1; background: radial-gradient(ellipse at 50% 0%, #33312466 0%, #10131000 62%), #101310; transition: opacity 650ms ease; }
+.cinema-intro__header { position: fixed; top: 0; left: 0; right: 0; height: 88px; display: flex; align-items: center; gap: 26px; padding: 0 48px; z-index: 3; }
+.cinema-intro__brand { font-size: 29px; font-weight: 800; letter-spacing: -1.7px; }
+.cinema-intro__brand > span, .cinema-intro__morph-logo > span { color: var(--cinema-accent); }
+.cinema-intro__edition { font-size: 9px; letter-spacing: 2.2px; color: #8f9386; border-left: 1px solid #404236; padding-left: 26px; }
+.cinema-intro__skip { margin-left: auto; display: flex; align-items: center; gap: 9px; background: #10131080; color: #bcbeb2; font-size: 12px !important; padding: 10px 12px; border: 1px solid #ffffff1a; border-radius: 5px; }
+.cinema-intro__skip:hover { background: #242921; color: #fff; }
+.cinema-intro__selection { width: min(100%, 720px); margin: 0 auto; padding: 104px 24px 28px; min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; transition: opacity 400ms ease, transform 650ms ease; }
+.cinema-intro__heading { text-align: center; }
+.cinema-intro__eyebrow { font-size: 9px !important; font-weight: 500; letter-spacing: 2.5px; color: var(--cinema-accent) !important; margin: 0 0 17px !important; }
+.cinema-intro__heading h1 { font-family: Georgia, serif; font-weight: 400; font-size: clamp(34px, 4vw, 52px); line-height: 1.09; letter-spacing: -1.9px; margin: 0; }
+.cinema-intro__heading p { color: #9da193; font-size: 12px; margin: 17px 0 0; }
+.cinema-intro__auditorium { margin: 35px auto 26px; width: min(100%, 500px); }
+.cinema-intro__screen-line { height: 47px; width: 78%; margin: 0 auto 24px; border-top: 2px solid #a9b39b; border-radius: 50% 50% 0 0; text-align: center; position: relative; background: radial-gradient(ellipse at 50% 0%, #c9d7b518, transparent 67%); }
+.cinema-intro__screen-line span { font-size: 8px; letter-spacing: 3px; color: #88957e; position: relative; top: 15px; }
+.cinema-intro__seating { display: flex; flex-direction: column; gap: 14px; }
+.cinema-intro__row { display: flex; align-items: center; justify-content: center; gap: 11px; }
+.cinema-intro__row-label { font-size: 9px; color: #686f62; width: 19px; text-align: center; flex-shrink: 0; }
+.cinema-intro__seat { width: 27px; height: 25px; padding: 0; flex-shrink: 0; border: 1px solid #61694f; border-bottom: 3px solid #788066; border-radius: 6px 6px 4px 4px; background: #363c2e; color: #d3d8c8; position: relative; transition: background 140ms ease, border-color 140ms ease, transform 140ms ease; }
+.cinema-intro__seat::before, .cinema-intro__seat::after { content: ''; position: absolute; width: 3px; height: 13px; top: 9px; background: #555d46; border-radius: 2px; }
+.cinema-intro__seat::before { left: -3px; }
+.cinema-intro__seat::after { right: -3px; }
+.cinema-intro__seat span { font-size: 8px; opacity: 0; transition: opacity 140ms; }
+.cinema-intro__seat:hover { background: #687256; border-color: #a7b38e; transform: translateY(-2px); }
+.cinema-intro__seat:hover span, .cinema-intro__seat:focus-visible span, .cinema-intro__seat[aria-pressed='true'] span { opacity: 1; }
+.cinema-intro__seat[aria-pressed='true'] { background: #e9a06e; border-color: #f6c7a4; border-bottom-color: #b47850; color: #302014; }
+.cinema-intro__seat[aria-pressed='true']::before, .cinema-intro__seat[aria-pressed='true']::after { background: #b98055; }
+.cinema-intro__seat--aisle { margin-left: 25px; }
+.cinema-intro__legend { display: flex; gap: 23px; justify-content: center; margin-top: 26px; font-size: 9px; color: #a4a995; }
+.cinema-intro__legend span { display: inline-flex; align-items: center; gap: 7px; }
+.cinema-intro__legend i { width: 8px; height: 8px; border: 1px solid #788066; background: #363c2e; border-radius: 2px; }
+.cinema-intro__legend i.is-selected { border-color: #e9a06e; background: #e9a06e; }
+.cinema-intro__ticket { border: 1px solid #3c4234; background: #1c2119; border-radius: 6px; padding: 16px 18px; display: flex; align-items: center; gap: 15px; width: min(100%, 480px); align-self: center; }
+.cinema-intro__ticket-detail { display: flex; flex-direction: column; flex: 1; min-width: 0; gap: 5px; }
+.cinema-intro__ticket-detail > span { font-size: 8px; letter-spacing: 1.8px; color: #8a9380; }
+.cinema-intro__ticket-detail strong { font-size: 12px; font-weight: 500; color: #d4d8ca; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.cinema-intro__watch { display: flex; align-items: center; justify-content: center; gap: 22px; border: 0; border-radius: 4px; background: #e9a06e; color: #2c2118; padding: 12px 21px; font-size: 12px !important; font-weight: 600 !important; }
+.cinema-intro__watch:hover { background: #f3b488; }
+.cinema-intro__watch:disabled { background: #353c2e; color: #8a9580; cursor: default; }
+.cinema-intro__reset { background: transparent; border: 0; padding: 10px; color: #a4a995; display: flex; }
+.cinema-intro__footnote { margin: 18px 0 0; text-align: center; font-size: 9px; color: #737b69; }
+.cinema-intro--entering .cinema-intro__selection, .cinema-intro--morph .cinema-intro__selection { opacity: 0; transform: translateY(25px); pointer-events: none; }
+.cinema-intro--entering .cinema-intro__scene { opacity: 1; }
+.cinema-intro--entering .cinema-intro__veil { opacity: 0; }
+.cinema-intro--entering .cinema-intro__brand, .cinema-intro--entering .cinema-intro__edition { opacity: 0; transition: opacity 300ms; }
+.cinema-intro__flight-caption { position: fixed; bottom: 35px; left: 0; right: 0; text-align: center; font-family: Georgia, serif; font-size: 23px; pointer-events: none; text-shadow: 0 2px 12px #000; animation: cinema-caption 4.6s both; }
+.cinema-intro__flight-caption span { display: block; font-family: Inter, sans-serif; font-size: 8px; letter-spacing: 2px; color: #b7b9ae; margin-top: 10px; }
+@keyframes cinema-caption { 0%, 100% { opacity: 0; } 20%, 70% { opacity: 1; } }
+.cinema-intro__morph { position: fixed; inset: 0; display: grid; place-items: center; background: #141514; transition: background 850ms ease; }
+.cinema-intro__morph-logo { font-size: clamp(80px, 12vw, 150px); font-weight: 800; letter-spacing: -0.058em; line-height: 1.5; display: inline-block; transform-origin: top left; transition: transform 850ms cubic-bezier(0.76, 0, 0.24, 1), color 850ms; }
+.cinema-intro--morph { background: transparent; pointer-events: none; }
+.cinema-intro--morph .cinema-intro__header, .cinema-intro--morph .cinema-intro__veil { opacity: 0; }
+.cinema-intro--reveal .cinema-intro__morph { background: transparent; }
+html.light .cinema-intro--reveal .cinema-intro__morph-logo { color: #242621; }
+html.light .cinema-intro--reveal .cinema-intro__morph-logo > span { color: #9c4927; }
+@media (max-width: 600px) {
+  .cinema-intro__header { height: 70px; padding: 0 20px; }
+  .cinema-intro__edition { display: none; }
+  .cinema-intro__selection { padding: 94px 16px 24px; }
+  .cinema-intro__heading h1 { font-size: 37px; }
+  .cinema-intro__auditorium { margin-top: 33px; }
+  .cinema-intro__row { gap: 7px; }
+  .cinema-intro__row-label { width: 10px; font-size: 8px; }
+  .cinema-intro__seat { width: 22px; height: 24px; }
+  .cinema-intro__seat--aisle { margin-left: 13px; }
+  .cinema-intro__seating { gap: 16px; }
+  .cinema-intro__ticket { padding: 13px; gap: 7px; }
+  .cinema-intro__watch { padding: 12px 16px; gap: 15px; }
+}
+@media (max-width: 360px) {
+  .cinema-intro__row { gap: 5px; }
+  .cinema-intro__seat { width: 19px; }
+  .cinema-intro__seat--aisle { margin-left: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cinema-intro__scene { display: none; }
+  .cinema-intro__selection, .cinema-intro__morph-logo { transform: none !important; }
+}

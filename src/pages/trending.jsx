@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import PageShell from '../components/PageShell';
-import SectionHeader from '../components/SectionHeader';
+import PageHeading from '../components/PageHeading';
 import MovieCard from '../components/MovieCard';
 import HorizontalScroller from '../components/HorizontalScroller';
 import { useWatchLater } from '../contexts/WatchLaterContext';
@@ -16,7 +16,7 @@ function Trending({ onViewMovie, onRate, ratings = {} }) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { addToWatchLater, isInWatchLater } = useWatchLater();
+  const { addToWatchLater, removeFromWatchLater, isInWatchLater } = useWatchLater();
 
   useEffect(() => {
     const apiKey = import.meta.env.VITE_TMDB_API_KEY;
@@ -31,7 +31,7 @@ function Trending({ onViewMovie, onRate, ratings = {} }) {
       setError(null);
       try {
         const results = await fetchDiscoverMovies(apiKey, {
-          primary_release_year: '2026',
+          primary_release_year: String(new Date().getFullYear()),
           sort_by: 'popularity.desc',
         });
         setMovies(results.map((item) => mapDiscoverMovie(item)));
@@ -49,10 +49,10 @@ function Trending({ onViewMovie, onRate, ratings = {} }) {
     <PageShell>
       <Container maxWidth="xl">
         <Stack spacing={0}>
-          <Box component="section" py={6} textAlign="center">
-            <SectionHeader
-              title="Trending Indian Movies (2026)"
-              subtitle="The most anticipated releases in India this year, powered by TMDb."
+          <Box component="section" py={{ xs: 4, md: 6 }}>
+            <PageHeading
+              title="Trending Indian films"
+              subtitle="Explore the Indian films people are following this year."
             />
           </Box>
 
@@ -77,17 +77,18 @@ function Trending({ onViewMovie, onRate, ratings = {} }) {
                     variant="upcoming"
                     rank={index + 1}
                     onAddToWatchlist={() => addToWatchLater(movie)}
+                      onRemoveFromWatchlist={() => removeFromWatchLater(movie.id)}
                     isInWatchlist={isInWatchLater(movie.id)}
                     onRate={onRate}
                     onViewDetails={() => onViewMovie?.(movie.id)}
                   />
                 )}
-                emptyMessage="No upcoming movies found for 2026 yet!"
+                emptyMessage="No trending films are available right now."
               />
             </Box>
           ) : (
             <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>
-              <Typography fontSize="1.2rem">No upcoming movies found for 2026 yet!</Typography>
+              <Typography fontSize="1.2rem">No trending films are available right now.</Typography>
             </Box>
           )}
         </Stack>

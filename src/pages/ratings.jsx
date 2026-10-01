@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
@@ -9,7 +10,9 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import CircularProgress from '@mui/material/CircularProgress';
 import PageShell from '../components/PageShell';
-import SectionHeader from '../components/SectionHeader';
+import PageHeading from '../components/PageHeading';
+import Button from '../components/Button';
+import { useAuth } from '../contexts/AuthContext';
 import MovieCard from '../components/MovieCard';
 import HorizontalScroller from '../components/HorizontalScroller';
 import { formatUsdToInrCrores } from '../utils/tmdbMovies';
@@ -23,16 +26,14 @@ const GENRE_MAP = {
 };
 
 function Ratings({ onViewMovie, onRate, ratings = {} }) {
+  const { isAuthenticated, loading: authLoading } = useAuth();
   const [ratedMovies, setRatedMovies] = useState([]);
   const [sortBy, setSortBy] = useState('rating');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const loadRatedMovies = async () => {
-      const isInitialLoad = ratedMovies.length === 0;
-      if (isInitialLoad) {
-        setIsLoading(true);
-      }
+      setIsLoading(true);
       try {
         const apiKey = import.meta.env.VITE_TMDB_API_KEY;
         if (!apiKey) {
@@ -89,9 +90,7 @@ function Ratings({ onViewMovie, onRate, ratings = {} }) {
       } catch (error) {
         console.error('Error loading rated movies:', error);
       } finally {
-        if (isInitialLoad) {
-          setIsLoading(false);
-        }
+        setIsLoading(false);
       }
     };
 
@@ -102,14 +101,24 @@ function Ratings({ onViewMovie, onRate, ratings = {} }) {
     <PageShell>
       <Container maxWidth="xl">
         <Stack spacing={0}>
-          <Box component="section" py={6} textAlign="center">
-            <SectionHeader
+          <Box component="section" py={{ xs: 4, md: 6 }}>
+            <PageHeading
               title="My Ratings"
               subtitle="All the movies you've rated, organized by your feedback."
             />
           </Box>
 
-          {isLoading ? (
+          {authLoading ? (
+            <Box role="status" aria-label="Loading ratings" sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>
+              <CircularProgress size={32} color="primary" thickness={4} />
+            </Box>
+          ) : !isAuthenticated ? (
+            <Box sx={{ p: { xs: 3, md: 5 }, border: 1, borderColor: 'divider', borderRadius: '6px', bgcolor: 'background.paper' }}>
+              <Typography component="h2" sx={{ fontSize: 22, fontWeight: 500, mb: 1 }}>Your film diary starts here</Typography>
+              <Typography sx={{ color: 'text.secondary', fontSize: 13, lineHeight: 1.8, mb: 3 }}>Sign in to rate films and keep your ratings available across devices.</Typography>
+              <Button component={Link} to="/signup">Sign in to rate films</Button>
+            </Box>
+          ) : isLoading ? (
             <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>
               <CircularProgress size={44} color="primary" thickness={4} />
             </Box>

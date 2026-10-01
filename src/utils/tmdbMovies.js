@@ -59,11 +59,13 @@ export function mapDiscoverMovie(item, extras = {}) {
   return {
     id: item.id,
     title: item.title,
+    overview: item.overview || '',
+    backdropPath: item.backdrop_path ? `https://image.tmdb.org/t/p/w1280${item.backdrop_path}` : null,
     image: item.poster_path
       ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
       : 'https://via.placeholder.com/300x450?text=No+Poster',
     releaseDate: item.release_date || 'TBA',
-    genre: GENRE_MAP[item.genre_ids?.[0]] || 'Indian Cinema',
+    genre: item.genres?.[0]?.name || GENRE_MAP[item.genre_ids?.[0]] || 'Indian Cinema',
     rating: item.vote_average,
     revenue: formatUsdToInrCrores(item.revenue) || 'Blockbuster',
     ...extras,
@@ -219,3 +221,38 @@ export async function fetchRecentReleaseMovies(apiKey) {
   return mapped;
 }
 
+
+/** Use TMDB's now-playing window with Indian origin and theatrical-release filters. */
+export async function fetchNowPlayingMovies(apiKey, { signal } = {}) {
+  const params = new URLSearchParams({ api_key: apiKey, region: 'IN', language: 'en-US', page: '1' });
+  const response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?${params}`, { signal });
+  if (!response.ok) throw new Error('Theater listings are currently unavailable.');
+  const nowPlaying = await response.json();
+  const { minimum, maximum } = nowPlaying.dates || {};
+  if (!minimum || !maximum) throw new Error('Theater release dates are currently unavailable.');
+
+  // Region selects where a movie is showing; origin selects where it was produced.
+  const today = getTodayReleaseDateCeiling();
+  const discoverParams = new URLSearchParams({
+    api_key: apiKey,
+    region: 'IN',
+    with_origin_country: 'IN',
+    with_release_type: '2|3',
+    'release_date.gte': minimum,
+    'release_date.lte': maximum < today ? maximum : today,
+    include_adult: 'false',
+    include_video: 'false',
+    sort_by: 'popularity.desc',
+    language: 'en-US',
+    page: '1',
+  });
+  const discoverResponse = await fetch(`https://api.themoviedb.org/3/discover/movie?${discoverParams}`, { signal });
+  if (!discoverResponse.ok) throw new Error('Theater listings are currently unavailable.');
+  const data = await discoverResponse.json();
+  const seen = new Set();
+  return (data.results || []).filter((movie) => {
+    if (movie.adult || !movie.poster_path || seen.has(movie.id)) return false;
+    seen.add(movie.id);
+    return true;
+  }).map((movie) => mapDiscoverMovie(movie, { revenue: null }));
+}

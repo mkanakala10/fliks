@@ -1,69 +1,38 @@
 import { createTheme } from '@mui/material/styles';
 
-const sharedTypography = {
-  fontFamily: "'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-  h1: { fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400, letterSpacing: '0.04em' },
-  h2: { fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400, letterSpacing: '0.04em' },
-  h3: { fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400, letterSpacing: '0.03em' },
-  button: { textTransform: 'none', fontWeight: 600 },
-};
+const fontFamily = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
 
-function createAppTheme(mode = 'dark') {
-  const isDark = mode === 'dark';
-
+export default function createAppTheme(mode = 'dark') {
+  const dark = mode === 'dark';
   return createTheme({
     palette: {
       mode,
-      primary: {
-        main: isDark ? '#3b82f6' : '#2563eb', // Solid Blue
-        contrastText: '#ffffff',
-      },
-      secondary: {
-        main: isDark ? '#10b981' : '#059669', // Solid Emerald
-      },
-      background: {
-        default: isDark ? '#0b0f19' : '#f3f4f6', // Slate-950 / Cool Gray
-        paper: isDark ? '#111827' : '#ffffff', // Slate-900 / White
-      },
-      text: {
-        primary: isDark ? '#f9fafb' : '#111827', // High contrast primary text
-        secondary: isDark ? '#9ca3af' : '#4b5563', // High contrast secondary text
-      },
-      divider: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
+      primary: { main: dark ? '#e9a06e' : '#9c4927', contrastText: dark ? '#191715' : '#ffffff' },
+      secondary: { main: dark ? '#b8c7b6' : '#476447' },
+      background: { default: dark ? '#141514' : '#f7f6f2', paper: dark ? '#1c1d1b' : '#ffffff' },
+      text: { primary: dark ? '#f0efe9' : '#242621', secondary: dark ? '#a5a79f' : '#62675d' },
+      divider: dark ? '#30322e' : '#dddfd6',
     },
-    typography: sharedTypography,
-    shape: { borderRadius: 16 },
+    typography: {
+      fontFamily,
+      h1: { fontWeight: 600, letterSpacing: '-0.045em' },
+      h2: { fontWeight: 600, letterSpacing: '-0.035em' },
+      h3: { fontWeight: 600, letterSpacing: '-0.025em' },
+      h4: { fontWeight: 600, letterSpacing: '-0.025em' },
+      h5: { fontWeight: 600, letterSpacing: '-0.02em' },
+      h6: { fontWeight: 600, letterSpacing: '-0.02em' },
+      body1: { lineHeight: 1.65 },
+      body2: { lineHeight: 1.65 },
+      button: { textTransform: 'none', fontWeight: 600 },
+    },
+    shape: { borderRadius: 8 },
     components: {
-      MuiCssBaseline: {
-        styleOverrides: {
-          body: {
-            backgroundColor: isDark ? '#0b0f19' : '#f3f4f6',
-            minHeight: '100vh',
-            fontFamily: "'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-          },
-        },
-      },
-      MuiPaper: {
-        styleOverrides: {
-          root: {
-            backgroundImage: 'none',
-            backgroundColor: isDark ? 'rgba(17, 24, 39, 0.7)' : 'rgba(255, 255, 255, 0.85)',
-            backdropFilter: 'blur(16px)',
-            border: isDark ? '1px solid rgba(255, 255, 255, 0.08)' : '1px solid rgba(0, 0, 0, 0.08)',
-          },
-        },
-      },
-      MuiButton: {
-        styleOverrides: {
-          root: {
-            borderRadius: 12,
-            fontWeight: 600,
-            textTransform: 'none',
-          },
-        },
-      },
+      MuiCssBaseline: { styleOverrides: { body: { minHeight: '100vh', fontFamily } } },
+      MuiContainer: { styleOverrides: { maxWidthXl: { '@media (min-width: 1536px)': { maxWidth: 1328 } }, root: { '@media (min-width: 900px)': { paddingLeft: 48, paddingRight: 48 } } } },
+      MuiPaper: { styleOverrides: { root: { backgroundImage: 'none', boxShadow: 'none' } } },
+      MuiButton: { defaultProps: { disableElevation: true }, styleOverrides: { root: { borderRadius: 6, textTransform: 'none', minHeight: 40, paddingInline: 18 } } },
+      MuiIconButton: { styleOverrides: { root: { borderRadius: 6 } } },
+      MuiChip: { styleOverrides: { root: { borderRadius: 4 } } },
     },
   });
 }
-
-export default createAppTheme;

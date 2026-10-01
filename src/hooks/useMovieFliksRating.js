@@ -19,6 +19,7 @@ export function useMovieFliksRating(movieId) {
     const ratingsRef = collection(db, 'movies', String(movieId), 'userRatings');
     const q = query(ratingsRef, orderBy('updatedAt', 'desc'));
 
+    let unsubscribeFallback;
     const unsubscribe = onSnapshot(
       q,
       (snapshot) => {
@@ -49,7 +50,7 @@ export function useMovieFliksRating(movieId) {
       (error) => {
         console.error('Error fetching Fliks ratings:', error);
         // Fallback in case of index issues or permission errors
-        const unsubscribeUnordered = onSnapshot(
+        unsubscribeFallback = onSnapshot(
           ratingsRef,
           (snapshot) => {
             let sum = 0;
@@ -77,11 +78,13 @@ export function useMovieFliksRating(movieId) {
             setFliksRating({ average: 0, count: 0, reviews: [], isLoading: false });
           }
         );
-        return () => unsubscribeUnordered();
       }
     );
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+      unsubscribeFallback?.();
+    };
   }, [movieId]);
 
   return fliksRating;

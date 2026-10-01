@@ -1,8 +1,11 @@
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import {
   HiHome,
+  HiX,
   HiTrendingUp,
   HiSparkles,
   HiUsers,
@@ -27,98 +30,21 @@ const navItems = [
 
 function Navbar({ isOpen, onToggle, currentPage, onNavigate }) {
   return (
-    <>
-      {isOpen && (
-        <Box
-          onClick={onToggle}
-          sx={{
-            position: 'fixed',
-            inset: 0,
-            bgcolor: 'rgba(3, 3, 10, 0.6)',
-            backdropFilter: 'blur(6px)',
-            WebkitBackdropFilter: 'blur(6px)',
-            zIndex: 1150,
-          }}
-        />
-      )}
-
-      <Box
-        sx={{
-          position: 'fixed',
-          top: { xs: 16, sm: 88 },
-          left: isOpen ? { xs: 16, sm: 24 } : -320,
-          height: { xs: 'calc(100vh - 32px)', sm: 'calc(100vh - 112px)' },
-          width: { xs: 'calc(100% - 32px)', sm: 260 },
-          maxWidth: 280,
-          bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.7)' : 'rgba(255, 255, 255, 0.9)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
-          borderRadius: 4,
-          border: 1,
-          borderColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(99, 102, 241, 0.15)' : 'rgba(0, 0, 0, 0.08)',
-          zIndex: 1200,
-          transition: 'left 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
-          boxShadow: '0 16px 40px rgba(0, 0, 0, 0.5)',
-          display: 'flex',
-          flexDirection: 'column',
-          pt: 3,
-          pb: 2,
-        }}
-      >
-        <Stack sx={{ p: 2, flexGrow: 1 }} spacing={0.5}>
-          <Typography
-            variant="overline"
-            sx={{ px: 2, pb: 1.5, color: 'text.secondary', letterSpacing: '0.08em', fontWeight: 700 }}
-          >
-            Fliks Menu
-          </Typography>
-
-          {navItems.map((item) => {
-            const IconComponent = item.icon;
-            const isActive = currentPage === item.id;
-            return (
-              <Box
-                key={item.id}
-                component="button"
-                onClick={() => {
-                  onNavigate(item.id);
-                  onToggle();
-                }}
-                sx={{
-                  width: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 1.5,
-                  px: 2.25,
-                  py: 1.5,
-                  borderRadius: 3,
-                  border: 'none',
-                  cursor: 'pointer',
-                  bgcolor: isActive ? 'rgba(99, 102, 241, 0.15)' : 'transparent',
-                  color: isActive ? '#818cf8' : 'text.secondary',
-                  borderLeft: isActive ? '4px solid #6366f1' : '4px solid transparent',
-                  pl: isActive ? 1.75 : 2.25,
-                  transition: 'all 0.2s ease',
-                  '&:hover': {
-                    bgcolor: isActive
-                      ? 'rgba(99, 102, 241, 0.2)'
-                      : (theme) => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.04)' : 'rgba(0, 0, 0, 0.04)',
-                    color: isActive ? '#818cf8' : 'text.primary',
-                    transform: 'translateX(4px)',
-                  },
-                }}
-              >
-                <IconComponent size={18} style={{ color: isActive ? '#818cf8' : 'inherit' }} />
-                <Typography component="span" fontWeight={isActive ? 700 : 500} fontSize="0.9rem">
-                  {item.label}
-                </Typography>
-              </Box>
-            );
-          })}
-        </Stack>
+    <Drawer open={isOpen} onClose={onToggle} PaperProps={{ sx: { width: 280, borderRight: 1, borderColor: 'divider', p: 2 } }}>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 3, px: 1 }}>
+        <Typography fontSize={24} fontWeight={700} letterSpacing="-1px">fliks.</Typography>
+        <IconButton aria-label="Close navigation menu" onClick={onToggle}><HiX size={20} /></IconButton>
+      </Stack>
+      <Box component="nav" aria-label="All pages">
+        {navItems.map(({ id, label, icon }) => {
+          const Icon = icon;
+          return (
+          <Box key={id} component="button" onClick={() => onNavigate(id)} aria-current={currentPage === id ? 'page' : undefined} sx={{ display: 'flex', alignItems: 'center', gap: 1.5, width: '100%', px: 2, py: 1.5, mb: 0.5, border: 0, borderRadius: '6px', cursor: 'pointer', textAlign: 'left', bgcolor: currentPage === id ? 'action.selected' : 'transparent', color: currentPage === id ? 'primary.main' : 'text.secondary', '&:hover': { bgcolor: 'action.hover', color: 'text.primary' } }}>
+            <Icon size={18} /><Typography component="span" fontSize={13}>{label}</Typography>
+          </Box>
+        ); })}
       </Box>
-    </>
+    </Drawer>
   );
 }
-
 export default Navbar;

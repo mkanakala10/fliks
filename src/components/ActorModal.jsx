@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import CircularProgress from '@mui/material/CircularProgress';
 import CloseIcon from '@mui/icons-material/Close';
+import PersonImage from './PersonImage';
 
 function ActorModal({ actorId, actorName, open, onClose, onMovieClick }) {
   const [details, setDetails] = useState(null);
@@ -109,7 +110,7 @@ function ActorModal({ actorId, actorName, open, onClose, onMovieClick }) {
     };
 
     fetchActorData();
-  }, [actorId, open]);
+  }, [actorId, actorName, open]);
 
   return (
     <Modal
@@ -134,11 +135,12 @@ function ActorModal({ actorId, actorName, open, onClose, onMovieClick }) {
           display: 'flex',
           flexDirection: 'column',
           p: { xs: 3, sm: 4 },
-          borderRadius: 4,
+          borderRadius: '8px',
           overflow: 'hidden',
         }}
       >
         <IconButton
+          aria-label="Close profile"
           onClick={onClose}
           sx={{
             position: 'absolute',
@@ -171,26 +173,26 @@ function ActorModal({ actorId, actorName, open, onClose, onMovieClick }) {
           <Box sx={{ overflowY: 'auto', pr: 0.5, '&::-webkit-scrollbar': { display: 'none' }, scrollbarWidth: 'none' }}>
             {/* Header info */}
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3} alignItems={{ xs: 'center', sm: 'flex-start' }} sx={{ mb: 3 }}>
-              <Box
-                component="img"
+              <PersonImage
+                loading="eager"
                 src={
                   details.profile_path
                     ? `https://image.tmdb.org/t/p/w185${details.profile_path}`
-                    : 'https://via.placeholder.com/185x278?text=No+Photo'
+                    : undefined
                 }
-                alt={details.name}
+                name={details.name}
                 sx={{
                   width: { xs: 120, sm: 140 },
-                  aspectRatio: '1 / 1',
-                  borderRadius: '50%',
+                  aspectRatio: '4 / 5',
+                  borderRadius: '6px',
                   objectFit: 'cover',
                   objectPosition: 'top center',
-                  border: '3px solid rgba(99, 102, 241, 0.25)',
-                  boxShadow: '0 8px 32px rgba(99,102,241,0.15)',
+                  border: 1,
+                  borderColor: 'divider',
                 }}
               />
               <Box sx={{ textAlign: { xs: 'center', sm: 'left' }, flex: 1 }}>
-                <Typography variant="h4" fontWeight={900} letterSpacing="-0.02em" sx={{ mb: 1 }}>
+                <Typography id="actor-profile-modal" variant="h4" fontWeight={500} letterSpacing="-0.02em" sx={{ mb: 1 }}>
                   {details.name}
                 </Typography>
                 <Typography variant="subtitle2" color="secondary.main" fontWeight={700} sx={{ textTransform: 'uppercase', mb: 2 }}>

@@ -3,7 +3,7 @@
 .fliks-chatbot {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 64px);
+  height: calc(100dvh - 76px);
   max-width: 900px;
   margin: 0 auto;
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -79,7 +79,7 @@
 .message-bubble {
   max-width: 78%;
   padding: 0.85rem 1rem;
-  border-radius: 12px;
+  border-radius: 6px;
   line-height: 1.55;
   font-size: 0.925rem;
 }
@@ -90,10 +90,10 @@
 }
 
 .user-bubble {
-  background: linear-gradient(135deg, #6366f1 0%, #d946ef 100%) !important;
-  color: #ffffff !important;
+  background: var(--fliks-primary) !important;
+  color: var(--fliks-on-primary) !important;
   border-bottom-right-radius: 4px;
-  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25);
+  box-shadow: none;
 }
 
 .assistant-bubble {
@@ -101,8 +101,6 @@
   color: var(--fliks-text, #f5f5f5);
   border: 1px solid var(--fliks-bubble-border) !important;
   border-bottom-left-radius: 4px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 }
 
 .movie-chip-label {
@@ -172,7 +170,7 @@
 .message-input {
   flex: 1;
   padding: 0.85rem 1rem;
-  border-radius: 12px;
+  border-radius: 6px;
   border: 1px solid var(--fliks-bubble-border) !important;
   background: var(--fliks-input-bg) !important;
   color: var(--fliks-text, #f5f5f5);
@@ -182,8 +180,8 @@
 }
 
 .message-input:focus {
-  border-color: rgba(99, 102, 241, 0.4) !important;
-  box-shadow: 0 0 15px rgba(99, 102, 241, 0.15);
+  border-color: var(--fliks-primary) !important;
+  box-shadow: none;
 }
 
 .message-input::placeholder {
@@ -193,15 +191,15 @@
 .send-button {
   width: 44px;
   height: 44px;
-  border-radius: 12px;
+  border-radius: 6px;
   border: none;
-  background: linear-gradient(135deg, #6366f1 0%, #d946ef 100%) !important;
-  color: #ffffff !important;
+  background: var(--fliks-primary) !important;
+  color: var(--fliks-on-primary) !important;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
+  box-shadow: none;
   transition: opacity 0.15s;
 }
 
@@ -219,4 +217,8 @@
   font-size: 0.75rem;
   color: var(--fliks-text-muted, #a3a3a3);
   margin: 0.65rem 0 0;
+}
+
+@media (max-width: 899px) {
+  .fliks-chatbot { height: calc(100dvh - 64px); }
 }

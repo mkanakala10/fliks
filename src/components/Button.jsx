@@ -40,7 +40,7 @@ function Button({ children, variant = 'primary', size = 'medium', onClick, sx, .
       sx={{
         textTransform: 'none',
         fontWeight: 600,
-        borderRadius: 2,
+        borderRadius: '6px',
         transition: 'opacity 0.15s, background-color 0.15s',
         ...variantStyles,
         ...sx,

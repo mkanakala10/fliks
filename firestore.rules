@@ -9,10 +9,11 @@ service cloud.firestore {
       allow delete: if request.auth != null && request.auth.uid == userId;
       allow create, update: if request.auth != null && request.auth.uid == userId
                             && request.resource.data.rating is number
-                            && request.resource.data.rating >= 1.0
+                            && request.resource.data.rating >= 0.5
                             && request.resource.data.rating <= 5.0
-                            && request.resource.data.reviewText is string
-                            && request.resource.data.reviewText.size() <= 1000
+                            && (!('reviewText' in request.resource.data)
+                                || (request.resource.data.reviewText is string
+                                    && request.resource.data.reviewText.size() <= 1000))
                             && request.resource.data.username is string
                             && request.resource.data.username.size() <= 100
                             && request.resource.data.updatedAt is timestamp;

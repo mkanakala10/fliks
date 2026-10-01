@@ -1,16 +1,19 @@
-import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { Fragment, useEffect, useState } from 'react';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import Chip from '@mui/material/Chip';
 import Alert from '@mui/material/Alert';
 import Rating from '@mui/material/Rating';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
-import Modal from '@mui/material/Modal';
-import Tooltip from '@mui/material/Tooltip';
+import Dialog from '@mui/material/Dialog';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import MovieBoxOffice from '../components/MovieBoxOffice';
+import { Check, Plus } from 'lucide-react';
+import SectionHeader from '../components/SectionHeader';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ShareIcon from '@mui/icons-material/Share';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
@@ -26,10 +29,13 @@ import { useMovieFliksRating } from '../hooks/useMovieFliksRating';
 import { useToast } from '../contexts/ToastContext';
 import { formatUsdToInrCrores } from '../utils/tmdbMovies';
 import ActorModal from '../components/ActorModal';
+import PersonImage from '../components/PersonImage';
 
 function MovieDetails() {
   const { movieId: movieIdParam } = useParams();
   const movieId = Number(movieIdParam);
+  const [params, setParams] = useSearchParams();
+  const activeTab = params.get('tab') === 'box-office' ? 'box-office' : 'overview';
   const { onGoBack, onNavigate } = useNavigation();
   const navigate = useNavigate();
   const [selectedActorId, setSelectedActorId] = useState(null);
@@ -49,35 +55,57 @@ function MovieDetails() {
   const [reviewInput, setReviewInput] = useState('');
   const [isSubmittingReview, setIsSubmittingReview] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [savingWatchlist, setSavingWatchlist] = useState(false);
 
   useEffect(() => {
     const apiKey = import.meta.env.VITE_TMDB_API_KEY;
     if (!apiKey || !movieId) {
-      setError('Missing movie ID or TMDB API key.');
+      setError('This film is currently unavailable.');
       setIsLoading(false);
       return;
     }
 
+    const controller = new AbortController();
+    setIsTrailerOpen(false);
+    setTrailerKey(null);
+    setReviewInput('');
     const fetchDetails = async () => {
       setIsLoading(true);
       setError(null);
       try {
         const [movieRes, creditsRes, videosRes] = await Promise.all([
-          fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`),
-          fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}`),
-          fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}`),
+          fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`, { signal: controller.signal }),
+          fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}`, { signal: controller.signal }).catch(() => null),
+          fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}`, { signal: controller.signal }).catch(() => null),
         ]);
 
         if (!movieRes.ok) throw new Error('Movie not found');
 
         const movieData = await movieRes.json();
-        const creditsData = creditsRes.ok ? await creditsRes.json() : { cast: [], crew: [] };
-        const videosData = videosRes.ok ? await videosRes.json() : { results: [] };
+        const creditsData = creditsRes?.ok ? await creditsRes.json() : { cast: [], crew: [] };
+        const videosData = videosRes?.ok ? await videosRes.json() : { results: [] };
 
-        // Find YouTube trailer key
-        const trailer = videosData.results?.find(
-          (v) => v.type === 'Trailer' && v.site === 'YouTube'
-        ) || videosData.results?.find((v) => v.site === 'YouTube');
+        if (controller.signal.aborted) return;
+        const chooseTrailer = (results = []) => {
+          const videos = results.filter((video) => video.site === 'YouTube' && video.key);
+          return videos.find((video) => video.type === 'Trailer' && video.official)
+            || videos.find((video) => video.type === 'Trailer')
+            || videos.find((video) => video.type === 'Teaser');
+        };
+        let trailer = chooseTrailer(videosData.results);
+        // TMDB defaults videos to English; Indian films often only have native-language trailers.
+        if (!trailer && movieData.original_language && movieData.original_language !== 'en') {
+          try {
+            const nativeRes = await fetch(
+              `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}&language=${encodeURIComponent(movieData.original_language)}`,
+              { signal: controller.signal }
+            );
+            if (nativeRes.ok) trailer = chooseTrailer((await nativeRes.json()).results);
+          } catch {
+            // A missing trailer must not prevent the film details from loading.
+          }
+        }
+        if (controller.signal.aborted) return;
 
         setTrailerKey(trailer ? trailer.key : null);
 
@@ -87,7 +115,7 @@ function MovieDetails() {
           overview: movieData.overview,
           image: movieData.poster_path
             ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
-            : 'https://via.placeholder.com/300x450?text=No+Poster',
+            : null,
           backdrop: movieData.backdrop_path
             ? `https://image.tmdb.org/t/p/original${movieData.backdrop_path}`
             : null,
@@ -99,21 +127,22 @@ function MovieDetails() {
           tagline: movieData.tagline,
           revenue: movieData.revenue,
           budget: movieData.budget,
-          language: movieData.original_language?.toUpperCase(),
+          language: movieData.original_language ? new Intl.DisplayNames(['en'], { type: 'language' }).of(movieData.original_language) : null,
         });
         setCredits(creditsData);
       } catch (err) {
-        setError(err.message || 'Unable to load movie details.');
+        if (!controller.signal.aborted) setError(err.message || 'Unable to load movie details.');
       } finally {
-        setIsLoading(false);
+        if (!controller.signal.aborted) setIsLoading(false);
       }
     };
 
     fetchDetails();
+    return () => controller.abort();
   }, [movieId]);
 
-  const handleWatchlist = () => {
-    if (!movie) return;
+  const handleWatchlist = async () => {
+    if (!movie || savingWatchlist) return;
     const card = {
       id: movie.id,
       title: movie.title,
@@ -121,11 +150,13 @@ function MovieDetails() {
       genre: movie.genres[0] || 'Indian Cinema',
       releaseDate: movie.releaseDate,
     };
-    if (isInWatchLater(movie.id)) {
-      removeFromWatchLater(movie.id);
-    } else {
-      addToWatchLater(card);
-    }
+    setSavingWatchlist(true);
+    try {
+      if (isInWatchLater(movie.id)) await removeFromWatchLater(movie.id);
+      else await addToWatchLater(card);
+    } catch (error) {
+      if (error.code !== 'auth/required') showToast('Your watchlist couldn’t be updated. Please try again.', 'error');
+    } finally { setSavingWatchlist(false); }
   };
 
   const fliks = useMovieFliksRating(movie?.id);
@@ -181,10 +212,14 @@ function MovieDetails() {
     }
   };
 
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      showToast('Couldn’t copy the link. You can copy it from the address bar.', 'info');
+    }
   };
 
   if (isLoading) return <PageShell loading />;
@@ -211,7 +246,6 @@ function MovieDetails() {
   const composers = crew.filter((c) => c.job === 'Music' || c.job === 'Original Music Composer' || c.job === 'Composer').map((c) => c.name).slice(0, 3).join(', ');
 
   const inWatchlist = isInWatchLater(movie.id);
-  const heroBackground = movie.backdrop || movie.image;
   const currentRating = ratings[movie.id] || 0;
 
   const isUnreleased = (() => {
@@ -234,650 +268,152 @@ function MovieDetails() {
     roi = (((movie.revenue - movie.budget) / movie.budget) * 100).toFixed(0);
   }
 
+  const writtenReviews = (fliks.reviews || []).filter((review) => review.reviewText?.trim());
+  const facts = [
+    ['Release date', movie.releaseDate || 'To be announced'],
+    ['Runtime', movie.runtime ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m` : 'Not available'],
+    ['Language', movie.language || 'Not available'],
+    ['Director', director],
+    ['Screenplay', writers],
+    ['Music', composers],
+  ].filter(([, value]) => value);
+
   return (
     <PageShell>
-      <Box sx={{ position: 'relative', overflow: 'hidden', pb: 8 }}>
-        {/* Background glow and backdrop */}
-        <Box
-          aria-hidden
-          sx={{
-            position: 'absolute',
-            inset: 0,
-            backgroundImage: `url(${heroBackground})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center top',
-            opacity: 0.15,
-            zIndex: 0,
-          }}
-        />
-        <Box
-          aria-hidden
-          sx={{
-            position: 'absolute',
-            inset: 0,
-            background: (theme) =>
-              theme.palette.mode === 'dark'
-                ? `linear-gradient(180deg, rgba(7,7,20,0.5) 0%, ${theme.palette.background.default} 90%)`
-                : `linear-gradient(180deg, rgba(255,255,255,0.7) 0%, ${theme.palette.background.default} 90%)`,
-            zIndex: 1,
-          }}
-        />
+      <Container maxWidth="xl" sx={{ pt: 3, pb: 7 }}>
+        <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
+          <Button variant="secondary" size="sm" onClick={() => onGoBack?.()} startIcon={<ArrowBackIcon sx={{ fontSize: 16 }} />}>Back</Button>
+          <Button variant="secondary" size="sm" onClick={handleShare} startIcon={<ShareIcon sx={{ fontSize: 16 }} />}>{copied ? 'Link copied' : 'Share film'}</Button>
+        </Stack>
 
-        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2, py: 4 }}>
-          <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => onGoBack?.()}
-              sx={{ borderColor: 'rgba(99, 102, 241, 0.25)' }}
-            >
-              <ArrowBackIcon sx={{ mr: 0.5, fontSize: 18 }} /> Back
-            </Button>
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={handleShare}
-              sx={{
-                borderColor: copied ? 'rgba(217, 70, 239, 0.4)' : 'rgba(99, 102, 241, 0.25)',
-                color: copied ? '#d946ef' : 'inherit',
-                transition: 'all 0.3s',
-              }}
-            >
-              <ShareIcon sx={{ mr: 0.5, fontSize: 16 }} />
-              {copied ? 'Link Copied!' : 'Share'}
-            </Button>
-          </Stack>
-
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: { xs: 'column', md: 'row' },
-              alignItems: { xs: 'center', md: 'flex-start' },
-              gap: { xs: 4, md: 5 },
-            }}
-          >
-            {/* Poster & Trailer Trigger */}
-            <Stack spacing={2} sx={{ flexShrink: 0, width: { xs: 260, sm: 300 } }}>
-              <Box
-                sx={{
-                  position: 'relative',
-                  borderRadius: 4,
-                  overflow: 'hidden',
-                  border: '1px solid rgba(99, 102, 241, 0.15)',
-                  boxShadow: '0 24px 48px rgba(0,0,0,0.5)',
-                  transition: 'transform 0.3s',
-                  '&:hover': { transform: 'scale(1.01)' },
-                }}
-              >
-                <Box
-                  component="img"
-                  src={movie.image}
-                  alt={movie.title}
-                  sx={{ width: '100%', display: 'block' }}
-                />
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '260px minmax(0, 1fr)' }, gap: { xs: 4, md: 5, lg: 7 } }}>
+          <Box component="aside">
+            <Box sx={{ position: { md: 'sticky' }, top: 104, maxWidth: { xs: 230, md: 'none' }, mx: 'auto' }}>
+              <Box sx={{ position: 'relative', borderRadius: '6px', overflow: 'hidden', bgcolor: 'background.paper', aspectRatio: '2 / 3' }}>
+                {movie.image ? <Box component="img" src={movie.image} alt={`${movie.title} poster`} sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} /> : <Box sx={{ p: 3 }}>Poster unavailable</Box>}
                 {trailerKey && (
                   <Box
+                    component="button"
+                    aria-label={`Play trailer for ${movie.title}`}
                     onClick={() => setIsTrailerOpen(true)}
-                    sx={{
-                      position: 'absolute',
-                      inset: 0,
-                      bgcolor: 'rgba(0,0,0,0.4)',
-                      opacity: 0,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: 'pointer',
-                      transition: 'opacity 0.25s',
-                      '&:hover': { opacity: 1 },
-                    }}
+                    sx={{ position: 'absolute', inset: 0, width: '100%', border: 0, cursor: 'pointer', bgcolor: '#0006', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'opacity 160ms', '@media (hover: hover) and (pointer: fine)': { opacity: 0, '&:hover, &:focus-visible': { opacity: 1 } } }}
                   >
-                    <Box
-                      sx={{
-                        width: 68,
-                        height: 68,
-                        borderRadius: '50%',
-                        bgcolor: 'primary.main',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        boxShadow: '0 0 20px rgba(99, 102, 241, 0.5)',
-                      }}
-                    >
-                      <PlayArrowIcon sx={{ fontSize: 36, color: 'primary.contrastText', ml: 0.3 }} />
-                    </Box>
+                    <Box component="span" sx={{ display: 'grid', placeItems: 'center', width: 60, height: 60, borderRadius: '50%', bgcolor: '#f0efe9', color: '#242621' }}><PlayArrowIcon sx={{ fontSize: 32 }} /></Box>
                   </Box>
                 )}
               </Box>
-            </Stack>
+              {trailerKey ? (
+                <Button variant="secondary" onClick={() => setIsTrailerOpen(true)} startIcon={<PlayArrowIcon />} sx={{ width: '100%', mt: 2 }}>Watch trailer</Button>
+              ) : <Typography sx={{ color: 'text.secondary', fontSize: 12, mt: 1.5, textAlign: 'center' }}>No trailer available yet</Typography>}
+            </Box>
+          </Box>
 
-            {/* Movie Info Details */}
-            <Box sx={{ flex: 1, minWidth: 0, width: '100%' }}>
-              <Stack spacing={3.5}>
+          <Stack spacing={4.5} sx={{ minWidth: 0 }}>
+            <Box component="section" aria-labelledby="film-title">
+              <Typography sx={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.16em', color: 'primary.main', mb: 1.5 }}>{isUnreleased ? 'Coming soon' : 'The film guide'}</Typography>
+              <Typography id="film-title" component="h1" sx={{ fontFamily: 'Georgia, serif', fontSize: { xs: 38, sm: 48, md: 56 }, lineHeight: 1.1, letterSpacing: '-0.035em', overflowWrap: 'anywhere' }}>{movie.title}</Typography>
+              <Typography sx={{ color: 'text.secondary', fontSize: 13, mt: 2 }}>{[movie.releaseDate?.slice(0, 4), ...movie.genres].filter(Boolean).join(' · ')}</Typography>
+              {movie.tagline && <Typography sx={{ mt: 2, fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 18, color: 'text.secondary' }}>{movie.tagline}</Typography>}
+              <Stack direction="row" flexWrap="wrap" useFlexGap spacing={3} sx={{ borderTop: 1, borderBottom: 1, borderColor: 'divider', py: 2.5, mt: 3 }}>
                 <Box>
-                  <Typography variant="h3" fontWeight={900} letterSpacing="-0.03em" sx={{ lineHeight: 1.15 }}>
-                    {movie.title}
-                  </Typography>
-                  {movie.tagline && (
-                    <Typography variant="h6" color="text.secondary" fontStyle="italic" sx={{ mt: 1, fontWeight: 500 }}>
-                      "{movie.tagline}"
-                    </Typography>
-                  )}
+                  <Typography sx={{ fontSize: 10, color: 'text.secondary', mb: 0.5 }}>TMDB RATING</Typography>
+                  <Typography sx={{ fontSize: 24, fontWeight: 500 }}>{movie.rating > 0 ? movie.rating.toFixed(1) : '—'}<Box component="span" sx={{ fontSize: 12, color: 'text.secondary' }}> / 10</Box></Typography>
+                  <Typography sx={{ fontSize: 11, color: 'text.secondary' }}>{movie.voteCount?.toLocaleString() || 0} votes</Typography>
                 </Box>
-
-                <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-                  {movie.genres.map((g) => (
-                    <Chip
-                      key={g}
-                      label={g}
-                      size="small"
-                      sx={{
-                        bgcolor: 'rgba(99, 102, 241, 0.08)',
-                        color: '#818cf8',
-                        border: '1px solid rgba(99, 102, 241, 0.15)',
-                        fontWeight: 600,
-                        px: 1,
-                      }}
-                    />
-                  ))}
-                </Stack>
-
-                {/* Ratings Cards Grid */}
-                <Box
-                  sx={{
-                    display: 'grid',
-                    gridTemplateColumns: { xs: '1fr', sm: 'repeat(3, 1fr)' },
-                    gap: 2,
-                  }}
-                >
-                  {/* Fliks Community Card */}
-                  <Box
-                    sx={{
-                      p: 2,
-                      bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.5)' : 'rgba(255, 255, 255, 0.85)',
-                      border: '1px solid rgba(168, 85, 247, 0.25)',
-                      borderRadius: 3,
-                      boxShadow: '0 8px 32px rgba(168, 85, 247, 0.08)',
-                      textAlign: 'center',
-                    }}
-                  >
-                    <Typography variant="caption" sx={{ color: '#c084fc', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                      Fliks Rating
-                    </Typography>
-                    <Typography variant="h4" fontWeight={800} sx={{ color: '#a855f7', mt: 0.5 }}>
-                      {fliks.isLoading ? '...' : fliks.count > 0 ? `★ ${fliks.average}` : '★ --'}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      {fliks.count} community votes
-                    </Typography>
-                  </Box>
-
-                  {/* TMDB Card */}
-                  <Box
-                    sx={{
-                      p: 2,
-                      bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.5)' : 'rgba(255, 255, 255, 0.85)',
-                      border: (theme) => theme.palette.mode === 'dark' ? '1px solid rgba(99, 102, 241, 0.15)' : '1px solid rgba(0, 0, 0, 0.08)',
-                      borderRadius: 3,
-                      textAlign: 'center',
-                    }}
-                  >
-                    <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                      TMDB Rating
-                    </Typography>
-                    <Typography variant="h4" fontWeight={800} sx={{ color: '#818cf8', mt: 0.5 }}>
-                      ★ {movie.rating?.toFixed(1)}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      {movie.voteCount?.toLocaleString()} votes
-                    </Typography>
-                  </Box>
-
-                  {/* Watchlist Quick Actions */}
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      height: '100%',
-                    }}
-                  >
-                    <Button
-                      variant={inWatchlist ? 'secondary' : 'primary'}
-                      size="sm"
-                      onClick={handleWatchlist}
-                      sx={{
-                        width: '100%',
-                        py: 1.5,
-                        background: inWatchlist ? 'transparent' : 'linear-gradient(135deg, #6366f1 0%, #d946ef 100%)',
-                      }}
-                    >
-                      {inWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}
-                    </Button>
-                  </Box>
+                <Box sx={{ pl: 3, borderLeft: 1, borderColor: 'divider' }}>
+                  <Typography sx={{ fontSize: 10, color: 'text.secondary', mb: 0.5 }}>FLIKS COMMUNITY</Typography>
+                  <Typography sx={{ fontSize: 24, fontWeight: 500 }}>{fliks.isLoading ? '…' : fliks.count ? fliks.average : '—'}<Box component="span" sx={{ fontSize: 12, color: 'text.secondary' }}> / 5</Box></Typography>
+                  <Typography sx={{ fontSize: 11, color: 'text.secondary' }}>{fliks.count || 0} ratings</Typography>
                 </Box>
-
-                {/* Movie Specs */}
-                <Stack spacing={1.5} sx={{ bgcolor: 'rgba(255,255,255,0.02)', p: 3, borderRadius: 3, border: '1px solid rgba(255,255,255,0.04)' }}>
-                  <Stack direction="row" justifyContent="space-between">
-                    <Typography color="text.secondary">Released</Typography>
-                    <Typography fontWeight={600}>{movie.releaseDate || 'TBA'}</Typography>
-                  </Stack>
-                  <Stack direction="row" justifyContent="space-between">
-                    <Typography color="text.secondary">Runtime</Typography>
-                    <Typography fontWeight={600}>{movie.runtime ? `${movie.runtime} min` : 'TBA'}</Typography>
-                  </Stack>
-                  <Stack direction="row" justifyContent="space-between">
-                    <Typography color="text.secondary">Language</Typography>
-                    <Typography fontWeight={600}>{movie.language || 'N/A'}</Typography>
-                  </Stack>
-                  {(formattedBudget || formattedRevenue) && (
-                    <Box sx={{ pt: 1, borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-                      <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 700, color: 'text.secondary' }}>Financials</Typography>
-                      {formattedBudget && (
-                        <Stack direction="row" justifyContent="space-between">
-                          <Typography color="text.secondary" variant="body2">Budget</Typography>
-                          <Typography fontWeight={600} variant="body2">{formattedBudget}</Typography>
-                        </Stack>
-                      )}
-                      {formattedRevenue && (
-                        <Stack direction="row" justifyContent="space-between">
-                          <Typography color="text.secondary" variant="body2">Box Office Revenue</Typography>
-                          <Typography fontWeight={600} variant="body2" sx={{ color: '#10b981' }}>{formattedRevenue}</Typography>
-                        </Stack>
-                      )}
-                      {roi && (
-                        <Stack direction="row" justifyContent="space-between" sx={{ mt: 0.5 }}>
-                          <Typography color="text.secondary" variant="body2">Box Office Success / ROI</Typography>
-                          <Typography fontWeight={700} variant="body2" sx={{ color: Number(roi) > 0 ? '#10b981' : '#ef4444' }}>
-                            {Number(roi) > 0 ? `+${roi}% Profit` : `${roi}% Loss`}
-                          </Typography>
-                        </Stack>
-                      )}
-                    </Box>
-                  )}
-                  {(director || writers || composers) && (
-                    <Box sx={{ pt: 1.5, borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-                      <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 700, color: 'text.secondary' }}>Key Crew</Typography>
-                      {director && (
-                        <Stack direction="row" justifyContent="space-between">
-                          <Typography color="text.secondary" variant="body2">Director</Typography>
-                          <Typography fontWeight={600} variant="body2">{director}</Typography>
-                        </Stack>
-                      )}
-                      {writers && (
-                        <Stack direction="row" justifyContent="space-between">
-                          <Typography color="text.secondary" variant="body2">Writer</Typography>
-                          <Typography fontWeight={600} variant="body2" sx={{ maxWidth: '70%', textAlign: 'right' }} noWrap>{writers}</Typography>
-                        </Stack>
-                      )}
-                      {composers && (
-                        <Stack direction="row" justifyContent="space-between">
-                          <Typography color="text.secondary" variant="body2">Music Composer</Typography>
-                          <Typography fontWeight={600} variant="body2" sx={{ maxWidth: '70%', textAlign: 'right' }} noWrap>{composers}</Typography>
-                        </Stack>
-                      )}
-                    </Box>
-                  )}
-                </Stack>
-
-                {/* Synopsis */}
-                <Box>
-                  <Typography variant="h5" fontWeight={700} sx={{ mb: 1.5, letterSpacing: '-0.01em' }}>
-                    Synopsis
-                  </Typography>
-                  <Typography variant="body1" color="text.secondary" lineHeight={1.8}>
-                    {movie.overview || 'No overview available.'}
-                  </Typography>
-                </Box>
-
-                {/* Star Rating & Review input */}
-                {isUnreleased ? (
-                  <Box sx={{
-                    bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.45)' : 'rgba(255, 255, 255, 0.85)',
-                    p: 3.5,
-                    border: (theme) => theme.palette.mode === 'dark' ? '1px solid rgba(99,102,241,0.15)' : '1px solid rgba(0, 0, 0, 0.08)',
-                    borderRadius: 4,
-                    textAlign: 'center'
-                  }}>
-                    <Typography variant="h6" fontWeight={700} sx={{ mb: 1 }}>
-                      Rate & Review This Film
-                    </Typography>
-                    <Typography color="text.secondary" sx={{ mb: 1, fontSize: '0.95rem' }}>
-                      Ratings and reviews are not available for upcoming movies.
-                    </Typography>
-                    <Typography variant="caption" sx={{ color: '#818cf8', fontWeight: 600 }}>
-                      Release Date: {movie.releaseDate || 'TBA'}
-                    </Typography>
-                  </Box>
-                ) : isAuthenticated ? (
-                  <Box sx={{
-                    bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.45)' : 'rgba(255, 255, 255, 0.85)',
-                    p: 3,
-                    border: (theme) => theme.palette.mode === 'dark' ? '1px solid rgba(99,102,241,0.15)' : '1px solid rgba(0, 0, 0, 0.08)',
-                    borderRadius: 4
-                  }}>
-                    <Typography variant="h6" fontWeight={700} sx={{ mb: 1 }}>
-                      {myReview ? 'Update Your Rating & Review' : 'Rate & Review This Film'}
-                    </Typography>
-                    <Stack spacing={2}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                        <Typography color="text.secondary">Your Rating:</Typography>
-                        <Rating
-                          name={`movie-details-rating-${movie.id}`}
-                          value={currentRating}
-                          precision={0.5}
-                          onChange={(_, value) => {
-                            handleRate(value);
-                          }}
-                          sx={{
-                            '& .MuiRating-iconFilled': { color: '#f59e0b' },
-                            '& .MuiRating-iconHover': { color: '#fbbf24' },
-                          }}
-                        />
-                        {currentRating > 0 && (
-                          <Button
-                            variant="secondary"
-                            size="sm"
-                            onClick={() => handleRate(null)}
-                            sx={{
-                              py: 0.5,
-                              px: 1.5,
-                              minWidth: 'auto',
-                              fontSize: '0.75rem',
-                              borderColor: 'rgba(239, 68, 68, 0.4)',
-                              color: '#f87171',
-                              '&:hover': {
-                                bgcolor: 'rgba(239, 68, 68, 0.08)',
-                                borderColor: '#ef4444',
-                                color: '#ef4444',
-                              },
-                            }}
-                          >
-                            Remove Rating
-                          </Button>
-                        )}
-                      </Box>
-                      <TextField
-                        multiline
-                        rows={3}
-                        fullWidth
-                        variant="outlined"
-                        placeholder="Write your review here... (What did you like or dislike?)"
-                        value={reviewInput}
-                        onChange={(e) => setReviewInput(e.target.value)}
-                        sx={{
-                          '& .MuiOutlinedInput-root': {
-                            borderRadius: 3,
-                            bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(7, 7, 20, 0.3)' : 'rgba(0, 0, 0, 0.03)',
-                          },
-                        }}
-                      />
-                      <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1.5 }}>
-                        {(currentRating > 0 || (myReview && (myReview.reviewText || myReview.rating))) && (
-                          <Button
-                            variant="secondary"
-                            onClick={handleRemoveReview}
-                            disabled={isSubmittingReview}
-                            sx={{
-                              borderColor: 'rgba(239, 68, 68, 0.4)',
-                              color: '#ef4444',
-                              px: 2.5,
-                              '&:hover': {
-                                borderColor: '#ef4444',
-                                bgcolor: 'rgba(239, 68, 68, 0.1)',
-                              },
-                            }}
-                          >
-                            Remove Review
-                          </Button>
-                        )}
-                        <Button
-                          variant="primary"
-                          onClick={handleSaveReview}
-                          disabled={isSubmittingReview}
-                          sx={{
-                            background: 'linear-gradient(135deg, #6366f1 0%, #d946ef 100%)',
-                            px: 3,
-                          }}
-                        >
-                          {isSubmittingReview ? 'Saving...' : 'Save Review'}
-                        </Button>
-                      </Box>
-                    </Stack>
-                  </Box>
-                ) : (
-                  <Box sx={{
-                    bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.45)' : 'rgba(255, 255, 255, 0.85)',
-                    p: 3.5,
-                    border: (theme) => theme.palette.mode === 'dark' ? '1px solid rgba(99,102,241,0.15)' : '1px solid rgba(0, 0, 0, 0.08)',
-                    borderRadius: 4,
-                    textAlign: 'center'
-                  }}>
-                    <Typography variant="h6" fontWeight={700} sx={{ mb: 1 }}>
-                      Rate & Review This Film
-                    </Typography>
-                    <Typography color="text.secondary" sx={{ mb: 2.5, fontSize: '0.95rem' }}>
-                      Please sign in to write a review and rate this film.
-                    </Typography>
-                    <Button
-                      variant="primary"
-                      onClick={() => onNavigate?.('signup')}
-                      sx={{
-                        background: 'linear-gradient(135deg, #6366f1 0%, #d946ef 100%)',
-                        px: 4,
-                      }}
-                    >
-                      Sign In to Review
-                    </Button>
-                  </Box>
-                )}
-
-                {/* Cast Grid */}
-                {cast.length > 0 && (
-                  <Box mt={2}>
-                    <Typography variant="h5" fontWeight={700} mb={3} letterSpacing="-0.02em">
-                      Cast
-                    </Typography>
-                    <Box
-                      sx={{
-                        display: 'grid',
-                        gridTemplateColumns: {
-                          xs: 'repeat(2, minmax(0, 1fr))',
-                          sm: 'repeat(4, minmax(0, 1fr))',
-                          md: 'repeat(4, minmax(0, 1fr))',
-                        },
-                        gap: 3,
-                      }}
-                    >
-                      {cast.map((person) => (
-                        <Stack
-                          key={person.id}
-                          alignItems="center"
-                          spacing={0.75}
-                          textAlign="center"
-                          onClick={() => {
-                            setSelectedActorId(person.id);
-                            setSelectedActorName(person.name);
-                            setIsActorModalOpen(true);
-                          }}
-                          sx={{
-                            p: 1.5,
-                            bgcolor: 'rgba(255,255,255,0.01)',
-                            border: '1px solid rgba(255,255,255,0.03)',
-                            borderRadius: 3,
-                            cursor: 'pointer',
-                            transition: 'all 0.3s ease',
-                            '&:hover': {
-                              bgcolor: 'rgba(99, 102, 241, 0.05)',
-                              borderColor: 'rgba(99, 102, 241, 0.25)',
-                              transform: 'translateY(-4px)',
-                            },
-                          }}
-                        >
-                          <Box
-                            component="img"
-                            src={
-                              person.profile_path
-                                ? `https://image.tmdb.org/t/p/w185${person.profile_path}`
-                                : 'https://via.placeholder.com/185x278?text=No+Photo'
-                            }
-                            alt={person.name}
-                            sx={{
-                              width: 80,
-                              height: 80,
-                              borderRadius: '50%',
-                              objectFit: 'cover',
-                              objectPosition: 'top center',
-                              border: '2px solid rgba(99, 102, 241, 0.15)',
-                            }}
-                          />
-                          <Typography fontWeight={700} fontSize="0.85rem" lineHeight={1.25}>
-                            {person.name}
-                          </Typography>
-                          <Typography variant="caption" color="text.secondary" lineHeight={1.25}>
-                            {person.character}
-                          </Typography>
-                        </Stack>
-                      ))}
-                    </Box>
-                  </Box>
-                )}
-
-                {/* User Reviews Timeline Section */}
-                <Box sx={{ mt: 4 }}>
-                  <Typography variant="h5" fontWeight={700} sx={{ mb: 2.5, letterSpacing: '-0.01em' }}>
-                    User Reviews ({fliks.reviews?.filter((r) => r.reviewText.trim()).length || 0})
-                  </Typography>
-                  {fliks.reviews?.filter((r) => r.reviewText.trim()).length > 0 ? (
-                    <Stack spacing={2}>
-                      {fliks.reviews
-                        .filter((r) => r.reviewText.trim())
-                        .map((rev, index) => {
-                          const isMyReview = user && rev.userId === user.uid;
-                          return (
-                            <Box
-                              key={index}
-                              sx={{
-                                p: 2.5,
-                                bgcolor: (theme) => theme.palette.mode === 'dark' ? 'rgba(15, 14, 38, 0.35)' : 'rgba(255, 255, 255, 0.75)',
-                                border: '1px solid',
-                                borderColor: isMyReview ? 'rgba(99, 102, 241, 0.3)' : (theme) => theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0, 0, 0, 0.06)',
-                                borderRadius: 3,
-                              }}
-                            >
-                              <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 1 }}>
-                                <Stack direction="row" alignItems="center" spacing={1}>
-                                  <Typography fontWeight={700} variant="body2" sx={{ color: '#818cf8' }}>
-                                    {rev.username}
-                                  </Typography>
-                                  {isMyReview && (
-                                    <Chip label="You" size="small" sx={{ height: 20, fontSize: '0.65rem', bgcolor: 'rgba(99, 102, 241, 0.15)', color: '#818cf8', fontWeight: 700 }} />
-                                  )}
-                                </Stack>
-                                <Stack direction="row" alignItems="center" spacing={1}>
-                                  <Rating
-                                    value={rev.rating}
-                                    precision={0.5}
-                                    readOnly
-                                    size="small"
-                                    sx={{ '& .MuiRating-iconFilled': { color: '#f59e0b' } }}
-                                  />
-                                  {isMyReview && (
-                                    <Tooltip title="Remove your review">
-                                      <IconButton
-                                        size="small"
-                                        onClick={handleRemoveReview}
-                                        disabled={isSubmittingReview}
-                                        sx={{
-                                          color: '#ef4444',
-                                          p: 0.5,
-                                          opacity: 0.8,
-                                          '&:hover': { opacity: 1, bgcolor: 'rgba(239, 68, 68, 0.1)' },
-                                        }}
-                                      >
-                                        <DeleteOutlineIcon sx={{ fontSize: 18 }} />
-                                      </IconButton>
-                                    </Tooltip>
-                                  )}
-                                </Stack>
-                              </Stack>
-                              <Typography variant="body2" color="text.primary" sx={{ fontStyle: 'italic', lineHeight: 1.6 }}>
-                                "{rev.reviewText}"
-                              </Typography>
-                              <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1 }}>
-                                {rev.updatedAt?.toLocaleDateString()}
-                              </Typography>
-                            </Box>
-                          );
-                        })}
-                    </Stack>
-                  ) : (
-                    <Typography variant="body2" color="text.secondary">
-                      No reviews written yet. Be the first to share your thoughts!
-                    </Typography>
-                  )}
+                <Box sx={{ display: 'flex', alignItems: 'center', ml: { sm: 'auto !important' } }}>
+                  <Button disabled={savingWatchlist} variant={inWatchlist ? 'secondary' : 'primary'} onClick={handleWatchlist} startIcon={inWatchlist ? <Check size={16} /> : <Plus size={16} />}>{savingWatchlist ? 'Saving…' : inWatchlist ? 'In your watchlist' : 'Add to watchlist'}</Button>
                 </Box>
               </Stack>
             </Box>
-          </Box>
-        </Container>
-      </Box>
 
-      {/* Embedded Trailer Modal */}
-      <Modal
-        open={isTrailerOpen}
-        onClose={() => setIsTrailerOpen(false)}
-        aria-labelledby="movie-trailer-modal"
-        sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-      >
-        <Box
-          sx={{
-            position: 'relative',
-            width: '90%',
-            maxWidth: 800,
-            aspectRatio: '16 / 9',
-            bgcolor: '#000',
-            border: '2px solid rgba(99, 102, 241, 0.4)',
-            boxShadow: '0 0 50px rgba(99, 102, 241, 0.35)',
-            borderRadius: 4,
-            overflow: 'hidden',
-            outline: 'none',
-          }}
-        >
-          <IconButton
-            onClick={() => setIsTrailerOpen(false)}
-            sx={{
-              position: 'absolute',
-              top: 8,
-              right: 8,
-              zIndex: 10,
-              bgcolor: 'rgba(0,0,0,0.5)',
-              color: '#fff',
-              '&:hover': { bgcolor: 'rgba(0,0,0,0.8)' },
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-          {isTrailerOpen && trailerKey && (
-            <iframe
-              src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1`}
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              style={{ width: '100%', height: '100%', border: 'none' }}
-            />
-          )}
+            <Tabs value={activeTab} onChange={(_, value) => setParams(value === 'box-office' ? { tab: 'box-office' } : {})} aria-label="Movie sections" sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tab id="movie-overview-tab" aria-controls="movie-overview-panel" value="overview" label="Overview" /><Tab id="movie-box-office-tab" aria-controls="movie-box-office-panel" value="box-office" label="Box office" />
+            </Tabs>
+            {activeTab === 'box-office' ? <Box role="tabpanel" id="movie-box-office-panel" aria-labelledby="movie-box-office-tab"><MovieBoxOffice key={movie.id} movieId={movie.id} movieTitle={movie.title} /></Box> : <Stack role="tabpanel" id="movie-overview-panel" aria-labelledby="movie-overview-tab" spacing={4.5}>
+            <Box component="section">
+              <SectionHeader title="Synopsis" />
+              <Typography sx={{ color: 'text.secondary', fontSize: 14, lineHeight: 1.9, maxWidth: 760 }}>{movie.overview || 'A synopsis is not available yet.'}</Typography>
+            </Box>
+
+            <Box component="section" sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1.2fr 1fr' }, gap: { xs: 3, sm: 5 }, py: 3, borderTop: 1, borderBottom: 1, borderColor: 'divider' }}>
+              <Box>
+                <Typography component="h2" sx={{ fontSize: 17, fontWeight: 500, mb: 2 }}>Film details</Typography>
+                <Box component="dl" sx={{ m: 0, display: 'grid', gridTemplateColumns: '100px minmax(0, 1fr)', gap: 1.5 }}>
+                  {facts.map(([label, value]) => <Fragment key={label}><Typography component="dt" sx={{ color: 'text.secondary', fontSize: 12 }}>{label}</Typography><Typography component="dd" sx={{ m: 0, fontSize: 12 }}>{value}</Typography></Fragment>)}
+                </Box>
+              </Box>
+              <Box>
+                <Typography component="h2" sx={{ fontSize: 17, fontWeight: 500, mb: 2 }}>At the box office</Typography>
+                {formattedBudget || formattedRevenue ? (
+                  <Stack spacing={1.5}>
+                    {[[ 'Budget', formattedBudget ], [ 'Worldwide gross', formattedRevenue ], [ 'Return on investment', roi !== null ? `${Number(roi) > 0 ? '+' : ''}${roi}%` : null ]].filter(([, value]) => value).map(([label, value]) => <Stack key={label} direction="row" justifyContent="space-between" gap={2}><Typography sx={{ fontSize: 12, color: 'text.secondary' }}>{label}</Typography><Typography sx={{ fontSize: 13, fontWeight: 500, whiteSpace: 'nowrap' }}>{value}</Typography></Stack>)}
+                    <Typography sx={{ fontSize: 10, color: 'text.secondary', pt: 1 }}>Reported figures from TMDB, converted to INR.</Typography>
+                  </Stack>
+                ) : <Typography sx={{ fontSize: 12, color: 'text.secondary' }}>Box office figures are not available yet.</Typography>}
+              </Box>
+            </Box>
+
+            {cast.length > 0 && <Box component="section">
+              <SectionHeader title="The cast" subtitle="The people who bring the story to life." />
+              <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'repeat(3, minmax(0, 1fr))', sm: 'repeat(4, minmax(0, 1fr))' }, gap: { xs: 2, md: 3 } }}>
+                {cast.map((person) => <Box key={person.id} component="button" onClick={() => { setSelectedActorId(person.id); setSelectedActorName(person.name); setIsActorModalOpen(true); }} aria-label={`View ${person.name}`} sx={{ p: 0, border: 0, textAlign: 'left', cursor: 'pointer', bgcolor: 'transparent', color: 'text.primary', '&:hover img': { opacity: 0.8 } }}>
+                  <Box sx={{ aspectRatio: '4 / 5', borderRadius: '6px', overflow: 'hidden', bgcolor: 'background.paper', mb: 1.2 }}>
+                    <PersonImage src={person.profile_path ? `https://image.tmdb.org/t/p/w185${person.profile_path}` : undefined} name={person.name} sx={{ width: '100%', height: '100%' }} />
+                  </Box>
+                  <Typography sx={{ fontSize: 12, fontWeight: 500, lineHeight: 1.4 }}>{person.name}</Typography>
+                  <Typography sx={{ fontSize: 11, color: 'text.secondary', mt: 0.5 }}>{person.character}</Typography>
+                </Box>)}
+              </Box>
+            </Box>}
+
+            <Box component="section" sx={{ p: { xs: 2.5, sm: 3 }, border: 1, borderColor: 'divider', borderRadius: '6px', bgcolor: 'background.paper' }}>
+              <Typography component="h2" sx={{ fontSize: 21, fontWeight: 500, mb: 1 }}>{myReview ? 'Your take on the film' : 'What did you think?'}</Typography>
+              {isUnreleased ? <Typography sx={{ color: 'text.secondary', fontSize: 13 }}>Ratings and reviews open after the film is released.</Typography> : isAuthenticated ? (
+                <Stack spacing={2}>
+                  <Stack direction="row" alignItems="center" flexWrap="wrap" useFlexGap gap={2}>
+                    <Typography sx={{ color: 'text.secondary', fontSize: 12 }}>Your rating</Typography>
+                    <Rating name={`movie-details-rating-${movie.id}`} value={currentRating} precision={0.5} onChange={(_, value) => handleRate(value)} sx={{ '& .MuiRating-iconFilled': { color: 'primary.main' } }} />
+                    {currentRating > 0 && <Button variant="secondary" size="sm" onClick={() => handleRate(null)}>Clear rating</Button>}
+                  </Stack>
+                  <TextField label="Your review" multiline rows={3} fullWidth placeholder="What stayed with you?" value={reviewInput} onChange={(event) => setReviewInput(event.target.value)} />
+                  <Stack direction="row" justifyContent="flex-end" flexWrap="wrap" useFlexGap gap={1.5}>
+                    {(currentRating > 0 || myReview) && <Button variant="secondary" onClick={handleRemoveReview} disabled={isSubmittingReview}>Remove review</Button>}
+                    <Button onClick={handleSaveReview} disabled={isSubmittingReview}>{isSubmittingReview ? 'Saving…' : 'Save review'}</Button>
+                  </Stack>
+                </Stack>
+              ) : <Stack alignItems="flex-start" spacing={2}><Typography sx={{ color: 'text.secondary', fontSize: 13 }}>Keep a record of what you watch and share your thoughts with the community.</Typography><Button onClick={() => onNavigate?.('signup')}>Sign in to review</Button></Stack>}
+            </Box>
+
+            <Box component="section">
+              <SectionHeader title={`Community reviews (${writtenReviews.length})`} />
+              {writtenReviews.length ? <Stack spacing={3}>{writtenReviews.map((review) => <Box key={review.userId} sx={{ pb: 3, borderBottom: 1, borderColor: 'divider' }}>
+                <Stack direction="row" flexWrap="wrap" useFlexGap gap={1.5} alignItems="center" justifyContent="space-between" sx={{ mb: 1.5 }}>
+                  <Typography sx={{ fontSize: 13, fontWeight: 500 }}>{review.username}{user?.uid === review.userId ? ' · You' : ''}</Typography>
+                  <Stack direction="row" alignItems="center" spacing={1}><Rating value={review.rating || 0} precision={0.5} readOnly size="small" sx={{ '& .MuiRating-iconFilled': { color: 'primary.main' } }} />{user?.uid === review.userId && <IconButton aria-label="Remove your review" onClick={handleRemoveReview} disabled={isSubmittingReview} size="small"><DeleteOutlineIcon fontSize="small" /></IconButton>}</Stack>
+                </Stack>
+                <Typography sx={{ fontSize: 13, lineHeight: 1.8, whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>{review.reviewText}</Typography>
+                <Typography sx={{ color: 'text.secondary', fontSize: 11, mt: 1 }}>{review.updatedAt?.toLocaleDateString()}</Typography>
+              </Box>)}</Stack> : <Typography sx={{ fontSize: 13, color: 'text.secondary' }}>No reviews yet. Be the first to share your thoughts.</Typography>}
+            </Box>
+            </Stack>}
+          </Stack>
         </Box>
-      </Modal>
+      </Container>
 
-      <ActorModal
-        actorId={selectedActorId}
-        actorName={selectedActorName}
-        open={isActorModalOpen}
-        onClose={() => setIsActorModalOpen(false)}
-        onMovieClick={(id) => navigate(`/movie/${id}`)}
-      />
+      <Dialog open={isTrailerOpen} onClose={() => setIsTrailerOpen(false)} aria-labelledby="movie-trailer-title" maxWidth="md" fullWidth>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={2} sx={{ px: 2.5, py: 1.5 }}>
+          <Typography id="movie-trailer-title" component="h2" sx={{ fontSize: 15 }}>{movie.title} · Trailer</Typography>
+          <IconButton aria-label="Close trailer" onClick={() => setIsTrailerOpen(false)}><CloseIcon /></IconButton>
+        </Stack>
+        {isTrailerOpen && trailerKey && <Box component="iframe" src={`https://www.youtube.com/embed/${encodeURIComponent(trailerKey)}?autoplay=1&playsinline=1&rel=0`} title={`${movie.title} trailer`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen sx={{ width: '100%', aspectRatio: '16 / 9', border: 0, bgcolor: '#000' }} />}
+        <Typography sx={{ px: 2.5, py: 1.5, fontSize: 12, color: 'text.secondary' }}>Player unavailable? <Box component="a" href={`https://www.youtube.com/watch?v=${encodeURIComponent(trailerKey || '')}`} target="_blank" rel="noopener noreferrer" sx={{ color: 'text.primary' }}>Watch on YouTube</Box></Typography>
+      </Dialog>
+      <ActorModal actorId={selectedActorId} actorName={selectedActorName} open={isActorModalOpen} onClose={() => setIsActorModalOpen(false)} onMovieClick={(id) => navigate(`/movie/${id}`)} />
     </PageShell>
   );
 }

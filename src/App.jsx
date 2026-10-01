@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import Home from './pages/home';
 import Trending from './pages/trending';
@@ -14,6 +14,7 @@ import FliksChatbot from './components/FliksChatbot';
 import Account from './pages/account';
 import Settings from './pages/settings';
 import Navbar from './components/Navbar';
+import CinemaIntro from './components/CinemaIntro';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { UserDataProvider, useUserData } from './contexts/UserDataContext';
 import { ColorModeProvider } from './contexts/ColorModeContext';
@@ -26,6 +27,17 @@ function AppContent() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isIntroOpen, setIsIntroOpen] = useState(() => {
+    if (location.pathname !== '/') return false;
+    try { return sessionStorage.getItem('fliks-intro-seen') !== '1'; }
+    catch { return true; }
+  });
+  const finishIntro = useCallback(() => {
+    try { sessionStorage.setItem('fliks-intro-seen', '1'); } catch { /* Storage can be unavailable in private browsing. */ }
+    setIsIntroOpen(false);
+    requestAnimationFrame(() => document.querySelector('[aria-label="Fliks home"]')?.focus({ preventScroll: true }));
+  }, []);
+  const replayIntro = () => { window.scrollTo(0, 0); setIsIntroOpen(true); };
   const { isAuthenticated } = useAuth();
   const { ratings, rateMovie } = useUserData();
   const currentPage = pageFromPath(location.pathname);
@@ -62,6 +74,7 @@ function AppContent() {
       await rateMovie(movieId, value);
     } catch (error) {
       console.error('Failed to save rating:', error);
+      showToast('Your rating couldn’t be updated. Please try again.', 'error');
     }
   };
 
@@ -70,6 +83,7 @@ function AppContent() {
     onViewMovie: handleViewMovie,
     onRate: handleRate,
     ratings,
+    onReplayIntro: replayIntro,
   };
 
   return (
@@ -78,6 +92,8 @@ function AppContent() {
       onToggleNav={handleToggleNav}
       onGoBack={() => navigate(-1)}
     >
+      {isIntroOpen && location.pathname === '/' && <CinemaIntro onComplete={finishIntro} />}
+      <div inert={isIntroOpen && location.pathname === '/' ? true : undefined} aria-hidden={isIntroOpen && location.pathname === '/' ? true : undefined}>
       <Navbar
         isOpen={isNavOpen}
         onToggle={handleToggleNav}
@@ -101,6 +117,7 @@ function AppContent() {
         <Route path="/movie/:movieId" element={<MovieDetails />} />
         <Route path="*" element={<Home {...sharedProps} />} />
       </Routes>
+      </div>
     </NavigationProvider>
   );
 }

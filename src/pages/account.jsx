@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -35,7 +35,7 @@ function Account({ onViewMovie, onRate }) {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [accountMenuAnchor, setAccountMenuAnchor] = useState(null);
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, logout, loading: authLoading } = useAuth();
   const { ratings, watchLater, loading, syncError, removeFromWatchLater } = useUserData();
 
   const openAccountMenu = (event) => setAccountMenuAnchor(event.currentTarget);
@@ -60,12 +60,13 @@ function Account({ onViewMovie, onRate }) {
   const [sortBy, setSortBy] = useState('rating');
   const [ratedMovies, setRatedMovies] = useState([]);
   const [loadingMovies, setLoadingMovies] = useState(false);
+  const hasLoadedRatedMovies = useRef(false);
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!authLoading && !isAuthenticated) {
       navigate('/signup', { replace: true });
     }
-  }, [isAuthenticated, navigate]);
+  }, [authLoading, isAuthenticated, navigate]);
 
   useEffect(() => {
     setTab(resolveTab(searchParams.get('tab')));
@@ -75,7 +76,7 @@ function Account({ onViewMovie, onRate }) {
     if (tab !== 'ratings') return undefined;
 
     const loadRatedMovies = async () => {
-      const isInitialLoad = ratedMovies.length === 0;
+      const isInitialLoad = !hasLoadedRatedMovies.current;
       if (isInitialLoad) {
         setLoadingMovies(true);
       }
@@ -129,6 +130,7 @@ function Account({ onViewMovie, onRate }) {
 
         setRatedMovies(sorted);
       } finally {
+        hasLoadedRatedMovies.current = true;
         if (isInitialLoad) {
           setLoadingMovies(false);
         }
@@ -149,7 +151,7 @@ function Account({ onViewMovie, onRate }) {
     }
   };
 
-  if (!isAuthenticated) return <PageShell loading />;
+  if (authLoading || !isAuthenticated) return <PageShell loading />;
 
   return (
     <PageShell>
@@ -174,7 +176,7 @@ function Account({ onViewMovie, onRate }) {
                 {(user?.displayName || user?.email || 'U').charAt(0).toUpperCase()}
               </Avatar>
               <Box>
-                <Typography variant="h5" fontWeight={700} letterSpacing="-0.02em">
+                <Typography component="h1" variant="h5" fontWeight={700} letterSpacing="-0.02em">
                   My Account
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
