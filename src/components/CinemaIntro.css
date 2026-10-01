@@ -63,8 +63,9 @@
 .cinema-intro__flight-caption { position: fixed; bottom: 35px; left: 0; right: 0; text-align: center; font-family: Georgia, serif; font-size: 23px; pointer-events: none; text-shadow: 0 2px 12px #000; animation: cinema-caption 4.6s both; }
 .cinema-intro__flight-caption span { display: block; font-family: Inter, sans-serif; font-size: 8px; letter-spacing: 2px; color: #b7b9ae; margin-top: 10px; }
 @keyframes cinema-caption { 0%, 100% { opacity: 0; } 20%, 70% { opacity: 1; } }
-.cinema-intro__morph { position: fixed; inset: 0; display: grid; place-items: center; background: #141514; transition: background 850ms ease; }
-.cinema-intro__morph-logo { font-size: clamp(80px, 12vw, 150px); font-weight: 800; letter-spacing: -0.058em; line-height: 1.5; display: inline-block; transform-origin: top left; transition: transform 850ms cubic-bezier(0.76, 0, 0.24, 1), color 850ms; }
+.cinema-intro__morph { position: fixed; inset: 0; display: grid; place-items: center; background: #141514; transition: background 900ms ease; }
+.cinema-intro__morph-logo { font-size: clamp(80px, 12vw, 150px); font-weight: 800; letter-spacing: -0.058em; line-height: 1.5; display: inline-block; transform-origin: top left; transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1), color 900ms, opacity 160ms ease; }
+.cinema-intro__morph-logo.is-handing-off { opacity: 0; }
 .cinema-intro--morph { background: transparent; pointer-events: none; }
 .cinema-intro--morph .cinema-intro__header, .cinema-intro--morph .cinema-intro__veil { opacity: 0; }
 .cinema-intro--reveal .cinema-intro__morph { background: transparent; }

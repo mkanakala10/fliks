@@ -1,5 +1,6 @@
 import { Component, lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { ArrowRight, RotateCcw } from 'lucide-react';
+import { useColorMode } from '../contexts/ColorModeContext';
 import './CinemaIntro.css';
 
 const CinemaScene = lazy(() => import('./CinemaScene'));
@@ -13,6 +14,7 @@ class SceneBoundary extends Component {
 }
 
 export default function CinemaIntro({ onComplete }) {
+  const { mode, toggleColorMode } = useColorMode();
   const [selected, setSelected] = useState([]);
   const [phase, setPhase] = useState('selection');
   const [cameraStage, setCameraStage] = useState('descending');
@@ -66,6 +68,12 @@ export default function CinemaIntro({ onComplete }) {
     const logo = logoRef.current;
     const destination = document.querySelector('[aria-label="Fliks home"]');
     const target = destination?.getBoundingClientRect();
+    const previousDestinationOpacity = destination?.style.opacity;
+    const previousDestinationTransition = destination?.style.transition;
+    if (destination) {
+      destination.style.opacity = '0';
+      destination.style.transition = 'none';
+    }
     const frame = requestAnimationFrame(() => {
       if (target && logo && !reducedMotion) {
         const bounds = logo.getBoundingClientRect();
@@ -73,8 +81,23 @@ export default function CinemaIntro({ onComplete }) {
       }
       rootRef.current?.classList.add('cinema-intro--reveal');
     });
-    timerRef.current = setTimeout(finish, reducedMotion ? 180 : 950);
-    return () => { cancelAnimationFrame(frame); clearTimeout(timerRef.current); };
+    const handoffTimer = setTimeout(() => {
+      logo?.classList.add('is-handing-off');
+      if (destination) {
+        destination.style.transition = 'opacity 160ms ease';
+        destination.style.opacity = '1';
+      }
+    }, reducedMotion ? 0 : 790);
+    timerRef.current = setTimeout(finish, reducedMotion ? 180 : 980);
+    return () => {
+      cancelAnimationFrame(frame);
+      clearTimeout(handoffTimer);
+      clearTimeout(timerRef.current);
+      if (destination) {
+        destination.style.opacity = previousDestinationOpacity || '';
+        destination.style.transition = previousDestinationTransition || '';
+      }
+    };
   }, [phase, finish, reducedMotion]);
 
   useEffect(() => {
@@ -91,6 +114,7 @@ export default function CinemaIntro({ onComplete }) {
   const selectSeat = (id) => setSelected((seats) => seats[0] === id ? [] : [id]);
   const start = () => {
     if (!selected.length) return;
+    if (mode === 'dark') toggleColorMode();
     skipRef.current?.focus({ preventScroll: true });
     setPhase('entering');
   };

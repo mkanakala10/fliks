@@ -22,6 +22,8 @@ import { NavigationProvider } from './contexts/NavigationContext';
 import { pathForPage, pageFromPath } from './navigation';
 import { ToastProvider, useToast } from './contexts/ToastContext';
 
+const INTRO_STORAGE_KEY = 'fliks-intro-seen';
+
 function AppContent() {
   const showToast = useToast();
   const navigate = useNavigate();
@@ -29,11 +31,16 @@ function AppContent() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isIntroOpen, setIsIntroOpen] = useState(() => {
     if (location.pathname !== '/') return false;
-    try { return sessionStorage.getItem('fliks-intro-seen') !== '1'; }
+    try {
+      const hasSeenIntro = localStorage.getItem(INTRO_STORAGE_KEY) === '1'
+        || sessionStorage.getItem(INTRO_STORAGE_KEY) === '1';
+      if (hasSeenIntro) localStorage.setItem(INTRO_STORAGE_KEY, '1');
+      return !hasSeenIntro;
+    }
     catch { return true; }
   });
   const finishIntro = useCallback(() => {
-    try { sessionStorage.setItem('fliks-intro-seen', '1'); } catch { /* Storage can be unavailable in private browsing. */ }
+    try { localStorage.setItem(INTRO_STORAGE_KEY, '1'); } catch { /* Storage can be unavailable in private browsing. */ }
     setIsIntroOpen(false);
     requestAnimationFrame(() => document.querySelector('[aria-label="Fliks home"]')?.focus({ preventScroll: true }));
   }, []);
