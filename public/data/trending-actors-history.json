@@ -438,5 +438,60 @@
         "rank": 10
       }
     ]
+  },
+  {
+    "week": "2026-10-05",
+    "actors": [
+      {
+        "name": "Nivin Pauly",
+        "trendingScore": 85318,
+        "rank": 1
+      },
+      {
+        "name": "Fahadh Faasil",
+        "trendingScore": 63904,
+        "rank": 2
+      },
+      {
+        "name": "Ajay Devgn",
+        "trendingScore": 52726,
+        "rank": 3
+      },
+      {
+        "name": "C. Joseph Vijay",
+        "trendingScore": 48952,
+        "rank": 4
+      },
+      {
+        "name": "Tamannaah Bhatia",
+        "trendingScore": 48116,
+        "rank": 5
+      },
+      {
+        "name": "Amitabh Bachchan",
+        "trendingScore": 44409,
+        "rank": 6
+      },
+      {
+        "name": "Salman Khan",
+        "trendingScore": 44074,
+        "rank": 7
+      },
+      {
+        "name": "Priyanka Chopra",
+        "trendingScore": 42413,
+        "rank": 8
+      },
+      {
+        "name": "Sundeep Kishan",
+        "trendingScore": 40330,
+        "rank": 9
+      },
+      {
+        "name": "Shah Rukh Khan",
+        "trendingScore": 40151,
+        "rank": 10
+      }
+    ]
   }
 ]
