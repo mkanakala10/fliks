@@ -493,5 +493,60 @@
         "rank": 10
       }
     ]
+  },
+  {
+    "week": "2026-10-12",
+    "actors": [
+      {
+        "name": "Nivin Pauly",
+        "trendingScore": 91934,
+        "rank": 1
+      },
+      {
+        "name": "Kiara Advani",
+        "trendingScore": 82110,
+        "rank": 2
+      },
+      {
+        "name": "Amitabh Bachchan",
+        "trendingScore": 82015,
+        "rank": 3
+      },
+      {
+        "name": "Vijay Deverakonda",
+        "trendingScore": 69831,
+        "rank": 4
+      },
+      {
+        "name": "Rashmika Mandanna",
+        "trendingScore": 64562,
+        "rank": 5
+      },
+      {
+        "name": "Ajay Devgn",
+        "trendingScore": 50846,
+        "rank": 6
+      },
+      {
+        "name": "Shah Rukh Khan",
+        "trendingScore": 45947,
+        "rank": 7
+      },
+      {
+        "name": "Priyanka Chopra",
+        "trendingScore": 43176,
+        "rank": 8
+      },
+      {
+        "name": "C. Joseph Vijay",
+        "trendingScore": 42663,
+        "rank": 9
+      },
+      {
+        "name": "Salman Khan",
+        "trendingScore": 42175,
+        "rank": 10
+      }
+    ]
   }
 ]
