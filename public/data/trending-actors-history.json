@@ -548,5 +548,60 @@
         "rank": 10
       }
     ]
+  },
+  {
+    "week": "2026-10-19",
+    "actors": [
+      {
+        "name": "Rajinikanth",
+        "trendingScore": 165421,
+        "rank": 1
+      },
+      {
+        "name": "Vijay Deverakonda",
+        "trendingScore": 85801,
+        "rank": 2
+      },
+      {
+        "name": "Hrithik Roshan",
+        "trendingScore": 69825,
+        "rank": 3
+      },
+      {
+        "name": "Amitabh Bachchan",
+        "trendingScore": 61525,
+        "rank": 4
+      },
+      {
+        "name": "Salman Khan",
+        "trendingScore": 60105,
+        "rank": 5
+      },
+      {
+        "name": "Saif Ali Khan",
+        "trendingScore": 50872,
+        "rank": 6
+      },
+      {
+        "name": "Rashmika Mandanna",
+        "trendingScore": 50126,
+        "rank": 7
+      },
+      {
+        "name": "C. Joseph Vijay",
+        "trendingScore": 45375,
+        "rank": 8
+      },
+      {
+        "name": "Nivin Pauly",
+        "trendingScore": 42241,
+        "rank": 9
+      },
+      {
+        "name": "Shah Rukh Khan",
+        "trendingScore": 42098,
+        "rank": 10
+      }
+    ]
   }
 ]
