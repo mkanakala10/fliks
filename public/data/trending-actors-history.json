@@ -603,5 +603,60 @@
         "rank": 10
       }
     ]
+  },
+  {
+    "week": "2026-10-26",
+    "actors": [
+      {
+        "name": "Rajinikanth",
+        "trendingScore": 175395,
+        "rank": 1
+      },
+      {
+        "name": "Tiger Shroff",
+        "trendingScore": 149071,
+        "rank": 2
+      },
+      {
+        "name": "Vijay Deverakonda",
+        "trendingScore": 110427,
+        "rank": 3
+      },
+      {
+        "name": "Rashmika Mandanna",
+        "trendingScore": 103185,
+        "rank": 4
+      },
+      {
+        "name": "Saif Ali Khan",
+        "trendingScore": 66775,
+        "rank": 5
+      },
+      {
+        "name": "Salman Khan",
+        "trendingScore": 61860,
+        "rank": 6
+      },
+      {
+        "name": "Hrithik Roshan",
+        "trendingScore": 55989,
+        "rank": 7
+      },
+      {
+        "name": "Deepika Padukone",
+        "trendingScore": 51509,
+        "rank": 8
+      },
+      {
+        "name": "Prabhas",
+        "trendingScore": 47320,
+        "rank": 9
+      },
+      {
+        "name": "Priyanka Chopra",
+        "trendingScore": 47171,
+        "rank": 10
+      }
+    ]
   }
 ]
