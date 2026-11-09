@@ -1,602 +1,602 @@
 [
   {
-    "id": 41176577,
-    "name": "Jithu Madhavan",
-    "image": "https://image.tmdb.org/t/p/w500/hw3v8VDPlMBdVDweSKH5IcLgdGP.jpg",
-    "trendingScore": 72636
-  },
-  {
-    "id": 541398794,
-    "name": "Karthik Subbaraj",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Karthik_Subbaraj_at_Iraivi_Press_Meet.jpg/500px-Karthik_Subbaraj_at_Iraivi_Press_Meet.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 68204
-  },
-  {
-    "id": 2019166670,
+    "id": 1354986568,
     "name": "Nitesh Tiwari",
     "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/28/The_Director_Nitesh_Tiwari_of_the_film_DANGAL_at_the_Master_Class%2C_during_the_48th_International_Film_Festival_of_India_%28IFFI-2017%29%2C_in_Panaji%2C_Goa_on_November_23%2C_2017.jpg/500px-thumbnail.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 56910
+    "trendingScore": 170841
   },
   {
-    "id": 180557148,
+    "id": 571586928,
+    "name": "Jithu Madhavan",
+    "image": "https://image.tmdb.org/t/p/w500/hw3v8VDPlMBdVDweSKH5IcLgdGP.jpg",
+    "trendingScore": 103840
+  },
+  {
+    "id": 141906709,
+    "name": "Karthik Subbaraj",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Karthik_Subbaraj_at_Iraivi_Press_Meet.jpg/500px-Karthik_Subbaraj_at_Iraivi_Press_Meet.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 29602
+  },
+  {
+    "id": 2040782194,
     "name": "Nelson Dilipkumar",
     "image": "https://upload.wikimedia.org/wikipedia/commons/8/83/Nelson_Dilipkumar.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 47291
+    "trendingScore": 25510
   },
   {
-    "id": 1349732603,
-    "name": "Trivikram Srinivas",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Trivikram-srinivas-director.jpg/500px-Trivikram-srinivas-director.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 29858
-  },
-  {
-    "id": 124474446,
-    "name": "Lokesh Kanagaraj",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/Lokesh_Kanagaraj_at_The_Zee_Cine_Awards.jpg/500px-Lokesh_Kanagaraj_at_The_Zee_Cine_Awards.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 18091
-  },
-  {
-    "id": 1209691624,
-    "name": "Karan Johar",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6b/Karan_Johar_at_2025_Cannes_Homebound_Photocall_2_%28cropped%29.jpg/500px-Karan_Johar_at_2025_Cannes_Homebound_Photocall_2_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 17218
-  },
-  {
-    "id": 521177453,
-    "name": "Rakshit Shetty",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/RakshitShetty.jpg/500px-RakshitShetty.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 16301
-  },
-  {
-    "id": 657703786,
-    "name": "Aditya Dhar",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/Aditya_Dhar_at_IFFI_2019_%28cropped%29.jpg/500px-Aditya_Dhar_at_IFFI_2019_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 13881
-  },
-  {
-    "id": 539986744,
-    "name": "Rohit Shetty",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Rohit_Shetty_snapped_during_Simmba_interviews_at_JW_Marriott_in_Juhu.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 13504
-  },
-  {
-    "id": 2036302907,
-    "name": "S. S. Rajamouli",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/SS_Rajamouli%2C_2021.jpg/500px-SS_Rajamouli%2C_2021.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 13424
-  },
-  {
-    "id": 2070710295,
-    "name": "Atlee",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/Atlee_in_2024.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 11728
-  },
-  {
-    "id": 800356205,
-    "name": "Anurag Kashyap",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Anurag_Kashyap_02.jpg/500px-Anurag_Kashyap_02.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 10103
-  },
-  {
-    "id": 355019794,
-    "name": "Farhan Akhtar",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/1/13/FarhanAkhtar.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 9648
-  },
-  {
-    "id": 656620461,
-    "name": "Laxman Utekar",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/Indian_Panorama_Directors_Ram%2C_Indranil_Roychowdury_and_Laxman_Utekar_briefing_the_Media%2C_at_the_44th_India_International_Film_Festival_of_India_%28IFFI-2013%29%2C_in_Panaji%2C_Goa_on_November_27%2C_2013..jpg/500px-thumbnail.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 9356
-  },
-  {
-    "id": 1763278592,
-    "name": "S. Shankar",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/Shankar_at_the_2.0_Trailer_Launch.jpg/500px-Shankar_at_the_2.0_Trailer_Launch.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 9221
-  },
-  {
-    "id": 1231210662,
-    "name": "Prashanth Neel",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/aa/Prashanth_Neel_in_2022.jpg/500px-Prashanth_Neel_in_2022.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 9098
-  },
-  {
-    "id": 839008246,
-    "name": "Mani Ratnam",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Mani_Ratnam_and_Suhasini_At_The_Vaanam_Kottatum_Audio_Launch2_%28cropped%29.jpg/500px-Mani_Ratnam_and_Suhasini_At_The_Vaanam_Kottatum_Audio_Launch2_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 8481
-  },
-  {
-    "id": 1206697146,
+    "id": 1343589918,
     "name": "Ashwiny Iyer Tiwari",
     "image": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Ashwiny_Iyer_Tiwari_attends_the_63rd_Jio_Filmfare_Awards_2018_%2805%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 7969
+    "trendingScore": 19778
   },
   {
-    "id": 544451177,
-    "name": "Sandeep Reddy Vanga",
-    "image": "https://image.tmdb.org/t/p/w500/ik1rXY6ci6i7LDm9cV178W3txgb.jpg",
-    "trendingScore": 7827
+    "id": 855477259,
+    "name": "S. S. Rajamouli",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/SS_Rajamouli%2C_2021.jpg/500px-SS_Rajamouli%2C_2021.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 16423
   },
   {
-    "id": 828960664,
+    "id": 802269353,
+    "name": "Karan Johar",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6b/Karan_Johar_at_2025_Cannes_Homebound_Photocall_2_%28cropped%29.jpg/500px-Karan_Johar_at_2025_Cannes_Homebound_Photocall_2_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 15666
+  },
+  {
+    "id": 1081420221,
+    "name": "Trivikram Srinivas",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Trivikram-srinivas-director.jpg/500px-Trivikram-srinivas-director.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 14624
+  },
+  {
+    "id": 746624005,
+    "name": "Atlee",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/1d/Atlee_in_2024.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "trendingScore": 11197
+  },
+  {
+    "id": 300534964,
+    "name": "Lokesh Kanagaraj",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/Lokesh_Kanagaraj_at_The_Zee_Cine_Awards.jpg/500px-Lokesh_Kanagaraj_at_The_Zee_Cine_Awards.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 10680
+  },
+  {
+    "id": 1809903605,
+    "name": "Aditya Dhar",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/Aditya_Dhar_at_IFFI_2019_%28cropped%29.jpg/500px-Aditya_Dhar_at_IFFI_2019_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 10648
+  },
+  {
+    "id": 1998566756,
+    "name": "Farhan Akhtar",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/13/FarhanAkhtar.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "trendingScore": 9252
+  },
+  {
+    "id": 972523118,
+    "name": "Anurag Kashyap",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Anurag_Kashyap_02.jpg/500px-Anurag_Kashyap_02.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 8871
+  },
+  {
+    "id": 2075292478,
+    "name": "Mani Ratnam",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Mani_Ratnam_and_Suhasini_At_The_Vaanam_Kottatum_Audio_Launch2_%28cropped%29.jpg/500px-Mani_Ratnam_and_Suhasini_At_The_Vaanam_Kottatum_Audio_Launch2_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 7544
+  },
+  {
+    "id": 1401164883,
     "name": "Sanjay Leela Bhansali",
     "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Sanjay_Leela_Bhansali.jpg/500px-Sanjay_Leela_Bhansali.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 7645
+    "trendingScore": 7468
   },
   {
-    "id": 1872865472,
-    "name": "Neeraj Pandey",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Neeraj_Pandey_IIT_Mumbai.jpg/500px-Neeraj_Pandey_IIT_Mumbai.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 7062
+    "id": 737510919,
+    "name": "Tharun Bhascker",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/37/Tarun_Bhascar_in_Cinivaram.jpg/500px-Tarun_Bhascar_in_Cinivaram.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 7346
   },
   {
-    "id": 1057071842,
-    "name": "Sukumar",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/Sukku-one.jpg/500px-Sukku-one.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 6823
+    "id": 1625714557,
+    "name": "S. Shankar",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/Shankar_at_the_2.0_Trailer_Launch.jpg/500px-Shankar_at_the_2.0_Trailer_Launch.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 7236
   },
   {
-    "id": 1884779169,
-    "name": "Puri Jagannadh",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Puri_Jagannadh_at_Ek_Niranjan_audio_release_event_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 6236
+    "id": 1848848739,
+    "name": "Rohit Shetty",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Rohit_Shetty_snapped_during_Simmba_interviews_at_JW_Marriott_in_Juhu.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "trendingScore": 6741
   },
   {
-    "id": 384733148,
+    "id": 1152574564,
+    "name": "Prashanth Neel",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/aa/Prashanth_Neel_in_2022.jpg/500px-Prashanth_Neel_in_2022.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 6658
+  },
+  {
+    "id": 958718301,
+    "name": "Sandeep Reddy Vanga",
+    "image": "https://image.tmdb.org/t/p/w500/ik1rXY6ci6i7LDm9cV178W3txgb.jpg",
+    "trendingScore": 6225
+  },
+  {
+    "id": 416317992,
     "name": "Sriram Venu",
     "image": null,
     "trendingScore": 6200
   },
   {
-    "id": 168788184,
-    "name": "Zoya Akhtar",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/Zoya_Akhtar_at_the_2024_Toronto_International_Film_Festival_%28cropped%29.jpg/500px-Zoya_Akhtar_at_the_2024_Toronto_International_Film_Festival_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 5615
-  },
-  {
-    "id": 917483803,
-    "name": "Rishab Shetty",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/Rishab_Shetty.jpg/500px-Rishab_Shetty.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 5565
-  },
-  {
-    "id": 1865098076,
-    "name": "Basil Joseph",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/Basil_Joseph_2023s_%28cropped%29.jpg/500px-Basil_Joseph_2023s_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 5275
-  },
-  {
-    "id": 596978202,
-    "name": "Vetrimaaran",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/39/Vetrimaaran_%28cropped%29.jpg/500px-Vetrimaaran_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 4775
-  },
-  {
-    "id": 2127750428,
-    "name": "Pa. Ranjith",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Tamil_Director_Pa._Ranjith.jpg/500px-Tamil_Director_Pa._Ranjith.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 4642
-  },
-  {
-    "id": 792394477,
-    "name": "Buchi Babu Sana",
-    "image": null,
-    "trendingScore": 4628
-  },
-  {
-    "id": 1770583406,
-    "name": "C. Prem Kumar",
-    "image": "https://image.tmdb.org/t/p/w500/g0FBgpYuF0KFA4IYVtf0slyB3t0.jpg",
-    "trendingScore": 4626
-  },
-  {
-    "id": 1172553991,
-    "name": "Arun Matheswaran",
-    "image": null,
-    "trendingScore": 4611
-  },
-  {
-    "id": 1475345195,
-    "name": "Jeethu Joseph",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/7/78/Jeethu_Joseph_%28director%29_%282019%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 4442
-  },
-  {
-    "id": 822547749,
-    "name": "Venky Atluri",
-    "image": "https://image.tmdb.org/t/p/w500/iT5fIq1duh31r3wzcVfFf3Qom0B.jpg",
-    "trendingScore": 4330
-  },
-  {
-    "id": 1096593914,
-    "name": "Rajkumar Hirani",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/4/44/Rajkumar_Hirani_2014.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 4223
-  },
-  {
-    "id": 375070034,
-    "name": "Nag Ashwin",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ae/Nag_Ashwin_by_Gage_Skidmore.jpg/500px-Nag_Ashwin_by_Gage_Skidmore.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 4210
-  },
-  {
-    "id": 186848141,
-    "name": "A. R. Murugadoss",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/5/54/Murugadoss.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 4209
-  },
-  {
-    "id": 405202383,
-    "name": "Ayan Mukerji",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Ayan_M_Jio-MAMI-Film-Club.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 4120
-  },
-  {
-    "id": 1531003836,
-    "name": "Anil Ravipudi",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/5/56/Anil_Ravipudi_at_71st_National_Film_Awards_%28cropped%29_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 4061
-  },
-  {
-    "id": 1265884249,
-    "name": "Ali Abbas Zafar",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Ali_Abbas_Zafar.jpg/500px-Ali_Abbas_Zafar.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 3850
-  },
-  {
-    "id": 1239703527,
-    "name": "Dileesh Pothan",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/Dileesh_Pothan_2019.jpg/500px-Dileesh_Pothan_2019.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 3845
-  },
-  {
-    "id": 1729691973,
-    "name": "Vishal Bhardwaj",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Vishal_Bhardwaj_in_2016.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 3759
-  },
-  {
-    "id": 299000402,
-    "name": "Harish Shankar",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b8/Harish_Shankar.jpg/500px-Harish_Shankar.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 3554
-  },
-  {
-    "id": 1340053340,
-    "name": "Venkat Prabhu",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Venkat_Prabhu_at_Damaal_Dumeel_Audio_Launch.jpg/500px-Venkat_Prabhu_at_Damaal_Dumeel_Audio_Launch.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 3449
-  },
-  {
-    "id": 1289348744,
+    "id": 1455966616,
     "name": "Sriram Raghavan",
     "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Sriram_Raghavan_at_News_18_Reel_Movie_Awards_2019.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 3355
+    "trendingScore": 5969
   },
   {
-    "id": 1177569129,
-    "name": "Meghna Gulzar",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/78/Meghna_Gulzar_at_49th_IFFI.jpg/500px-Meghna_Gulzar_at_49th_IFFI.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 3210
+    "id": 2062557354,
+    "name": "Puri Jagannadh",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Puri_Jagannadh_at_Ek_Niranjan_audio_release_event_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "trendingScore": 5553
   },
   {
-    "id": 590991381,
-    "name": "Anees Bazmee",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Anees_Bazmee.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 3040
+    "id": 1425046445,
+    "name": "Sukumar",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/Sukku-one.jpg/500px-Sukku-one.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 5528
   },
   {
-    "id": 689304458,
-    "name": "Lijo Jose Pellissery",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/93/Lijo_at_IFFI_2018.jpg/500px-Lijo_at_IFFI_2018.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 2996
+    "id": 1935983447,
+    "name": "Basil Joseph",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/Basil_Joseph_2023s_%28cropped%29.jpg/500px-Basil_Joseph_2023s_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 5386
   },
   {
-    "id": 377695085,
-    "name": "Tharun Bhascker",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/37/Tarun_Bhascar_in_Cinivaram.jpg/500px-Tarun_Bhascar_in_Cinivaram.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 2640
+    "id": 494390073,
+    "name": "Ayan Mukerji",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Ayan_M_Jio-MAMI-Film-Club.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "trendingScore": 5359
   },
   {
-    "id": 1764507121,
-    "name": "Alphonse Puthren",
-    "image": "https://image.tmdb.org/t/p/w500/bizV6LQMKMCEAVzeIh5rEOty7av.jpg",
-    "trendingScore": 2352
+    "id": 445270496,
+    "name": "C. Prem Kumar",
+    "image": "https://image.tmdb.org/t/p/w500/g0FBgpYuF0KFA4IYVtf0slyB3t0.jpg",
+    "trendingScore": 4989
   },
   {
-    "id": 1790466876,
-    "name": "Tigmanshu Dhulia",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Photo_Of_Tigmanshu_Dhulia_From_The_DVD_launch_of_%27Paan_Singh_Tomar%27.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 2348
+    "id": 2035684502,
+    "name": "Vetrimaaran",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/39/Vetrimaaran_%28cropped%29.jpg/500px-Vetrimaaran_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 4980
   },
   {
-    "id": 963435517,
-    "name": "R. Balki",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/a/a3/R._Balki.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 2337
+    "id": 335856334,
+    "name": "Zoya Akhtar",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/Zoya_Akhtar_at_the_2024_Toronto_International_Film_Festival_%28cropped%29.jpg/500px-Zoya_Akhtar_at_the_2024_Toronto_International_Film_Festival_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 4859
   },
   {
-    "id": 1036650637,
-    "name": "H. Vinoth",
-    "image": "https://image.tmdb.org/t/p/w500/32y5N68bLbNgOVADywSo3e0m9TG.jpg",
-    "trendingScore": 2276
+    "id": 1380268151,
+    "name": "Rajkumar Hirani",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/4/44/Rajkumar_Hirani_2014.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "trendingScore": 4720
   },
   {
-    "id": 1139884633,
-    "name": "Anubhav Sinha",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/Anubhav_Sinha_3.0.jpg/500px-Anubhav_Sinha_3.0.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 2244
+    "id": 936750197,
+    "name": "Rakshit Shetty",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/RakshitShetty.jpg/500px-RakshitShetty.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 4662
   },
   {
-    "id": 1860795518,
-    "name": "Koratala Siva",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/5/53/Koratala_Siva_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 2238
+    "id": 1177486983,
+    "name": "Rishab Shetty",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/Rishab_Shetty.jpg/500px-Rishab_Shetty.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 4419
   },
   {
-    "id": 212119198,
-    "name": "Mari Selvaraj",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/Director_Mari_Selvaraj.png/500px-Director_Mari_Selvaraj.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 2126
+    "id": 193297680,
+    "name": "Jeethu Joseph",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/7/78/Jeethu_Joseph_%28director%29_%282019%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "trendingScore": 4203
   },
   {
-    "id": 1721356451,
-    "name": "Vivek Athreya",
-    "image": "https://image.tmdb.org/t/p/w500/zrOsSaFfRUHWmfGCAvjW8XnMYj6.jpg",
-    "trendingScore": 1977
+    "id": 1669733322,
+    "name": "Venky Atluri",
+    "image": "https://image.tmdb.org/t/p/w500/iT5fIq1duh31r3wzcVfFf3Qom0B.jpg",
+    "trendingScore": 4027
   },
   {
-    "id": 1320543016,
+    "id": 1631423549,
+    "name": "Anil Ravipudi",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/5/56/Anil_Ravipudi_at_71st_National_Film_Awards_%28cropped%29_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "trendingScore": 3993
+  },
+  {
+    "id": 1109272118,
+    "name": "Nag Ashwin",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ae/Nag_Ashwin_by_Gage_Skidmore.jpg/500px-Nag_Ashwin_by_Gage_Skidmore.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 3669
+  },
+  {
+    "id": 451087529,
+    "name": "Arun Matheswaran",
+    "image": null,
+    "trendingScore": 3665
+  },
+  {
+    "id": 56139422,
+    "name": "A. R. Murugadoss",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/5/54/Murugadoss.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "trendingScore": 3661
+  },
+  {
+    "id": 12091032,
+    "name": "Pa. Ranjith",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Tamil_Director_Pa._Ranjith.jpg/500px-Tamil_Director_Pa._Ranjith.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 3454
+  },
+  {
+    "id": 1118567972,
+    "name": "Harish Shankar",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b8/Harish_Shankar.jpg/500px-Harish_Shankar.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 3430
+  },
+  {
+    "id": 532521318,
+    "name": "Laxman Utekar",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/Indian_Panorama_Directors_Ram%2C_Indranil_Roychowdury_and_Laxman_Utekar_briefing_the_Media%2C_at_the_44th_India_International_Film_Festival_of_India_%28IFFI-2013%29%2C_in_Panaji%2C_Goa_on_November_27%2C_2013..jpg/500px-thumbnail.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 3248
+  },
+  {
+    "id": 1254446801,
+    "name": "Dileesh Pothan",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/Dileesh_Pothan_2019.jpg/500px-Dileesh_Pothan_2019.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 3054
+  },
+  {
+    "id": 1231372383,
+    "name": "Vishal Bhardwaj",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Vishal_Bhardwaj_in_2016.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "trendingScore": 2982
+  },
+  {
+    "id": 302678549,
     "name": "Hansal Mehta",
     "image": "https://upload.wikimedia.org/wikipedia/commons/e/e9/Hansal_Mehta_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 1969
+    "trendingScore": 2827
   },
   {
-    "id": 767636859,
-    "name": "Amar Kaushik",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/98/The_Director_Amar_Khaushik_of_the_film_AABA%2C_at_the_Presentation%2C_during_the_48th_International_Film_Festival_of_India_%28IFFI-2017%29%2C_in_Panaji%2C_Goa_on_November_27%2C_2017.jpg/500px-thumbnail.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 1960
+    "id": 616269295,
+    "name": "Neeraj Pandey",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Neeraj_Pandey_IIT_Mumbai.jpg/500px-Neeraj_Pandey_IIT_Mumbai.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 2753
   },
   {
-    "id": 506266806,
+    "id": 2008684648,
+    "name": "Meghna Gulzar",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/78/Meghna_Gulzar_at_49th_IFFI.jpg/500px-Meghna_Gulzar_at_49th_IFFI.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 2682
+  },
+  {
+    "id": 410314985,
+    "name": "Venkat Prabhu",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Venkat_Prabhu_at_Damaal_Dumeel_Audio_Launch.jpg/500px-Venkat_Prabhu_at_Damaal_Dumeel_Audio_Launch.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 2552
+  },
+  {
+    "id": 271243778,
+    "name": "H. Vinoth",
+    "image": "https://image.tmdb.org/t/p/w500/32y5N68bLbNgOVADywSo3e0m9TG.jpg",
+    "trendingScore": 2399
+  },
+  {
+    "id": 430476670,
+    "name": "C. S. Amudhan",
+    "image": null,
+    "trendingScore": 2370
+  },
+  {
+    "id": 1796400742,
+    "name": "Tigmanshu Dhulia",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/6/62/Photo_Of_Tigmanshu_Dhulia_From_The_DVD_launch_of_%27Paan_Singh_Tomar%27.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "trendingScore": 2274
+  },
+  {
+    "id": 2124312294,
+    "name": "Anubhav Sinha",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/Anubhav_Sinha_3.0.jpg/500px-Anubhav_Sinha_3.0.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 2113
+  },
+  {
+    "id": 767220531,
+    "name": "Lijo Jose Pellissery",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/93/Lijo_at_IFFI_2018.jpg/500px-Lijo_at_IFFI_2018.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 2057
+  },
+  {
+    "id": 1116433120,
+    "name": "Ali Abbas Zafar",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Ali_Abbas_Zafar.jpg/500px-Ali_Abbas_Zafar.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 2047
+  },
+  {
+    "id": 1331134124,
+    "name": "Anees Bazmee",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Anees_Bazmee.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "trendingScore": 1956
+  },
+  {
+    "id": 1364392459,
+    "name": "Alphonse Puthren",
+    "image": "https://image.tmdb.org/t/p/w500/bizV6LQMKMCEAVzeIh5rEOty7av.jpg",
+    "trendingScore": 1782
+  },
+  {
+    "id": 157822149,
+    "name": "Buchi Babu Sana",
+    "image": null,
+    "trendingScore": 1781
+  },
+  {
+    "id": 846833451,
     "name": "Vamshi Paidipally",
     "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/65/Vamsi_Paidipally.jpg/500px-Vamsi_Paidipally.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 1951
+    "trendingScore": 1616
   },
   {
-    "id": 1842449086,
-    "name": "Ram",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Director_Ram_at_the_Aruvi_Movie_Premiere.jpg/500px-Director_Ram_at_the_Aruvi_Movie_Premiere.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 1720
-  },
-  {
-    "id": 558745121,
-    "name": "Shoojit Sircar",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Shoojit_Sircar_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 1691
-  },
-  {
-    "id": 593792377,
-    "name": "Vikramaditya Motwane",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Vikramaditya_Motwane.jpg/500px-Vikramaditya_Motwane.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 1684
-  },
-  {
-    "id": 1453855923,
-    "name": "K. V. Anudeep",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b5/Anudeep_Director.jpg/500px-Anudeep_Director.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 1594
-  },
-  {
-    "id": 454700810,
-    "name": "Rahul Sadasivan",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/RahulSpic_2024_-_jpg_%28cropped%29.jpg/500px-RahulSpic_2024_-_jpg_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 1586
-  },
-  {
-    "id": 606745601,
-    "name": "Boyapati Srinu",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Boyapati_Srinu.jpg/500px-Boyapati_Srinu.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 1511
-  },
-  {
-    "id": 1775322159,
-    "name": "Sailesh Kolanu",
-    "image": "https://image.tmdb.org/t/p/w500/phjFUbCMwOfGqyPQqRDoGQyNLAV.jpg",
-    "trendingScore": 1500
-  },
-  {
-    "id": 1726664476,
+    "id": 1310588858,
     "name": "Narthan",
     "image": null,
     "trendingScore": 1500
   },
   {
-    "id": 2082381497,
-    "name": "Mudassar Aziz",
-    "image": null,
-    "trendingScore": 1495
+    "id": 944021708,
+    "name": "Boyapati Srinu",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Boyapati_Srinu.jpg/500px-Boyapati_Srinu.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 1496
   },
   {
-    "id": 1187710116,
-    "name": "Jude Anthany Joseph",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/4/40/Jude_Anthany_Joseph.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 1398
+    "id": 429811404,
+    "name": "Vivek Athreya",
+    "image": "https://image.tmdb.org/t/p/w500/zrOsSaFfRUHWmfGCAvjW8XnMYj6.jpg",
+    "trendingScore": 1482
   },
   {
-    "id": 1232320299,
-    "name": "M. Manikandan",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7b/M_Manikandan_in_February_2018.jpg/500px-M_Manikandan_in_February_2018.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 1315
+    "id": 1486579224,
+    "name": "Koratala Siva",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/5/53/Koratala_Siva_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "trendingScore": 1457
   },
   {
-    "id": 1727540439,
-    "name": "Anjali Menon",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/%E0%B4%85%E0%B4%9C%E0%B5%8D%E0%B4%9E%E0%B4%B2%E0%B4%BF_%E0%B4%AE%E0%B5%87%E0%B4%A8%E0%B5%8B%E0%B5%BB_%28cropped%29.jpg/500px-%E0%B4%85%E0%B4%9C%E0%B5%8D%E0%B4%9E%E0%B4%B2%E0%B4%BF_%E0%B4%AE%E0%B5%87%E0%B4%A8%E0%B5%8B%E0%B5%BB_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 1262
-  },
-  {
-    "id": 616650650,
+    "id": 1966619929,
     "name": "Sudha Kongara",
     "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Sudha_Kongara_Prasad_at_Irudhi_Suttru_Thanks_Giving_Meet.jpg/500px-Sudha_Kongara_Prasad_at_Irudhi_Suttru_Thanks_Giving_Meet.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 1259
+    "trendingScore": 1444
   },
   {
-    "id": 2126344367,
+    "id": 1702952434,
+    "name": "R. Balki",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/a/a3/R._Balki.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "trendingScore": 1436
+  },
+  {
+    "id": 1905579112,
+    "name": "Ram",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Director_Ram_at_the_Aruvi_Movie_Premiere.jpg/500px-Director_Ram_at_the_Aruvi_Movie_Premiere.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 1436
+  },
+  {
+    "id": 990646402,
+    "name": "Mari Selvaraj",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/Director_Mari_Selvaraj.png/500px-Director_Mari_Selvaraj.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 1405
+  },
+  {
+    "id": 1517252895,
     "name": "Aashiq Abu",
     "image": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Aashiq_Abu.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 1238
+    "trendingScore": 1393
   },
   {
-    "id": 1932458331,
-    "name": "Vipin Das",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5c/Vipin_Das_Malayalam_Film_Director_at_Film_Shooting_Site.jpg/500px-Vipin_Das_Malayalam_Film_Director_at_Film_Shooting_Site.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 1233
+    "id": 522093633,
+    "name": "Vikramaditya Motwane",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Vikramaditya_Motwane.jpg/500px-Vikramaditya_Motwane.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 1268
   },
   {
-    "id": 603123652,
-    "name": "Srikanth Addala",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/Srikanth_Addala.jpg/500px-Srikanth_Addala.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 1181
+    "id": 253603819,
+    "name": "Rahul Sadasivan",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/RahulSpic_2024_-_jpg_%28cropped%29.jpg/500px-RahulSpic_2024_-_jpg_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 1257
   },
   {
-    "id": 1125604703,
-    "name": "Krish Jagarlamudi",
-    "image": "https://image.tmdb.org/t/p/w500/1qwNtxzvmb1dAmmfQ81HBiKcVGP.jpg",
-    "trendingScore": 1042
+    "id": 1344667812,
+    "name": "Shoojit Sircar",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Shoojit_Sircar_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "trendingScore": 1202
   },
   {
-    "id": 262939991,
-    "name": "Karthick Naren",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/86/Karthick_Naren_at_Kadugu_Movie_Premiere.jpg/500px-Karthick_Naren_at_Kadugu_Movie_Premiere.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 1040
+    "id": 216965335,
+    "name": "Amar Kaushik",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/98/The_Director_Amar_Khaushik_of_the_film_AABA%2C_at_the_Presentation%2C_during_the_48th_International_Film_Festival_of_India_%28IFFI-2017%29%2C_in_Panaji%2C_Goa_on_November_27%2C_2017.jpg/500px-thumbnail.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 1134
   },
   {
-    "id": 2033988353,
+    "id": 743864786,
+    "name": "Anjali Menon",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/%E0%B4%85%E0%B4%9C%E0%B5%8D%E0%B4%9E%E0%B4%B2%E0%B4%BF_%E0%B4%AE%E0%B5%87%E0%B4%A8%E0%B5%8B%E0%B5%BB_%28cropped%29.jpg/500px-%E0%B4%85%E0%B4%9C%E0%B5%8D%E0%B4%9E%E0%B4%B2%E0%B4%BF_%E0%B4%AE%E0%B5%87%E0%B4%A8%E0%B5%8B%E0%B5%BB_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 1134
+  },
+  {
+    "id": 2096911828,
+    "name": "Sailesh Kolanu",
+    "image": "https://image.tmdb.org/t/p/w500/phjFUbCMwOfGqyPQqRDoGQyNLAV.jpg",
+    "trendingScore": 1101
+  },
+  {
+    "id": 949517164,
+    "name": "Mudassar Aziz",
+    "image": null,
+    "trendingScore": 1091
+  },
+  {
+    "id": 478311381,
     "name": "Khalid Rahman",
     "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/Khalid_Rahman_2.jpg/500px-Khalid_Rahman_2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 1023
+    "trendingScore": 1062
   },
   {
-    "id": 805953229,
-    "name": "Blessy",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/85/Director_Blessy.jpg/500px-Director_Blessy.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 888
+    "id": 1948768585,
+    "name": "M. Manikandan",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7b/M_Manikandan_in_February_2018.jpg/500px-M_Manikandan_in_February_2018.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 1041
   },
   {
-    "id": 1710288721,
-    "name": "Mahesh Narayanan",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/Mahesh_Narayanan.jpg/500px-Mahesh_Narayanan.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 857
+    "id": 947696210,
+    "name": "Jude Anthany Joseph",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/4/40/Jude_Anthany_Joseph.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "trendingScore": 927
   },
   {
-    "id": 338310601,
-    "name": "Abhishek Chaubey",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/Abhishek_Chaubey_-_2.jpg/500px-Abhishek_Chaubey_-_2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 804
+    "id": 190239311,
+    "name": "K. V. Anudeep",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b5/Anudeep_Director.jpg/500px-Anudeep_Director.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 922
   },
   {
-    "id": 1388414564,
-    "name": "Seenu Ramasamy",
-    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Seenu_Ramasamy_at_Dharmadurai_Success_Meet.jpg/500px-Seenu_Ramasamy_at_Dharmadurai_Success_Meet.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "trendingScore": 713
+    "id": 170857393,
+    "name": "Vipin Das",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5c/Vipin_Das_Malayalam_Film_Director_at_Film_Shooting_Site.jpg/500px-Vipin_Das_Malayalam_Film_Director_at_Film_Shooting_Site.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 920
   },
   {
-    "id": 193019004,
-    "name": "Hemanth M. Rao",
-    "image": "https://image.tmdb.org/t/p/w500/sqEXUI2Lm5tqCplzpGHeFQnQFTT.jpg",
-    "trendingScore": 711
-  },
-  {
-    "id": 704007952,
-    "name": "Chandoo Mondeti",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Chandoo_Mondeti_at_the_70th_NFA.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
-    "trendingScore": 704
-  },
-  {
-    "id": 1484350178,
+    "id": 1769879412,
     "name": "Pandiraj",
     "image": "https://image.tmdb.org/t/p/w500/oEwRDJwCMWmdGof93Ew6WZiAmrL.jpg",
-    "trendingScore": 661
+    "trendingScore": 906
   },
   {
-    "id": 1765463008,
-    "name": "Pavan Wadeyar",
-    "image": "https://image.tmdb.org/t/p/w500/1DDKDbhHZBIZ3gIIRmuc8t287By.jpg",
-    "trendingScore": 633
+    "id": 1242130106,
+    "name": "Krish Jagarlamudi",
+    "image": "https://image.tmdb.org/t/p/w500/1qwNtxzvmb1dAmmfQ81HBiKcVGP.jpg",
+    "trendingScore": 880
   },
   {
-    "id": 1176023718,
-    "name": "Radha Krishna Kumar",
-    "image": "https://image.tmdb.org/t/p/w500/znpuraqSIwGmOn5dixNAlZ97bJS.jpg",
-    "trendingScore": 546
+    "id": 1366693765,
+    "name": "Blessy",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/85/Director_Blessy.jpg/500px-Director_Blessy.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 874
   },
   {
-    "id": 504356914,
+    "id": 713906938,
+    "name": "Seenu Ramasamy",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Seenu_Ramasamy_at_Dharmadurai_Success_Meet.jpg/500px-Seenu_Ramasamy_at_Dharmadurai_Success_Meet.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 859
+  },
+  {
+    "id": 1751427883,
+    "name": "Srikanth Addala",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/Srikanth_Addala.jpg/500px-Srikanth_Addala.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 787
+  },
+  {
+    "id": 1705836579,
+    "name": "Mahesh Narayanan",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/Mahesh_Narayanan.jpg/500px-Mahesh_Narayanan.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 756
+  },
+  {
+    "id": 270761074,
+    "name": "Abhishek Chaubey",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/Abhishek_Chaubey_-_2.jpg/500px-Abhishek_Chaubey_-_2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 732
+  },
+  {
+    "id": 874731257,
+    "name": "Karthick Naren",
+    "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/86/Karthick_Naren_at_Kadugu_Movie_Premiere.jpg/500px-Karthick_Naren_at_Kadugu_Movie_Premiere.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "trendingScore": 688
+  },
+  {
+    "id": 1380456138,
+    "name": "Chandoo Mondeti",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Chandoo_Mondeti_at_the_70th_NFA.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "trendingScore": 646
+  },
+  {
+    "id": 294090306,
+    "name": "Hemanth M. Rao",
+    "image": "https://image.tmdb.org/t/p/w500/sqEXUI2Lm5tqCplzpGHeFQnQFTT.jpg",
+    "trendingScore": 510
+  },
+  {
+    "id": 1744253651,
     "name": "Ratheesh Balakrishnan Poduval",
     "image": "https://image.tmdb.org/t/p/w500/gEmeyBAFY2Illw7O49bDqKxQS6Q.jpg",
-    "trendingScore": 528
+    "trendingScore": 503
   },
   {
-    "id": 1603982137,
-    "name": "C. S. Amudhan",
-    "image": null,
-    "trendingScore": 481
+    "id": 1883985433,
+    "name": "Radha Krishna Kumar",
+    "image": "https://image.tmdb.org/t/p/w500/znpuraqSIwGmOn5dixNAlZ97bJS.jpg",
+    "trendingScore": 420
   },
   {
-    "id": 751456222,
+    "id": 1713254362,
+    "name": "Pavan Wadeyar",
+    "image": "https://image.tmdb.org/t/p/w500/1DDKDbhHZBIZ3gIIRmuc8t287By.jpg",
+    "trendingScore": 403
+  },
+  {
+    "id": 2011155509,
     "name": "M. Muthaiah",
     "image": null,
-    "trendingScore": 289
+    "trendingScore": 290
   },
   {
-    "id": 1012213278,
+    "id": 618101145,
     "name": "Kiranraj K.",
     "image": null,
-    "trendingScore": 287
+    "trendingScore": 199
   },
   {
-    "id": 246307371,
-    "name": "Simple Suni",
-    "image": null,
-    "trendingScore": 248
-  },
-  {
-    "id": 1758894103,
+    "id": 1565283668,
     "name": "K. S. Ravindra",
     "image": "https://image.tmdb.org/t/p/w500/b0vOz06sawC4MQ4pdg0JboXqqTk.jpg",
-    "trendingScore": 217
+    "trendingScore": 163
   },
   {
-    "id": 499511375,
+    "id": 691206555,
+    "name": "Simple Suni",
+    "image": null,
+    "trendingScore": 127
+  },
+  {
+    "id": 643265479,
     "name": "Desingh Periyasamy",
     "image": null,
-    "trendingScore": 152
+    "trendingScore": 65
   },
   {
-    "id": 721839061,
-    "name": "Imtiaz Ali",
-    "image": "https://image.tmdb.org/t/p/w500/FLcxKO8DEjtzXvAz8xLN2gMeO9.jpg",
-    "trendingScore": 62
-  },
-  {
-    "id": 1147415709,
+    "id": 1977117459,
     "name": "Kabir Khan",
     "image": "https://image.tmdb.org/t/p/w500/hxiBucUGDTsBS4BP9Z1nGGmGWI7.jpg",
-    "trendingScore": 44
+    "trendingScore": 42
   },
   {
-    "id": 2001553192,
+    "id": 594955701,
+    "name": "Imtiaz Ali",
+    "image": "https://image.tmdb.org/t/p/w500/FLcxKO8DEjtzXvAz8xLN2gMeO9.jpg",
+    "trendingScore": 40
+  },
+  {
+    "id": 1752304794,
     "name": "Cheran",
     "image": "https://image.tmdb.org/t/p/w500/nCZmkDoFuBqKs3IbkXJ7qmRcHTW.jpg",
-    "trendingScore": 26
+    "trendingScore": 19
   },
   {
-    "id": 853261327,
+    "id": 1866389867,
     "name": "Parasuram",
     "image": null,
-    "trendingScore": 11
+    "trendingScore": 10
   }
 ]

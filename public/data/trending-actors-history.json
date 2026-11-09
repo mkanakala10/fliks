@@ -1,60 +1,5 @@
 [
   {
-    "week": "2026-08-17",
-    "actors": [
-      {
-        "name": "Yash (actor)",
-        "trendingScore": 54297,
-        "rank": 1
-      },
-      {
-        "name": "C. Joseph Vijay",
-        "trendingScore": 36354,
-        "rank": 2
-      },
-      {
-        "name": "Nayanthara",
-        "trendingScore": 29386,
-        "rank": 3
-      },
-      {
-        "name": "Priyanka Chopra",
-        "trendingScore": 28564,
-        "rank": 4
-      },
-      {
-        "name": "Salman Khan",
-        "trendingScore": 25994,
-        "rank": 5
-      },
-      {
-        "name": "Suriya",
-        "trendingScore": 25407,
-        "rank": 6
-      },
-      {
-        "name": "Atharvaa",
-        "trendingScore": 22267,
-        "rank": 7
-      },
-      {
-        "name": "Shah Rukh Khan",
-        "trendingScore": 21353,
-        "rank": 8
-      },
-      {
-        "name": "Amitabh Bachchan",
-        "trendingScore": 20740,
-        "rank": 9
-      },
-      {
-        "name": "Dhanush",
-        "trendingScore": 18656,
-        "rank": 10
-      }
-    ]
-  },
-  {
     "week": "2026-08-24",
     "actors": [
       {
@@ -655,6 +600,61 @@
       {
         "name": "Hrithik Roshan",
         "trendingScore": 48312,
+        "rank": 10
+      }
+    ]
+  },
+  {
+    "week": "2026-11-09",
+    "actors": [
+      {
+        "name": "Yash",
+        "trendingScore": 161083,
+        "rank": 1
+      },
+      {
+        "name": "Sai Pallavi",
+        "trendingScore": 137690,
+        "rank": 2
+      },
+      {
+        "name": "Shahid Kapoor",
+        "trendingScore": 95739,
+        "rank": 3
+      },
+      {
+        "name": "Ranbir Kapoor",
+        "trendingScore": 95166,
+        "rank": 4
+      },
+      {
+        "name": "Shah Rukh Khan",
+        "trendingScore": 83197,
+        "rank": 5
+      },
+      {
+        "name": "Nazriya Nazim",
+        "trendingScore": 56844,
+        "rank": 6
+      },
+      {
+        "name": "Kajal Aggarwal",
+        "trendingScore": 53555,
+        "rank": 7
+      },
+      {
+        "name": "Keerthy Suresh",
+        "trendingScore": 52966,
+        "rank": 8
+      },
+      {
+        "name": "Salman Khan",
+        "trendingScore": 50791,
+        "rank": 9
+      },
+      {
+        "name": "Saif Ali Khan",
+        "trendingScore": 50763,
         "rank": 10
       }
     ]
