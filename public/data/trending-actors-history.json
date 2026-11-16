@@ -1,60 +1,5 @@
 [
   {
-    "week": "2026-08-24",
-    "actors": [
-      {
-        "name": "Emraan Hashmi",
-        "trendingScore": 104419,
-        "rank": 1
-      },
-      {
-        "name": "Yash (actor)",
-        "trendingScore": 84221,
-        "rank": 2
-      },
-      {
-        "name": "Siddharth (actor)",
-        "trendingScore": 74615,
-        "rank": 3
-      },
-      {
-        "name": "Ravi Teja",
-        "trendingScore": 67244,
-        "rank": 4
-      },
-      {
-        "name": "C. Joseph Vijay",
-        "trendingScore": 64934,
-        "rank": 5
-      },
-      {
-        "name": "Priyanka Chopra",
-        "trendingScore": 59556,
-        "rank": 6
-      },
-      {
-        "name": "Suriya",
-        "trendingScore": 58018,
-        "rank": 7
-      },
-      {
-        "name": "Salman Khan",
-        "trendingScore": 45303,
-        "rank": 8
-      },
-      {
-        "name": "Pawan Kalyan",
-        "trendingScore": 43904,
-        "rank": 9
-      },
-      {
-        "name": "Sunny Deol",
-        "trendingScore": 43156,
-        "rank": 10
-      }
-    ]
-  },
-  {
     "week": "2026-08-31",
     "actors": [
       {
@@ -655,6 +600,61 @@
       {
         "name": "Saif Ali Khan",
         "trendingScore": 50763,
+        "rank": 10
+      }
+    ]
+  },
+  {
+    "week": "2026-11-16",
+    "actors": [
+      {
+        "name": "Yash",
+        "trendingScore": 191985,
+        "rank": 1
+      },
+      {
+        "name": "Sai Pallavi",
+        "trendingScore": 177394,
+        "rank": 2
+      },
+      {
+        "name": "Pawan Kalyan",
+        "trendingScore": 137219,
+        "rank": 3
+      },
+      {
+        "name": "Ranbir Kapoor",
+        "trendingScore": 112328,
+        "rank": 4
+      },
+      {
+        "name": "Rajinikanth",
+        "trendingScore": 90347,
+        "rank": 5
+      },
+      {
+        "name": "Suriya",
+        "trendingScore": 77802,
+        "rank": 6
+      },
+      {
+        "name": "Nazriya Nazim",
+        "trendingScore": 74312,
+        "rank": 7
+      },
+      {
+        "name": "Kajal Aggarwal",
+        "trendingScore": 58190,
+        "rank": 8
+      },
+      {
+        "name": "Rakul Preet Singh",
+        "trendingScore": 55509,
+        "rank": 9
+      },
+      {
+        "name": "Sunny Deol",
+        "trendingScore": 53851,
         "rank": 10
       }
     ]
